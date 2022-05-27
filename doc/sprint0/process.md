@@ -12,7 +12,9 @@ and if that's not possible then persuade anyone opposing the decision to agree.
 Everyone assigns a reasonable point to the user story, this first vote will show how much
 disparity there is among the estimates. The group discusses the range, asking the outlying
 voters to describe their reasoning process, this is repeated until everyone produces the
-same estimate.
+same estimate.Fibonacci Series will be used for storypoints: 2, 3, 5, 8, 13, 20, 40, 100
+0-points estimates are used for trivial tasks that require little effort. Only use numbers within
+the set and avoid averages.
 
 **Meetings:**
 Meetings happen on Mondays, Wednesdays and Fridays, for all planned meetings everyone
