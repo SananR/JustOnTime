@@ -1,18 +1,21 @@
-# JustOnTime
-# A web application to bid on experiences last minute. 
+<h1 align="center">JustOnTime</h1>
+
+<h2 align="center">A web application to bid on experiences last minute.</h2>
 JustOnTime provides consumers with an application to book experiences last minute by bidding against other users. From sporting events, concert tickets, restaurant reservations, and everything in between. Whether you forgot to buy tickets for you and your significant other, or need a last minute reservation for a friends birthday party, you are never late, always just on time.
 
-# Installation
+<h2>Installation</h2>
 To be added...
 
-# Technologies 
-MERN Tech Stack
-  - MongoDB
-  - Express
-  - React
-  - NodeJS
+<h2>Technologies</h2>
+MERN Tech Stack</br>
+<ul>
+<li> MongoDB </li>
+<li> Express </li>
+<li> React </li>
+<li> NodeJS </li>
+</ul>
 
-# Contribution 
+<h2>Contribution</h2>
 All features must be created in separate branches from the "dev" branch.
 When merging a feature branch to dev, a pull request must be created and reviewed by at least two group members.
 Dev branch is merged to main during official scrum meetings for testing purposes.
