@@ -1,0 +1,62 @@
+User {
+    id: ,
+    Contact: {
+        email: ,
+        phone_number: 
+    },
+    Personal_Info: {
+        First_Name: ,
+        Last_Name: ,
+        address: , (could be an object)
+    }
+}
+
+Event_Organizer:  {
+        id: ,
+    Contact: {
+        email: ,
+        phone_number: 
+    },
+    Personal_Info: {
+        First_Name: ,
+        Last_Name: ,
+        address: , (could be an object)
+    }
+    Bank_Info: {
+
+    },
+    Event_List: {
+        event1: {
+            Name: 
+            Highest_Bid: 
+            Date_Time:
+            Status:  "Completed/Ongoing/UnderReview"
+
+        }
+        event2: {
+
+        }
+    }
+}
+
+Event: {
+    id: "",
+    General_Info: {
+        Name: "",
+        Description: "",
+        Time: "",
+        Status: "Completed/Ongoing/UnderReview"
+    }, 
+    Tags: [list of tags],
+    Bid_Info{
+        Bid_History: [
+            {Uid: "",
+            Bid_Price: "",
+            Date_Time: ""}
+        ]
+    },
+    Organizer_Info: {
+        id: 
+        Name: 
+    }
+}
