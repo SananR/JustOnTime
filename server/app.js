@@ -1,9 +1,11 @@
+//Created by Yuto, could be moved to server.js/index.js
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
 import { setupCustomerRoutes } from './routes/customer/index.js';
 import { setupOrganizerRoutes } from './routes/organizer/index.js';
+import { run } from './api/databse/initDB.js'
 
 dotenv.config()
 
@@ -16,6 +18,7 @@ app.use(cors());
 setupCustomerRoutes(app);
 setupOrganizerRoutes(app);
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
+run()
 
 // Server listens on port3000
 const hostname = 'localhost';
