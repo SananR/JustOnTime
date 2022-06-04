@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import validator from 'validator'
-import { Customer } from './customer.model.js';
+import { Customer } from '../customer.model.js';
 const { isEmail, isMobilePhone } = validator
 
 // const emailValidator = async (inputEmail) => {

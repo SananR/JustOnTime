@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 
 import { setupCustomerRoutes } from './routes/customer/index.js';
 import { setupOrganizerRoutes } from './routes/organizer/index.js';
-import { demo } from './api/databse/initDB.js'
+import { demo } from './api/databse/DBDemo.js'
 
 dotenv.config()
 

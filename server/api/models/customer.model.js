@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
-import { contactSchema } from './contact.schema.js'
-import { personalInfoSchema } from './personalInfo.schema.js';
+import { contactSchema } from './schemas/contact.schema.js'
+import { personalInfoSchema } from './schemas/personalInfo.schema.js';
 
 const customerSchema = mongoose.Schema({
     contact: {

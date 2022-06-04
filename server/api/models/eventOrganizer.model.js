@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
-import { bankInfoSchema } from './bankInfo.schema.js';
-import { contactSchema } from './contact.schema.js'
-import { personalInfoSchema } from './personalInfo.schema.js';
+import { bankInfoSchema } from './schemas/bankInfo.schema.js';
+import { contactSchema } from './schemas/contact.schema.js'
+import { personalInfoSchema } from './schemas/personalInfo.schema.js';
 
 const eventOrganizerSchema = mongoose.Schema({
     contact: {
