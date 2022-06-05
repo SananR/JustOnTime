@@ -2,7 +2,9 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import passport from 'passport';
 
+import { configPassportStrategy } from './auth/index.js';
 import { setupCustomerRoutes } from './routes/customer/index.js';
 import { setupOrganizerRoutes } from './routes/organizer/index.js';
 import { demo } from './api/databse/DBDemo.js'
@@ -11,12 +13,23 @@ dotenv.config()
 
 const app = express();
 
-app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
+app.use(express.json({
+    extended: true
+}));
 app.use(cors());
+
+
+// configure passport strategy
+configPassportStrategy(passport);
+app.use(passport.initialize());
 
 // set up routes
 setupCustomerRoutes(app);
 setupOrganizerRoutes(app);
+
 
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 demo()
