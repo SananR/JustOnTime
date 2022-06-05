@@ -1,0 +1,82 @@
+
+.Signup-cont{
+    margin-top: 10%;
+    margin-left: 25%; 
+    width: 50%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.wrapper{
+    display: flex;
+}
+.Name-input{
+    flex: 1;
+    margin-left: 2%; 
+}
+
+.Lastname-input{
+    flex: 1;
+    margin-left: 10%; 
+    margin-right: 10%;
+}
+
+.Email-input{
+    margin-left: 2%; 
+    width: 80%;
+}
+
+.Password-input{
+    margin-left: 2%; 
+    width: 80%;
+}
+
+.Conf-input{
+    margin-left: 2%; 
+    width: 80%;
+    margin-bottom: 5px;
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-between;
+}
+
+#signup-button{
+    flex: 1;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-left: 55%;
+    margin-right: 2%;
+    border: 0.5px solid white;
+    background-color: black;
+    border-radius: 5px;
+    padding: 8px;
+    justify-content: end;
+
+}
+
+#signin-button{
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-left: 2%;
+    padding: 8px;
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a:hover{
+    background-color: rgb(226, 225, 225);
+}
+
+
+
+
+
+
+
+
