@@ -26,8 +26,8 @@ app.use(cors());
 
 // configure session
 var sessionStore = new MongoDBStore(session)({
-    uri: 'mongodb://localhost:27017/connect_mongodb_session_test',
-    collection: 'mySessions'
+    uri: process.env.SESSION_DB_URI,
+    collection: process.env.SESSION_DB_COLLECTION
   });
 // Catch errors
 sessionStore.on('error', function(error) {
