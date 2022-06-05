@@ -10,6 +10,7 @@ import { configPassportStrategy } from './auth/index.js';
 import { setupCustomerRoutes } from './routes/customer/index.js';
 import { setupOrganizerRoutes } from './routes/organizer/index.js';
 import { connectDB } from './api/databse/DBConnect.js'
+import { removeAllData } from './api/databse/DBReset.js';
 
 dotenv.config()
 
@@ -51,7 +52,9 @@ setupCustomerRoutes(app);
 setupOrganizerRoutes(app);
 
 //connect to DB
-connectDB()
+connectDB().then(() => {
+    removeAllData();
+})
 
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 

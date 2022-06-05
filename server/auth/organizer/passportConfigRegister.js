@@ -19,7 +19,7 @@ function configOrganizerRegisterStrategy(passport) {
                     return done(null, false, {message: "invalid input types"});
                 }
                 console.log("request body verified");
-            try{
+            try {
                 const hashedPassword = await bcrypt.hash(password, 10);
                 const hashedBankName = await bcrypt.hash(req.body.bankName, 10);
                 const hashedBranchNum = await bcrypt.hash(req.body.branchNum, 10);
@@ -49,7 +49,7 @@ function configOrganizerRegisterStrategy(passport) {
                     password: hashedPassword
                 });
                 await eventOrganizer.save()
-                console.log(eventOrganizer)
+                done(null, eventOrganizer, {});
             }
             catch(err){
                 return done(err)

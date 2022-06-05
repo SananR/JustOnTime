@@ -22,8 +22,10 @@ router
                   message: info.message
                 }); 
               }
+              console.log("We are logging in now!")
               req.logIn(user, function(err) {
                 if (err) { return next(err); }
+                console.log("We are logged in!")
                 return res.send(user);
               });
         })(req, res, next);
