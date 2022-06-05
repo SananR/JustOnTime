@@ -4,7 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import passport from 'passport';
 import session from 'express-session';
-import MySQLStore from 'express-mysql-session';
+import MongoDBStore from 'connect-mongodb-session';
 
 import { configPassportStrategy } from './auth/index.js';
 import { setupCustomerRoutes } from './routes/customer/index.js';
@@ -25,16 +25,14 @@ app.use(express.json({
 app.use(cors());
 
 // configure session
-const options = {
-    host: process.env.DB_HOSTNAME,
-    port: 3306,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-};
-
-const sessionStore = new MySQLStore(options);
-
+var sessionStore = new MongoDBStore(session)({
+    uri: 'mongodb://localhost:27017/connect_mongodb_session_test',
+    collection: 'mySessions'
+  });
+// Catch errors
+sessionStore.on('error', function(error) {
+    console.log(error);
+  });
 app.use(session({
     secret: process.env.SESSION_SECCRET_KEY,
     store: sessionStore,
@@ -51,17 +49,18 @@ app.use(passport.session());
 setupCustomerRoutes(app);
 setupOrganizerRoutes(app);
 
-//connect to DB
+// connect to DB 
+// (it is deleting data everytime we start server for testing)
 connectDB().then(() => {
     removeAllData();
 })
 
-app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
-
-app.get("/", (req,res) => {
+app.get("/userInSession", (req,res) => {
     console.log(req.user);
     res.send(req.user);
 })
+
+app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 
 // Server listens on port3000
 const hostname = 'localhost';
