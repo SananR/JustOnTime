@@ -5,10 +5,14 @@ const router = express.Router();
 router
     .route("/")
     .post((req, res, next) => {
-        console.log("request body: " + JSON.stringify(req.body));
         passport.authenticate("registerOrganizer", 
         (err, user, info) => {
             if (err) { 
+                if (err.code = 11000){
+                    return res.status(400).send({
+                        message: "The email is already used"
+                      }) 
+                }
                 return res.status(400).send({
                   message: err
                 })
@@ -18,8 +22,6 @@ router
                   message: info.message
                 }); 
               }
-              console.log("User Created");
-              console.log(user);
               req.logIn(user, function(err) {
                 if (err) { return next(err); }
                 return res.send(user);

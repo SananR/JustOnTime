@@ -20,7 +20,10 @@
     "validator": "^13.7.0",
     "bcrypt": "^5.0.0",
     "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "express-session": "^1.17.3",
+    "express-mysql-session": "^2.1.5",
+    "cookie-parser": "^1.4.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.16"
