@@ -7,7 +7,7 @@ const MongoClient = mongodb.MongoClient;
 const port = process.env.PORT || 3000;
 
 MongoClient.connect(
-    process.env.JUSTONTIME_DB_URI,
+    process.env.JUSTONTIME_DB_URI_LOCAL, //REPLACE WITH JUSTONTIME_DB_URI FOR PRODUCTION
     {
         maxPoolSize:50,
         wtimeoutMS:2500,
