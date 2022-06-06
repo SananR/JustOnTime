@@ -20,6 +20,13 @@ The sprint goal is to complete tasks involving authentication (login and registr
    - Setup routes for event organizer backend
    - Refactor the backend code to avoid redundancy
 
+# Spikes
+
+- Figuring out separation of responsibility between React and Node.js
+- Figuring out the setup for the MongoDB database
+- Learning Passport.js
+- Separating schemas and dividing user info into different schemas
+
 # Team Capacity
 
 Team Capacity: 150 points
