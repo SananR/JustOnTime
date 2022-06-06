@@ -1,43 +1,73 @@
 import express from 'express';
 import cors from 'cors';
-import test from './api/test.route.js';
+import dotenv from 'dotenv';
+import passport from 'passport';
+import session from 'express-session';
+import MongoDBStore from 'connect-mongodb-session';
+
+import { configPassportStrategy } from './auth/index.js';
+import { setupCustomerRoutes } from './routes/customer/index.js';
+import { setupOrganizerRoutes } from './routes/organizer/index.js';
+import { connectDB } from './api/database/DBconnect.js'
+import { removeAllData } from './api/database/DBReset.js';
+import connectdB from "./config/dbconnect.js"
+
+dotenv.config()
 
 const app = express();
 
-app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
+app.use(express.json({
+    extended: true
+}));
 app.use(cors());
 
-app.use("/api/test", test);
+// configure session
+var sessionStore = new MongoDBStore(session)({
+    uri: process.env.SESSION_DB_URI,
+    collection: process.env.SESSION_DB_COLLECTION
+  });
+// Catch errors
+sessionStore.on('error', function(error) {
+    console.log(error);
+  });
+app.use(session({
+    secret: process.env.SESSION_SECCRET_KEY,
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false
+}))
+
+// configure passport strategy
+configPassportStrategy(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+
+// set up routes
+setupCustomerRoutes(app);
+setupOrganizerRoutes(app);
+
+// connect to DB 
+// (it is deleting data everytime we start server for testing)
+connectDB().then(() => {
+    removeAllData();
+})
+
+// connects to mongo db atlas online  cluster
+//connectdB();
+
+app.get("/userInSession", (req,res) => {
+    console.log(req.user);
+    res.send(req.user);
+})
+
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 
-export default app;
-
-//write me a function that connects to the database
-function connectToDatabase() {
-    mongoose.connect(config.database, { useNewUrlParser: true });
-}
-
-//write me a function that starts the server
-function startServer() {
-    app.listen(config.port, () => {
-        console.log(`Server started on port ${config.port}`);
-    });
-}
-
-//write me a function that handles the request
-function handleRequest() {
-    app.use('/', router);
-}
-
-//write me a function that starts everything
-function start() {
-    connectToDatabase();
-    startServer();
-    handleRequest();
-}
-
-//write me a function that stops everything
-function stop() {
-    mongoose.disconnect();
-    app.close();
-}
+// Server listens on port3000
+const hostname = 'localhost';
+const port = process.env.PORT || 3000;
+app.listen(port, ()=>{
+    console.log('Server running at http://'+ hostname + ':' + port + '/');
+})
