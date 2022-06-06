@@ -85,23 +85,23 @@
     - 1 mark  = Frontend setup is complete
     - 0 marks = Frontend is not setup
 
-    Your mark: 0
+    Your mark: 1
 
   - Backend
     - 1 mark  = Backend setup is complete
     - 0 marks = Backend is not setup
 
-    Your mark: 0
+    Your mark: 1
 
   - Database
     - 1 mark  = Database setup is complete
     - 0 marks = Database is not setup
 
-    Your mark: 0 
+    Your mark: 1
    
-  Setup Total Mark: 0 / 3
+  Setup Total Mark: 3 / 3
 
-  Comment: Looking through the git history it seems that setup for frontend, backend and db wasn't done until after the deadline for sprint 0.  
+  Comment: Looking through the git history it seems that setup for frontend, backend and db wasn't done until after the deadline for sprint 0.  --- NVM
 
 ---
 ## Documentation: README.md (max 3 marks)
@@ -230,5 +230,5 @@
    
 ---
 ## Total Mark  
-Sprint 0 Total Mark : 43 / 48   Good Job!
+Sprint 0 Total Mark : 46 / 48   Good Job!
 	
