@@ -7,6 +7,7 @@ JustOnTime provides consumers with an application to book experiences last minut
 
  - Install [NodeJS](https://nodejs.org/en/download/) </br>
  - Install [ReactJS](https://reactjs.org/docs/getting-started.html) </br>
+ - Install [MongoDB](https://www.mongodb.com/docs/manual/administration/install-community/) </br>
 
 #### Back End
 - Navigate to ```server```
