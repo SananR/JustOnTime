@@ -82,9 +82,9 @@ function Signup() {
                 {errorConfirm && <div className="error"> {errorConfirm} </div>}
                 </div>
 
-                <div className="buttons">
-                    <a id= "signin-button">Already have an account</a>
-                    <button id= "signup-button">Sign Up</button>
+                <div className="signup-buttons"> 
+                <a id= "signin-button" href="/login">Already have an account</a>
+                <button id= "signup-button">Sign Up</button>
                 </div>
             </form>
         </div>

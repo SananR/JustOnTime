@@ -9,12 +9,17 @@
 }
 
 .User-input{
-    margin-left: 5%; 
-    width: 75%;
+    margin-left: 2%; 
+    width: 80%;
 }
 .Pass-input{
-    margin-left: 5%; 
-    width: 75%;
+    margin-left: 2%; 
+    width: 80%;
+}
+
+.login-buttons{
+    display: flex;
+    justify-content: space-between;
 }
 
 #login-button{
@@ -23,11 +28,22 @@
     color: white;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-left: 83%;
+    margin-left: 5%;
+    margin-right: 1%;
     border: 0.5px solid white;
     background-color: black;
     border-radius: 5px;
     padding: 8px;
+}
+
+
+#create-button{
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-left: 2%;
+    padding: 8px;
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .title {

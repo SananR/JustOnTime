@@ -5,7 +5,6 @@ function Login() {
 
     const [errorMessageUser, setErrorMessageUser] = useState("");
     const [errorMessagePass, setErrorMessagePass] = useState("");
-    const [message, setMessage] = useState("");
 
 
      const errors = {
@@ -23,15 +22,12 @@ function Login() {
         
         if(User === "" || Pass === ""){
             if (User === ""  && Pass === ""){
-                setMessage("")
                 setErrorMessageUser(errors.username)
                 setErrorMessagePass(errors.password)
             } else if (User === ""){
-                setMessage("")
                 setErrorMessagePass("")
                 setErrorMessageUser(errors.username)
             } else if (Pass === "") {
-                setMessage("")
                 setErrorMessageUser("")
                 setErrorMessagePass(errors.password)
             }
@@ -73,10 +69,13 @@ function Login() {
                 <input id= "Pass" type= "password" placeholder= "Enter Password"/>
                 {errorMessagePass && <div className="error"> {errorMessagePass} </div>}
                 </div>
-
-                {message && <div className="message"> {message} </div>}
+                <div className="login-buttons">
+                <a id= "create-button" href= "/signup">Create a new account</a>
                 <button id= "login-button">Login</button>
+                </div>
             </form>
+
+
         </div>
     )
 
