@@ -26,8 +26,8 @@ Team Capacity: 150 points
 
 # Participants
 
-Sanan S. Rao
-Arya Sharma
-Bhoomi Patel
-Virthiyasahar Uthayanan
-Yuto Omachi
+Sanan S. Rao  <br/>
+Arya Sharma  <br/>
+Bhoomi Patel  <br/>
+Virthiyasahar Uthayanan  <br/>
+Yuto Omachi  <br/>
