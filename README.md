@@ -1,4 +1,4 @@
-<h1 align="center">JustOnTime</h1>    
+![alt text](/doc/logo.jpg)
 
 <div align="center"> 
  
