@@ -1,11 +1,10 @@
 import { Strategy as LocalStrategy } from 'passport-local'
 import * as bcrypt from 'bcrypt'
 
-import { EventOrganizer } from '../../api/models/eventOrganizer.model.js';
+import { Customer } from '../../models/customerModel.js'
 
-
-function configOrganizerRegisterStrategy(passport) {
-    passport.use("registerOrganizer",
+function customerRegisterStrategy(passport) {
+    passport.use("registerCustomer",
     new LocalStrategy({
         usernameField: "email",
         passReqToCallback: true
@@ -21,11 +20,8 @@ function configOrganizerRegisterStrategy(passport) {
                 console.log("request body verified");
             try {
                 const hashedPassword = await bcrypt.hash(password, 10);
-                const hashedBankName = await bcrypt.hash(req.body.bankName, 10);
-                const hashedBranchNum = await bcrypt.hash(req.body.branchNum, 10);
-                const hashedAccountNum = await bcrypt.hash(req.body.accountNum, 10);
-                
-                const eventOrganizer = new EventOrganizer(
+
+                const customer = new Customer(
                     {contact: {
                         email: email,
                         phoneNumber: req.body.phoneNumber
@@ -41,21 +37,16 @@ function configOrganizerRegisterStrategy(passport) {
                             postalCode: req.body.postalCode
                         }
                     },
-                    bankInfo: {
-                        bankName: hashedBankName,
-                        branchNum: hashedBranchNum,
-                        accountNum: hashedAccountNum
-                    },
                     password: hashedPassword
                 });
-                await eventOrganizer.save()
-                done(null, eventOrganizer, {});
+                await customer.save()
+                done(null, customer, {});
             }
             catch(err){
                 return done(err)
             }
         }
-        ))
+        ));
 }
 
-export { configOrganizerRegisterStrategy }
+export { customerRegisterStrategy }
