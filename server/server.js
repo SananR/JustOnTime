@@ -34,7 +34,7 @@ sessionStore.on('error', function(error) {
     console.log(error);
   });
 app.use(session({
-    secret: 'bavys2022',
+    secret: process.env.SESSION_SECCRET_KEY,
     store: sessionStore,
     resave: false,
     saveUninitialized: false
