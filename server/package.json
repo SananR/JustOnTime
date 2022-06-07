@@ -9,20 +9,25 @@
   "type": "module",
   "keywords": [],
   "author": "Sanan S. Rao",
-  "contributors": ["Yuto Omachi", "Arya Sharma", "Bhoomi Patel", "Virthiya Uthayanan"],
+  "contributors": [
+    "Yuto Omachi",
+    "Arya Sharma",
+    "Bhoomi Patel",
+    "Virthiya Uthayanan"
+  ],
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.0.0",
+    "connect-mongodb-session": "^3.1.1",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "express-session": "^1.17.3",
     "mongoose": "^6.3.5",
-    "validator": "^13.7.0",
-    "bcrypt": "^5.0.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "express-session": "^1.17.3",
-    "connect-mongodb-session": "^3.1.1",
-    "cookie-parser": "^1.4.5"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.16"
