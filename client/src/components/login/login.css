@@ -1,0 +1,93 @@
+
+.Login-cont{
+    margin-top: 10%;
+    margin-left: 35%; 
+    width: 30%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.User-input{
+    margin-left: 2%; 
+    width: 80%;
+}
+.Pass-input{
+    margin-left: 2%; 
+    width: 80%;
+}
+
+.login-buttons{
+    display: flex;
+    justify-content: space-between;
+}
+
+#login-button{
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5%;
+    margin-right: 1%;
+    border: 0.5px solid white;
+    background-color: black;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+
+#create-button{
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-left: 2%;
+    padding: 8px;
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 24px;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+}
+
+
+label,input{
+    display:flex;
+    flex-direction:column;
+}
+
+
+input{
+    height: 28px;
+    width: 120%;
+    font-size: 18px;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+}
+
+label {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    color: black;
+}
+
+.error {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 12px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button:hover{
+    background-color: gray;
+}
+
