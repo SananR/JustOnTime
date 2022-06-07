@@ -1,4 +1,13 @@
-<h1 align="center">JustOnTime</h1>
+<h1 align="center">JustOnTime</h1>    
+
+<div align="center"> 
+ 
+ ![npm](https://img.shields.io/badge/npm-8.5.5-brightgreen.svg) 
+ ![npm](https://img.shields.io/badge/react-18.1.0-blue.svg)
+ ![npm](https://img.shields.io/badge/mongodb-5.0-red.svg)
+ 
+</div>
+
 
 <h2 align="center">A web application to bid on experiences last minute.</h2>
 JustOnTime provides consumers with an application to book experiences last minute by bidding against other users. From sporting events, concert tickets, restaurant reservations, and everything in between. Whether you forgot to buy tickets for you and your significant other, or need a last minute reservation for a friends birthday party, you are never late, always just on time.
