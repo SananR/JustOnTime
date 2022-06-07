@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
-import { Customer } from '../models/customer.model.js'
-import { EventOrganizer } from '../models/eventOrganizer.model.js'
+import { Customer } from '../api/models/customer.model.js'
+import { EventOrganizer } from '../api/models/eventOrganizer.model.js'
 import dotenv from 'dotenv';
 dotenv.config();
 
