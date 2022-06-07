@@ -7,6 +7,7 @@ function Signup() {
     const [errorName, setErrorName] = useState("");
     const [errorLastname, setErrorLastname] = useState("");
     const [errorEmail, setErrorEmail] = useState("");
+    const [errorPhone, setErrorPhone] = useState("");
     const [errorAddr, setErrorAddr] = useState("");
     const [errorCity, setErrorCity] = useState("");
     const [errorCountry, setErrorCountry] = useState("");
@@ -29,9 +30,9 @@ function Signup() {
         var Confirm = document.getElementById("Conf").value; 
         var Phone = document.getElementById("Phone"); 
 
-        const values = [Name, Lastname, Email, Address, City, Country, Code, Password, Confirm]; 
-        const names = ["Name", "Lastname", "Email", "Address", "City", "Country", "Code", "Password", "Confirm"]; 
-        const funcs = [setErrorEmail, setErrorName, setErrorLastname, setErrorAddr, 
+        const values = [Name, Lastname, Email, Phone, Address, City, Country, Code, Password, Confirm]; 
+        const names = ["Name", "Lastname", "Email", "Phone", "Address", "City", "Country", "Code", "Password", "Confirm"]; 
+        const funcs = [setErrorName, setErrorLastname, setErrorEmail, setErrorPhone, setErrorAddr,
             setErrorCity, setErrorCountry, setErrorCode, setErrorPassword, setErrorConfirm]
         var empty = 0
         for (var i in values){
@@ -47,7 +48,6 @@ function Signup() {
         if(empty == 0 ){
            /*  when validating remember the address variable holds 
             the suite number and the street name */
-            // Phone is an optional field 
         }
 
     }
@@ -82,13 +82,13 @@ function Signup() {
 
                 <div className="Phone-input">
                 <label id= "Phone-label">Phone Number: </label> 
-                <input id= "Phone" type= "text" placeholder= "Enter Phone Number (optional)"/>
+                <input id= "Phone" type= "text" placeholder= "Enter Phone Number"/>
                 </div>
             </div>
 
                 
-                <label id= "Address-label">Address:</label> 
-                <input id= "Address" type= "text" placeholder= "Enter Address"/>
+                <label id= "Address-label">Street:</label> 
+                <input id= "Address" type= "text" placeholder= "Enter Street Address (e.g 123 Main St)"/>
                 {errorAddr && <div className="error"> {errorAddr} </div>}
 
              <div className="wrapper">
@@ -199,9 +199,7 @@ function Signup() {
             </div>
 
             <div id="tri7">
-              {/*   <div id="grey"></div> */}
                 <div id="pink"></div>
-               {/*  <div id="red"></div> */}
                 <div id="lightgrey"></div>
                 <div id="grey2"></div>
                 <div id="pink2"></div>
