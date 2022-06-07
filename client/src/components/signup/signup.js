@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { render } from "react-dom";
 import "./signup.css";
 
 function Signup() {
@@ -54,23 +55,25 @@ function Signup() {
 
     const renderForm = (
         <div className= "Signup-cont">
-            <div className="title">Sign Up</div>
+            <div className="title">Create a new account</div>
+            <div className="sub">Get Started</div>
+
             <form onSubmit={handleSubmit}>
             <div className="wrapper">
                 <div className="Name-input">
-                <label id= "name-label">Name:</label> 
-                <input id= "Name" type= "text" placeholder= "Name"/>
+                <label id= "name-label">First Name:</label> 
+                <input id= "Name" type= "text" placeholder= "Enter First Name"/>
                 {errorName && <div className="error"> {errorName} </div>}
                 </div>
 
                 <div className="Lastname-input">
                 <label id= "Lastname-label">Last Name:</label> 
-                <input id= "Lastname" type= "text" placeholder= "Last Name"/>
+                <input id= "Lastname" type= "text" placeholder= "Enter Last Name"/>
                 {errorLastname && <div className="error"> {errorLastname} </div>}
                 </div> 
             </div>
-               
-
+            
+            <div className="wrapper">
                 <div className="Email-input">
                 <label id= "email-label">Email:</label> 
                 <input id= "Email" type= "text" placeholder= "Enter Email"/>
@@ -78,30 +81,34 @@ function Signup() {
                 </div>
 
                 <div className="Phone-input">
-                <label id= "Phone-label">Phone Number:  <p id= "help">(optional)</p> </label> 
-                <input id= "Phone" type= "text" placeholder= "Enter Phone Number"/>
+                <label id= "Phone-label">Phone Number: </label> 
+                <input id= "Phone" type= "text" placeholder= "Enter Phone Number (optional)"/>
                 </div>
+            </div>
 
-                <div className="Address-wrapper">
+                
                 <label id= "Address-label">Address:</label> 
                 <input id= "Address" type= "text" placeholder= "Enter Address"/>
                 {errorAddr && <div className="error"> {errorAddr} </div>}
 
-                <label id= "city-label">City:</label> 
-                <input id= "City" type= "text" placeholder= "Enter City"/>
-                {errorCity && <div className="error"> {errorCity} </div>}
+             <div className="wrapper">
+             <div className="Email-input">
+                 <label id= "city-label">City:</label> 
+                 <input id= "City" type= "text" placeholder= "Enter City"/>
+                 {errorCity && <div className="error"> {errorCity} </div>}
+                 </div>
 
-                <label id= "country-label">Country:</label> 
-                <input id= "Country" type= "text" placeholder= "Enter Country"/>
-                {errorCountry && <div className="error"> {errorCountry} </div>}
+                 <div className="Phone-input">
+                 <label id= "country-label">Country:</label> 
+                 <input id= "Country" type= "text" placeholder= "Enter Country"/>
+                 {errorCountry && <div className="error"> {errorCountry} </div>}
+                 </div>
+             </div>
 
                 <label id= "code-label">Postal Code:</label> 
-                <input id= "Code" type= "text" placeholder= "Enter Postal Code"  
+                <input id= "Code" type= "text" placeholder= "Enter Postal Code (e.g A1A 1A1)"  
                 pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" />
-                <p id= "help">Format A1A 1A1</p>
                 {errorCode && <div className="error"> {errorCode} </div>}
-
-                </div>
 
                 <div className="Password-input">
                 <label id= "pass-label">Password:</label> 
@@ -113,19 +120,141 @@ function Signup() {
                 <label id= "Conf-label">Confirm Password:</label> 
                 <input id= "Conf" type= "password" placeholder= "Confirm Password"/>
                 {errorConfirm && <div className="error"> {errorConfirm} </div>}
+              
                 </div>
-
-                <div className="signup-buttons"> 
-                <a id= "signin-button" href="/login">Already have an account</a>
                 <button id= "signup-button">Sign Up</button>
-                </div>
+
             </form>
+
+
+            <a id= "signin-button" href="/login">Already have an account?</a>
+
+        </div>
+    )
+
+    const renderback = (
+        <div className="tris">
+            <div id="tri1">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+            <div id="tri2">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+            <div id="tri3">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri4">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri5">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri6">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri7">
+              {/*   <div id="grey"></div> */}
+                <div id="pink"></div>
+               {/*  <div id="red"></div> */}
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri8">
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri9">
+            <div id="grey"></div>
+                <div id="red2"></div>
+                <div id="pink2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri10">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+            <div id="tri11">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri12">
+                <div id="lightgrey"></div>
+            </div>
+            
         </div>
     )
 
     return (
         <div className="Signup">
             {renderForm}
+            {renderback}
         </div>
     );
 }
