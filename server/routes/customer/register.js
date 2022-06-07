@@ -1,5 +1,5 @@
-import express from 'express';
-import passport from 'passport';
+import express from 'express'
+import passport from 'passport'
 const router = express.Router();
 
 router
@@ -8,13 +8,13 @@ router
         passport.authenticate("registerCustomer", 
         (err, user, info) => {
             if (err) { 
-                if (err.code = 11000){
+                if (err.message.includes("duplicate key")){
                     return res.status(400).send({
                         message: "The email is already used"
                       }) 
                 }
                 return res.status(400).send({
-                  message: err
+                  message: err.message
                 })
               }
               if (!user) {

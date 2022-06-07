@@ -5,4 +5,4 @@ function setupOrganizerRoutes(app) {
     app.use("/organizer/login", loginRouter);
 }
 
-export { setupOrganizerRoutes } 
+export { setupOrganizerRoutes }

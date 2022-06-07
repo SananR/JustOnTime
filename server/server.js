@@ -1,16 +1,16 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import passport from 'passport';
-import session from 'express-session';
-import MongoDBStore from 'connect-mongodb-session';
+import express from 'express'
+import cors from 'cors'
+import dotenv from 'dotenv'
+import passport from 'passport'
+import session from 'express-session'
+import MongoDBStore from 'connect-mongodb-session'
 
-import { configPassportStrategy } from './auth/index.js';
-import { setupCustomerRoutes } from './routes/customer/index.js';
-import { setupOrganizerRoutes } from './routes/organizer/index.js';
-import { connectDB } from './api/database/DBconnect.js'
-import { removeAllData } from './api/database/DBReset.js';
-import connectdB from "./config/dbconnect.js"
+import { configPassportStrategy } from './auth/index.js'
+import { setupCustomerRoutes } from './routes/customer/index.js'
+import { setupOrganizerRoutes } from './routes/organizer/index.js'
+import { connectDB } from './database/DBconnect.js'
+import { removeAllData } from './database/DBReset.js'
+//import connectdB from "./config/dbconnect.js"
 
 dotenv.config()
 
