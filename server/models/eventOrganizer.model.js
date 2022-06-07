@@ -15,6 +15,10 @@ const eventOrganizerSchema = mongoose.Schema({
     bankInfo: {
         type: bankInfoSchema,
         required: true
+    },
+    password: {
+        type: String,
+        required: true
     }
 },  {
     timestamps: true,

@@ -11,10 +11,9 @@ const customerSchema = mongoose.Schema({
         type: personalInfoSchema,
         required: true
     },
-    password:{
+    password: {
         type: String,
-        trim: true,
-        required: true,
+        required: true
     }
 },  {
     timestamps: true,
