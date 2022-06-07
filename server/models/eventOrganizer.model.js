@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { bankInfoSchema } from './schemas/bankInfo.schema.js';
+import { bankInfoSchema } from './schemas/organizer/bankInfo.schema.js';
 import { contactSchema } from './schemas/contact.schema.js'
 import { personalInfoSchema } from './schemas/personalInfo.schema.js';
 
