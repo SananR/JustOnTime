@@ -6,4 +6,4 @@ function setupOrganizerRoutes(app) {
     app.use("/organizer/register", registerRouter);
 }
 
-export { setupOrganizerRoutes } 
+export { setupOrganizerRoutes }
