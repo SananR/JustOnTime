@@ -13,7 +13,7 @@ function OrganizerMain() {
                     <li><a id="Logout" href="/login">Logout</a></li>
                 </ul>
             </div>
-            <h1 id="title"> Customer main page </h1>
+            <h1 id="title"> Organizer main page </h1>
         </div>
     );
 }
