@@ -1,0 +1,34 @@
+.topnav {
+    background-color: lightblue;
+    display: flex;
+}
+
+.topnav li {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: inline-block;
+    margin-left: 50px;
+}
+
+.topnav a {
+    text-decoration: none;
+    color: darkblue;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.topnav input[type=text] {
+    width: 600px;
+    height: 8px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.topnav input::placeholder {
+    color: lightblue;
+}
+
+#title {
+    color: lightgrey;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-left: 5%;
+}
