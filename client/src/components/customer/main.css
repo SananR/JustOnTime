@@ -6,7 +6,7 @@
 .topnav li {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: inline-block;
-    margin-left: 40px;
+    margin-left: 50px;
 }
 
 .topnav a {
@@ -17,7 +17,7 @@
 }
 
 .topnav input[type=text] {
-    width: 800px;
+    width: 600px;
     height: 8px;
     margin-left: 100px;
     margin-right: 100px;
@@ -30,5 +30,5 @@
 #title {
     color: lightgrey;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin-left: 40px;
+    margin-left: 5%;
 }
