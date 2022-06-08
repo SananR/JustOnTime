@@ -1,7 +1,7 @@
 import { Strategy as LocalStrategy } from 'passport-local'
 import * as bcrypt from 'bcrypt'
 
-import { EventOrganizer } from '../../api/models/eventOrganizer.model.js';
+import { EventOrganizer } from '../../models/eventOrganizer.model.js';
 
 
 function configOrganizerRegisterStrategy(passport) {

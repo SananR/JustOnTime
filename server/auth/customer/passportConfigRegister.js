@@ -1,7 +1,7 @@
 import { Strategy as LocalStrategy } from 'passport-local'
 import * as bcrypt from 'bcrypt'
 
-import { Customer } from '../../api/models/customer.model.js'
+import { Customer } from '../../models/customer.model.js'
 
 
 function configCustomerRegisterStrategy(passport) {
