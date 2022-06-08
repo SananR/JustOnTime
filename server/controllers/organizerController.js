@@ -1,7 +1,7 @@
 import passport from 'passport';
 
-const registerOrganizer = (req, res, next) => {
-    passport.authenticate("registerOrganizer", 
+const registerOrganizer = async (req, res, next) => {
+    await passport.authenticate("registerOrganizer", 
     (err, user, info) => {
         if (err) { 
             if (err.code = 11000){
