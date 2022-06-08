@@ -1,7 +1,7 @@
 import passport from 'passport';
 
-const registerCustomer = (req, res, next) => {
-    passport.authenticate("registerCustomer", 
+const registerCustomer = async (req, res, next) => {
+    await passport.authenticate("registerCustomer", 
     (err, user, info) => {
         if (err) { 
             if (err.code = 11000){
@@ -21,7 +21,7 @@ const registerCustomer = (req, res, next) => {
           req.logIn(user, function(err) {
             if (err) { return next(err); }
             console.log("We are logged in!")
-            return res.send(user);
+            return res.status(200).send(user);
           });
     })(req, res, next);
 }
