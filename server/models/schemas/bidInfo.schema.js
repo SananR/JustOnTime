@@ -1,9 +1,8 @@
-import { ObjectId } from 'mongodb';
 import mongoose from 'mongoose'
 
 const bidInfoSchema = mongoose.Schema({
     uid: {
-        type: ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     bidPrice: {

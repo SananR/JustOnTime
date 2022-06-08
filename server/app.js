@@ -42,10 +42,7 @@ app.use(passport.session());
 setupCustomerRoutes(app);
 setupOrganizerRoutes(app);
 
-app.get("/userInSession", (req,res) => {
-    console.log(req.user);
-    res.send(req.user);
-});
+
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 
 export default app;

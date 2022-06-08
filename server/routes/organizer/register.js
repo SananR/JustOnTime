@@ -43,20 +43,20 @@ router
                     auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_APP_PASS },
                     logger: true
                   });
-                  
+                  console.log("your email: "+user.contact.email)
                   const mailOptions = { 
                     from: process.env.EMAIL_ADDRESS, 
                     to: user.contact.email, 
                     subject: 'Account Verification Link', 
-                    text: 'Hello '+ req.body.name +',\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/'
-                     + req.headers.host + '\/confirmation\/' + user.email + '\/' + token.token + '\n\nThank You!\n' 
+                    text: 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/'
+                     + req.headers.host + '\/organizer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n' 
                   };
                   transporter.sendMail(mailOptions, function (err) {
                       if (err) { 
                           console.log(err);
                           return res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
                       }
-                      return res.status(200).send('A verification email has been sent to ' + user.email + '. It will be expire after one day. If you not get verification Email click on resend token.');
+                      return res.status(200).send('A verification email has been sent to ' + user.contact.email + '. It will be expire after one day. If you not get verification Email click on resend token.');
                   });
                 })
               });
