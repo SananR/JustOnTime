@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const verificationTokenSchema = mongoose.Schema({
     _userId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     token: {
