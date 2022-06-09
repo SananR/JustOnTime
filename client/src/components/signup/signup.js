@@ -1,53 +1,81 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { render } from "react-dom";
+import {useSelector, useDispatch} from 'react-redux'
+import { useNavigate } from "react-router-dom";
 import "./signup.css";
+import {registerUser, reset} from '/Users/sanan/finalprojects22-justontime/client/src/features/auth/authSlice.js'
 
 function Signup() {
 
     const [errorName, setErrorName] = useState("");
     const [errorLastname, setErrorLastname] = useState("");
     const [errorEmail, setErrorEmail] = useState("");
-    const [errorPhone, setErrorPhone] = useState("");
-    const [errorAddr, setErrorAddr] = useState("");
-    const [errorCity, setErrorCity] = useState("");
-    const [errorCountry, setErrorCountry] = useState("");
-    const [errorCode, setErrorCode] = useState("");
     const [errorPassword, setErrorPassword] = useState("");
     const [errorConfirm, setErrorConfirm] = useState("");
 
+    const [formData, setFormData] = useState({
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        password2: ''
+    })
 
-    const handleSubmit = (e) => {
+    const {first_name, last_name, email, password, password2} = formData;
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth) 
+
+    useEffect(() => {
+        if (isError) {
+            //handle error
+        }
+        if (isSuccess /*|| user*/) {
+            navigate('/')
+        }
+
+
+    }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+    const onChange = (e) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }))
+    }
+
+    const onSubmit = (e) => {
         e.preventDefault();
 
-        var Name = document.getElementById("Name").value; 
-        var Lastname = document.getElementById("Lastname").value;
-        var Email = document.getElementById("Email").value;  
-        var Address = document.getElementById("Address").value; 
-        var City = document.getElementById("City").value; 
-        var Country = document.getElementById("Country").value; 
-        var Code = document.getElementById("Code").value; 
-        var Password = document.getElementById("Pass").value;
-        var Confirm = document.getElementById("Conf").value; 
-        var Phone = document.getElementById("Phone"); 
+        var Name = document.getElementById("first_name").value; 
+        var Lastname = document.getElementById("last_name").value;
+        var Email = document.getElementById("email").value;  
+        var Password = document.getElementById("password").value;
+        var Confirm = document.getElementById("password2").value; 
+        var Phone = document.getElementById("phone"); 
 
-        const values = [Name, Lastname, Email, Phone, Address, City, Country, Code, Password, Confirm]; 
-        const names = ["Name", "Lastname", "Email", "Phone", "Address", "City", "Country", "Code", "Password", "Confirm"]; 
-        const funcs = [setErrorName, setErrorLastname, setErrorEmail, setErrorPhone, setErrorAddr,
-            setErrorCity, setErrorCountry, setErrorCode, setErrorPassword, setErrorConfirm]
+        const values = [Name, Lastname, Email, Password, Confirm]; 
+        const names = ["Name", "Lastname", "Email", "Password", "Confirm"]; 
+        const funcs = [setErrorName, setErrorLastname, setErrorEmail, setErrorPassword, setErrorConfirm]
         var empty = 0
         for (var i in values){
-            if(values[i] === "" ){
+            if(values[i] === ""){
                 funcs[i](names[i] + " Required")
                 empty++;
             } else {
                 funcs[i]("")
             }
         }
-
-        //validate all required fields
         if(empty == 0 ){
-           /*  when validating remember the address variable holds 
-            the suite number and the street name */
+            const userData = {
+                first_name,
+                email,
+                password
+            }
+
+            dispatch(registerUser(userData))
         }
 
     }
@@ -58,72 +86,75 @@ function Signup() {
             <div className="title">Create a new account</div>
             <div className="sub">Get Started</div>
 
-            <form onSubmit={handleSubmit}>
-            <div className="wrapper">
-                <div className="Name-input">
-                <label id= "name-label">First Name:</label> 
-                <input id= "Name" type= "text" placeholder= "Enter First Name"/>
-                {errorName && <div className="error"> {errorName} </div>}
-                </div>
+            <form onSubmit={onSubmit}>
+                <div className="wrapper">
+                    <div className="Name-input">
+                    <label id= "name-label">First Name:</label> 
+                    <input 
+                        id= "first_name" 
+                        type= "text" 
+                        placeholder= "First Name"
+                        onChange={onChange}
+                    />
+                    {errorName && <div className="error"> {errorName} </div>}
+                    </div>
 
-                <div className="Lastname-input">
-                <label id= "Lastname-label">Last Name:</label> 
-                <input id= "Lastname" type= "text" placeholder= "Enter Last Name"/>
-                {errorLastname && <div className="error"> {errorLastname} </div>}
-                </div> 
-            </div>
-            
-            <div className="wrapper">
-                <div className="Email-input">
-                <label id= "email-label">Email:</label> 
-                <input id= "Email" type= "text" placeholder= "Enter Email"/>
-                {errorEmail && <div className="error"> {errorEmail} </div>}
+                    <div className="Lastname-input">
+                    <label id= "Lastname-label">Last Name:</label> 
+                    <input 
+                        id= "last_name" 
+                        type= "text" 
+                        placeholder= "Last Name"
+                        onChange={onChange}
+                    />
+                    {errorLastname && <div className="error"> {errorLastname} </div>}
+                    </div> 
                 </div>
-
-                <div className="Phone-input">
-                <label id= "Phone-label">Phone Number: </label> 
-                <input id= "Phone" type= "text" placeholder= "Enter Phone Number"/>
-                </div>
-            </div>
-
                 
-                <label id= "Address-label">Street:</label> 
-                <input id= "Address" type= "text" placeholder= "Enter Street Address (e.g 123 Main St)"/>
-                {errorAddr && <div className="error"> {errorAddr} </div>}
+                <div className="wrapper">
+                    <div className="Email-input">
+                    <label id= "email-label">Email:</label> 
+                    <input 
+                        id= "email" 
+                        type= "text" 
+                        placeholder= "Email Address"
+                        onChange={onChange}
+                    />
+                    {errorEmail && <div className="error"> {errorEmail} </div>}
+                    </div>
 
-             <div className="wrapper">
-             <div className="Email-input">
-                 <label id= "city-label">City:</label> 
-                 <input id= "City" type= "text" placeholder= "Enter City"/>
-                 {errorCity && <div className="error"> {errorCity} </div>}
-                 </div>
-
-                 <div className="Phone-input">
-                 <label id= "country-label">Country:</label> 
-                 <input id= "Country" type= "text" placeholder= "Enter Country"/>
-                 {errorCountry && <div className="error"> {errorCountry} </div>}
-                 </div>
-             </div>
-
-                <label id= "code-label">Postal Code:</label> 
-                <input id= "Code" type= "text" placeholder= "Enter Postal Code (e.g A1A 1A1)"  
-                pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" />
-                {errorCode && <div className="error"> {errorCode} </div>}
-
+                    <div className="Phone-input">
+                        <label id= "Phone-label">Phone Number: </label> 
+                        <input 
+                            id= "phone" 
+                            type= "phone" 
+                            placeholder= "Phone Number"
+                            onChange={onChange}
+                        />
+                    </div>
+                </div>
                 <div className="Password-input">
-                <label id= "pass-label">Password:</label> 
-                <input id= "Pass" type= "password" placeholder= "Enter Password"/>
-                {errorPassword && <div className="error"> {errorPassword} </div>}
+                    <label id= "pass-label">Password:</label> 
+                    <input 
+                        id= "password" 
+                        type= "password" 
+                        placeholder= "Password"
+                        onChange={onChange}
+                    />
+                    {errorPassword && <div className="error"> {errorPassword} </div>}
                 </div>
                 
                 <div className="Conf-input">
-                <label id= "Conf-label">Confirm Password:</label> 
-                <input id= "Conf" type= "password" placeholder= "Confirm Password"/>
-                {errorConfirm && <div className="error"> {errorConfirm} </div>}
-              
+                    <label id= "Conf-label">Confirm Password:</label> 
+                    <input 
+                        id= "password2" 
+                        type= "password" 
+                        placeholder= "Confirm Password"
+                        onChange={onChange}
+                    />                
+                    {errorConfirm && <div className="error"> {errorConfirm} </div>}
                 </div>
-                <button id= "signup-button">Sign Up</button>
-
+                <button id= "signup-button" type="submit" className="btn btn-block">Sign Up</button>
             </form>
 
 

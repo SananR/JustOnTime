@@ -4,6 +4,7 @@ const registerCustomer = async (req, res, next) => {
     await passport.authenticate("registerCustomer", 
     (err, user, info) => {
         if (err) { 
+            console.log(err);
             if (err.code = 11000){
                 return res.status(400).send({
                     message: "The email is already used"
