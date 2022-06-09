@@ -1,0 +1,9 @@
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: white;
+}
+.logo .logo:hover {
+    text-decoration: none;
+    color: inherit;
+    background-color: white;
+}

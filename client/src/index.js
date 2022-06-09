@@ -7,13 +7,14 @@ import Signup from './pages/signup/signup.js'
 import OrganizerRegister from './pages/organizer/register.jsx'
 import Header from './components/header/Header'
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 export default function App() {
   return (
     <Router>
         <Header />
         <Routes>
+            <Route path="/" element={<Login />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="register" element={<OrganizerRegister />} />
