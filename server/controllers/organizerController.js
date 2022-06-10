@@ -46,7 +46,7 @@ const registerOrganizer = async (req, res, next) => {
                 to: user.contact.email, 
                 subject: 'Account Verification Link', 
                 text: 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/'
-                  + req.headers.host + '\/organizer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n' 
+                  + req.headers.host + '\/api\/organizer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n' 
               };
               transporter.sendMail(mailOptions, function (err) {
                   if (err) { 
@@ -124,7 +124,7 @@ const resendCode = async (req, res, next) => {
             to: user.contact.email, 
             subject: 'Account Verification Link', 
             text: 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/'
-                + req.headers.host + '\/organizer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n' 
+                + req.headers.host + '\/api\/organizer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n' 
             };
             transporter.sendMail(mailOptions, function (err) {
             if (err) { 
