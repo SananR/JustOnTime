@@ -19,10 +19,12 @@ export default function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="register" element={<OrganizerRegister />} />
+            <Route path="organizer">
             <Route path="verification-required" element={<VerificationRequired />} />
-            <Route path="verifyemail" element={<VerifyEmail />}>
-              <Route path=":email" element={<VerifyEmail />}>
-                <Route path=":token" element={<VerifyEmail />} />
+              <Route path="verifyemail">              
+                <Route path=":email">
+                  <Route path=":token" element={<VerifyEmail />} />
+                </Route>
               </Route>
             </Route>
         </Routes>

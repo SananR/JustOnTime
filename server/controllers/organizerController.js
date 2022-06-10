@@ -40,13 +40,13 @@ const registerOrganizer = async (req, res, next) => {
                 auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_APP_PASS },
                 logger: true
               });
-              console.log("your email: "+user.contact.email)
+              const host = 'http://localhost:3005'
               const mailOptions = { 
                 from: process.env.EMAIL_ADDRESS, 
                 to: user.contact.email, 
                 subject: 'Account Verification Link', 
-                text: 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/'
-                  + req.headers.host + '\/api\/organizer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n' 
+                text: 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: ' 
+                + host + '\/organizer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n' 
               };
               transporter.sendMail(mailOptions, function (err) {
                   if (err) { 
@@ -118,13 +118,13 @@ const resendCode = async (req, res, next) => {
                 auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_APP_PASS },
                 logger: true
               });
-            //   console.log(VerificationToken.find());
+            const host = 'http://localhost:3005'
             const mailOptions = { 
             from: process.env.EMAIL_ADDRESS, 
             to: user.contact.email, 
             subject: 'Account Verification Link', 
-            text: 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/'
-                + req.headers.host + '\/api\/organizer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n' 
+            text: 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: ' 
+            + host + '\/organizer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n' 
             };
             transporter.sendMail(mailOptions, function (err) {
             if (err) { 
