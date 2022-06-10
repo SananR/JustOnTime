@@ -6,10 +6,10 @@ import Login from './pages/login/login.js'
 import Signup from './pages/signup/signup.js'
 import OrganizerRegister from './pages/organizer/register.jsx'
 import VerifyEmail from './pages/verifyEmail/verifyEmail.jsx'
+import VerificationRequired from './pages/verificationRequired/verificationRequired.jsx'
 import Header from './components/header/Header'
 
 import 'bootstrap/dist/css/bootstrap.css';
-
 export default function App() {
   return (
     <Router>
@@ -19,7 +19,12 @@ export default function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="register" element={<OrganizerRegister />} />
-            <Route path="verifyemail" element={<VerifyEmail />} />
+            <Route path="verification-required" element={<VerificationRequired />} />
+            <Route path="verifyemail" element={<VerifyEmail />}>
+              <Route path=":email" element={<VerifyEmail />}>
+                <Route path=":token" element={<VerifyEmail />} />
+              </Route>
+            </Route>
         </Routes>
     </Router>
   );
