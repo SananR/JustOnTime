@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
-import authService from './verificationService.js';
+import verificationService from './verificationService.js';
 
 const user = JSON.parse(localStorage.getItem('user'));
 
@@ -14,7 +14,7 @@ const initialState = {
 //Register user
 export const registerUser = createAsyncThunk('auth/register', async (user, thunkAPI) => {
     try {
-        return await authService.registerUser(user);
+        return await verificationService.verifyEmail(email, token);
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) 
             || error.message || error.toString();

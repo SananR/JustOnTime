@@ -5,15 +5,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Login from './pages/login/login.js'
 import Signup from './pages/signup/signup.js'
 import OrganizerRegister from './pages/organizer/register.jsx'
+import VerifyEmail from './pages/verifyEmail/verifyEmail.jsx'
 import Header from './components/header/Header'
-import { store } from './store.js'
-import {Provider} from 'react-redux'
 
-import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap.css';
 
 export default function App() {
   return (
-  <>
     <Router>
         <Header />
         <Routes>
@@ -21,17 +19,13 @@ export default function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="register" element={<OrganizerRegister />} />
+            <Route path="verifyemail" element={<VerifyEmail />} />
         </Routes>
     </Router>
-  </>
   );
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
-);
+root.render(<App />);
 
 reportWebVitals();
