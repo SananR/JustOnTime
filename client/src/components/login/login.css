@@ -1,20 +1,26 @@
-
+/* color palette
+    - Background: 011936
+    - Secondary: 0F3460
+    - Light: D6E2FF
+    - Accent1: F46672
+    - Accent2: DA2F3A 
+    - Muted: 465362*/
 .Login-cont{
-    margin-top: 10%;
-    margin-left: 35%; 
-    width: 30%;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid black;
+    margin-top: 11%;
+    margin-left: 30%; 
+    width: 40%;
+    padding-bottom: 20px;
+    backdrop-filter: blur(70px);
+
 }
 
 .User-input{
-    margin-left: 2%; 
-    width: 80%;
+    margin-left: 3%; 
+    width: 78%;
 }
 .Pass-input{
-    margin-left: 2%; 
-    width: 80%;
+    margin-left: 3%; 
+    width: 78%;
 }
 
 .login-buttons{
@@ -28,35 +34,29 @@
     color: white;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-left: 5%;
-    margin-right: 1%;
     border: 0.5px solid white;
     background-color: black;
     border-radius: 5px;
     padding: 8px;
+    margin-left: 44%;
+    background-color: #CDDEFF;
+    color: #011936;;
 }
 
-
-#create-button{
-    margin-top: 15px;
-    margin-bottom: 10px;
-    margin-left: 2%;
-    padding: 8px;
-    border-radius: 5px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
 
 .title {
     text-align: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 20px;
+    color: #CDDEFF;
+    font-weight: bold;
     font-size: 24px;
 }
 
 .error {
-    color: red;
+    color: #CDDEFF;
     font-size: 14px;
 }
-
 
 label,input{
     display:flex;
@@ -70,14 +70,16 @@ input{
     font-size: 18px;
     border-radius: 5px;
     border: 1px solid lightgrey;
+    color: #CDDEFF;
 }
 
 label {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 18px;
-    padding-top: 15px;
+    padding-top: 10px;
     padding-bottom: 10px;
-    color: black;
+    color: #CDDEFF;
+    font-size: 20px;
+
 }
 
 .error {
@@ -91,3 +93,202 @@ button:hover{
     background-color: gray;
 }
 
+#user-button{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-left: 42%;
+    margin-top: 13px;
+    margin-bottom: 10px;
+    padding: 7px;
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+
+
+}
+
+a:link{
+    text-decoration: underline;
+    color: white;
+}
+a:hover{
+    background-color: #374C69;
+}
+
+#grey{
+    position: absolute;
+    left: 0px;
+    top: 80px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid  #374C69;
+    transform: rotate(-180deg);
+}
+
+#pink{
+    position: absolute;
+    left: 100px;
+    top: 160px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid  #F45B69;
+    transform: rotate(-180deg);
+}
+
+#red {
+    position: absolute;
+    left: 0px;
+    top: 160px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid  #DA2C38;
+}
+
+#lightgrey {
+    position: absolute;
+    left: 100px;
+    top: 80px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid   #CDDEFF;
+}
+
+
+
+#grey2{
+    position: absolute;
+    left: 200px;
+    top: 240px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid   #374C69;
+    transform: rotate(-180deg);
+}
+
+#pink2{
+    position: absolute;
+    left: 200px;
+    top: 0px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid  #F45B69;
+}
+
+#red2 {
+    position: absolute;
+    left: 300px;
+    top: 160px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid  #DA2C38;
+    transform: rotate(-180deg);
+}
+
+#lightgrey2 {
+    position: absolute;
+    left: 400px;
+    top: 80px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid #CDDEFF;
+    transform: rotate(-180deg);
+}
+
+
+#tri1{
+    position: absolute;
+    top: 0px; 
+    left: 0px;
+    z-index: -1;
+}
+
+#tri2{
+    position: absolute;
+    top: 320px; 
+    left: 600px;
+    z-index: -1;
+    transform: scaleY(-1);
+
+}
+
+#tri3{
+    position: absolute;
+    top: 560px; 
+    left: 900px;
+    z-index: -1;
+    transform: rotate(-180deg);
+
+}
+
+#tri4{
+    position: absolute;
+    top: 640px; 
+    left: 400px;
+    z-index: -1;
+    transform: rotate(-180deg);
+
+}
+
+#tri5{
+    position: absolute;
+    top: 800px; 
+    left: 600px;
+    z-index: -1;
+    transform: scaleY(-1);
+
+}
+
+#tri6{
+    position: absolute;
+    top: 800px; 
+    left: 200px;
+    z-index: -1;
+    transform: scaleY(-1);
+
+}
+
+
+#tri7{
+    position: absolute;
+    top: 560px; 
+    left: 1500px;
+    z-index: -1;
+    transform: rotate(-180deg);
+
+}
+
+#tri8{
+    position: absolute;
+    top: 1040px; 
+    left: -100px;
+    z-index: -1;
+    transform: scaleY(-1);
+}
+
+#tri9{
+    position: absolute;
+    top: 560px; 
+    left: -400px;
+    z-index: -1;
+}
+
+#tri10{
+    position: absolute;
+    top: 0px; 
+    left: 1000px;
+    z-index: -1;
+}
+
+
+#tri11{
+    position: absolute;
+    top: 640px; 
+    left: 1000px;
+    z-index: -1;
+}
+
+#tri12{
+    position: absolute;
+    top: 700px; 
+    left: 400px;
+    z-index: -1;
+}

@@ -1,10 +1,9 @@
 import { Strategy as LocalStrategy } from 'passport-local'
 import * as bcrypt from 'bcrypt'
 
-import { Customer } from '../../models/customer.model.js'
+import { Customer } from '../../models/customerModel.js'
 
-
-function configCustomerRegisterStrategy(passport) {
+function customerRegisterStrategy(passport) {
     passport.use("registerCustomer",
     new LocalStrategy({
         usernameField: "email",
@@ -47,7 +46,7 @@ function configCustomerRegisterStrategy(passport) {
                 return done(err)
             }
         }
-        ))
+        ));
 }
 
-export { configCustomerRegisterStrategy }
+export { customerRegisterStrategy }

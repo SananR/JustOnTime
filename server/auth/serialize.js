@@ -1,5 +1,5 @@
-import { Customer } from "../models/customer.model.js";
-import { EventOrganizer } from "../models/eventOrganizer.model.js";
+import { Customer } from "../models/customerModel.js";
+import { EventOrganizer } from "../models/eventOrganizerModel.js";
 
 function configSerialization(passport){ 
     passport.serializeUser((user, done) => done(null, user.id))

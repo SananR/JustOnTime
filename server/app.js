@@ -6,8 +6,8 @@ import MongoDBStore from 'connect-mongodb-session';
 import dotenv from 'dotenv';
 
 import { configPassportStrategy } from './auth/index.js';
-import { setupCustomerRoutes } from './routes/customer/index.js';
-import { setupOrganizerRoutes } from './routes/organizer/index.js';
+import { organizerRouter } from './routes/organizerRoutes.js';
+import { customerRouter } from './routes/customerRoutes.js';
 
 dotenv.config();
 
@@ -38,11 +38,8 @@ configPassportStrategy(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// set up routes
-setupCustomerRoutes(app);
-setupOrganizerRoutes(app);
-
-
+app.use("/api/organizer", organizerRouter);
+app.use("/api/customer", customerRouter);
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 
 export default app;

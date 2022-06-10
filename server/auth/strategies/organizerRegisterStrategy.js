@@ -1,10 +1,10 @@
 import { Strategy as LocalStrategy } from 'passport-local'
 import * as bcrypt from 'bcrypt'
 
-import { EventOrganizer } from '../../models/eventOrganizer.model.js';
+import { EventOrganizer } from '../../models/eventOrganizerModel.js';
 
 
-function configOrganizerRegisterStrategy(passport) {
+function organizerRegisterStrategy(passport) {
     passport.use("registerOrganizer",
     new LocalStrategy({
         usernameField: "email",
@@ -55,7 +55,7 @@ function configOrganizerRegisterStrategy(passport) {
                 return done(err)
             }
         }
-        ))
+        ));
 }
 
-export { configOrganizerRegisterStrategy }
+export { organizerRegisterStrategy }

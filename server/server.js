@@ -1,8 +1,7 @@
 import app from './app.js';
 import mongoose from 'mongoose';
-import { Customer } from './models/customer.model.js'; 
-import { EventOrganizer } from './models/eventOrganizer.model.js';
-import { VerificationToken } from './models/verificationToken.model.js';
+import { EventOrganizer } from './models/eventOrganizerModel.js';
+import { VerificationToken } from './models/verificationTokenModel.js';
 
 const port = process.env.PORT || 3000;
 const uri = process.env.JUSTONTIME_DB_URI_LOCAL; //process.env.JUSTONTIME_DB_URI (use this on production)

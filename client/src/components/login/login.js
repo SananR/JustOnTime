@@ -6,7 +6,6 @@ function Login() {
     const [errorMessageUser, setErrorMessageUser] = useState("");
     const [errorMessagePass, setErrorMessagePass] = useState("");
 
-
      const errors = {
         username: "Username Required",
         usernotfound: "Username not found",
@@ -69,19 +68,137 @@ function Login() {
                 <input id= "Pass" type= "password" placeholder= "Enter Password"/>
                 {errorMessagePass && <div className="error"> {errorMessagePass} </div>}
                 </div>
-                <div className="login-buttons">
-                <a id= "create-button" href= "/signup">Create a new account</a>
                 <button id= "login-button">Login</button>
-                </div>
             </form>
+            
+            <a id= "user-button" href= "/signup">New User?</a>
 
+        </div>
+    )
 
+    const renderback = (
+        <div className="tris">
+            <div id="tri1">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+            <div id="tri2">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+            <div id="tri3">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri4">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri5">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri6">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri7">
+              {/*   <div id="grey"></div> */}
+                <div id="pink"></div>
+               {/*  <div id="red"></div> */}
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri8">
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri9">
+            <div id="grey"></div>
+                <div id="red2"></div>
+                <div id="pink2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri10">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+            <div id="tri11">
+                <div id="grey"></div>
+                <div id="pink"></div>
+                <div id="red"></div>
+                <div id="lightgrey"></div>
+                <div id="grey2"></div>
+                <div id="pink2"></div>
+                <div id="red2"></div>
+                <div id="lightgrey2"></div>
+            </div>
+
+            <div id="tri12">
+                <div id="lightgrey"></div>
+            </div>
+            
         </div>
     )
 
     return (
         <div className="Login">
             {renderForm}
+            {renderback}
         </div>
     );
 }
