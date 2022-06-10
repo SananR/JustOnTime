@@ -20,7 +20,7 @@ function customerRegisterStrategy(passport) {
                 console.log("request body verified");
             try {
                 const hashedPassword = await bcrypt.hash(password, 10);
-
+                console.log(JSON.stringify(req.body))
                 const customer = new Customer(
                     {contact: {
                         email: email,

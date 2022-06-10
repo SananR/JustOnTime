@@ -5,21 +5,19 @@ import { personalInfoSchema } from './schemas/personalInfo.schema.js';
 const customerSchema = mongoose.Schema({
     contact: {
         type: contactSchema,
-        required: false
-    },    
-    firstName: {
-        type: String,
-        required: true,
-        trim: true
-    },    
-    lastName: {
-        type: String,
-        required: true,
-        trim: true
+        required: true
+    },
+    personalInfo: {
+        type: personalInfoSchema,
+        required: true
     },
     password: {
         type: String,
         required: true
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
     }
 },  {
     timestamps: true,

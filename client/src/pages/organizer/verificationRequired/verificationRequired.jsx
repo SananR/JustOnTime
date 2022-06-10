@@ -1,14 +1,23 @@
 import React, {useState} from 'react'
 import "./verificationRequired.css";
-import { resendCode } from '../../features/emailVerification/resendCode.js';
+import { resendCode } from '../../../features/emailVerification/organizer/resendCode.js';
 
-function VerificationRequired() {
+function OrgVerificationRequired() {
     const [message, setMessage] = useState({message: "", visible: false});
 
     const handleResendCode = () => {
         resendCode().then((data) => {
             console.log(data);
             setMessage({message: data, visible: true});
+        }).catch(err => {
+            console.log(err)
+            console.log(err.response)
+            if (err.response.status / 100 == 4){
+                setMessage({message: err.response.data.msg})
+            }
+            else{
+                setMessage({message: "Something went wrong, please try again!"})
+            }   
         })
     }
     return (
@@ -32,4 +41,4 @@ function VerificationRequired() {
     )
 }
 
-export default VerificationRequired;
+export default OrgVerificationRequired;
