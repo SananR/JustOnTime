@@ -8,13 +8,13 @@ const registerOrganizer = async (req, res, next) => {
     await passport.authenticate("registerOrganizer", 
     (err, user, info) => {
         if (err) { 
-            if (err.code = 11000){
+            if (err.message.includes("duplicate")){
                 return res.status(400).send({
                     message: "The email is already used"
                   }) 
             }
             return res.status(400).send({
-              message: err
+              message: err.message
             })
           }
           if (!user) {
