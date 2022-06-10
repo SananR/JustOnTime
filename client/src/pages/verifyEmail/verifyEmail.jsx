@@ -16,7 +16,11 @@ function VerifyEmail() {
         setMessage({message: "Something went wrong, please try again!"})
     })
     return (
-        <div>{message.message}</div>
+        <div id="container">
+            <div class="message">
+                {message.message}
+            </div>
+        </div>
     )
 }
 
