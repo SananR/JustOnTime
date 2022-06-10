@@ -132,7 +132,7 @@ const resendCode = async (req, res, next) => {
                 return res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
             }
             return res.status(200).send('A new verification email has been sent to ' + user.contact.email +
-             '. It will be expire after one day. Please use the new verification link since the old link will be invalid.');
+             '. It will be expire after one day.\n Please use the new verification link since the old link will be invalid.');
             });
         })
     }
