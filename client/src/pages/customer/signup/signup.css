@@ -1,0 +1,316 @@
+/* color palette
+    - Background: 011936
+    - Secondary: 0F3460
+    - Light: D6E2FF
+    - Accent1: F46672
+    - Accent2: DA2F3A 
+    - Muted: 465362*/
+
+
+.Signup-cont{
+    width: 75%;
+    margin-top: 2%;
+    margin-left: 12.5%;
+    height: 100%;
+    padding-bottom: 10px;
+    backdrop-filter: blur(70px);
+    z-index: 2;
+    background-size: 30px 30px;
+}
+.title{
+    padding-top: 20px;
+    color: #CDDEFF;
+    font-weight: bold;
+    font-size: 24px;
+}
+.sub{
+    color: #CDDEFF;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-left: 45%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.wrapper{
+    display: flex;
+}
+.Name-input{
+    flex: 1;
+    margin-left: 2%; 
+}
+
+.Lastname-input{
+    flex: 1;
+    margin-left: 10%; 
+    margin-right: 10%;
+}
+
+.Email-input{
+    flex: 1;
+    margin-left: 2%; 
+}
+
+.Phone-input{
+    flex: 1;
+    margin-left: 10%; 
+    margin-right: 10%;
+}
+
+.Password-input{
+    margin-left: 2%; 
+    width: 80%;
+}
+
+.Conf-input{
+    margin-left: 2%; 
+    width: 80%;
+    margin-bottom: 5px;
+}
+
+#Address-label, #Address, #code-label, #Code {
+    margin-left: 2%; 
+    width: 96%;
+}
+
+
+#signup-button{
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #011936;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-left: 45%;
+    margin-right: 2%;
+    background-color: #CDDEFF;
+    border-width: 0px;
+    border-radius: 5px;
+    padding: 8px;
+
+}
+
+#signin-button{
+    color: white;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-left: 40%;
+    padding: 8px;
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#help{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    font-size: 12px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #CDDEFF;
+}
+
+input{
+    height: 12px;
+    padding-left: 5px;
+    background-color: #011936;
+    border-width: 1px;
+    border-radius: 0px; 
+    border-color: #CDDEFF;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    color: #CDDEFF;
+
+}
+::placeholder{
+    color: #465362;
+    font-size: 14px;
+}
+
+label{
+    color: #CDDEFF;
+    font-size: 14px;
+}
+
+.error{
+    color: #CDDEFF;
+}
+
+
+#grey{
+    position: absolute;
+    left: 0px;
+    top: 80px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid  #374C69;
+    transform: rotate(-180deg);
+}
+
+#pink{
+    position: absolute;
+    left: 100px;
+    top: 160px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid  #F45B69;
+    transform: rotate(-180deg);
+}
+
+#red {
+    position: absolute;
+    left: 0px;
+    top: 160px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid  #DA2C38;
+}
+
+#lightgrey {
+    position: absolute;
+    left: 100px;
+    top: 80px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid   #CDDEFF;
+}
+
+
+
+#grey2{
+    position: absolute;
+    left: 200px;
+    top: 240px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid   #374C69;
+    transform: rotate(-180deg);
+}
+
+#pink2{
+    position: absolute;
+    left: 200px;
+    top: 0px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid  #F45B69;
+}
+
+#red2 {
+    position: absolute;
+    left: 300px;
+    top: 160px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid  #DA2C38;
+    transform: rotate(-180deg);
+}
+
+#lightgrey2 {
+    position: absolute;
+    left: 400px;
+    top: 80px;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 80px solid #CDDEFF;
+    transform: rotate(-180deg);
+}
+
+
+#tri1{
+    position: absolute;
+    top: 0px; 
+    left: 0px;
+    z-index: -1;
+}
+
+#tri2{
+    position: absolute;
+    top: 320px; 
+    left: 600px;
+    z-index: -1;
+    transform: scaleY(-1);
+
+}
+
+#tri3{
+    position: absolute;
+    top: 560px; 
+    left: 900px;
+    z-index: -1;
+    transform: rotate(-180deg);
+
+}
+
+#tri4{
+    position: absolute;
+    top: 640px; 
+    left: 400px;
+    z-index: -1;
+    transform: rotate(-180deg);
+
+}
+
+#tri5{
+    position: absolute;
+    top: 800px; 
+    left: 600px;
+    z-index: -1;
+    transform: scaleY(-1);
+
+}
+
+#tri6{
+    position: absolute;
+    top: 800px; 
+    left: 200px;
+    z-index: -1;
+    transform: scaleY(-1);
+
+}
+
+
+#tri7{
+    position: absolute;
+    top: 560px; 
+    left: 1500px;
+    z-index: -1;
+    transform: rotate(-180deg);
+
+}
+
+#tri8{
+    position: absolute;
+    top: 1040px; 
+    left: -100px;
+    z-index: -1;
+    transform: scaleY(-1);
+}
+
+#tri9{
+    position: absolute;
+    top: 560px; 
+    left: -400px;
+    z-index: -1;
+}
+
+#tri10{
+    position: absolute;
+    top: 0px; 
+    left: 1000px;
+    z-index: -1;
+}
+
+
+#tri11{
+    position: absolute;
+    top: 640px; 
+    left: 1000px;
+    z-index: -1;
+}
+
+#tri12{
+    position: absolute;
+    top: 700px; 
+    left: 400px;
+    z-index: -1;
+}
+
+

@@ -1,0 +1,16 @@
+#container{
+    margin-top: 15%;
+    margin-left: 30%; 
+    width: 40%;
+    padding-bottom: 20px;
+    backdrop-filter: blur(70px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.message{
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-bottom: 50px;
+}
