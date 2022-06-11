@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import "./signup.css";
-import {registerUser, reset} from '../../features/auth/authSlice.js'
+import {registerUser, reset} from '/Users/sanan/finalprojects22-justontime/client/src/features/auth/authSlice'
 function Signup() {
 
     const [errorName, setErrorName] = useState("");
@@ -32,7 +32,7 @@ function Signup() {
             //handle error
         }
         if (isSuccess /*|| user*/) {
-            navigate('/')
+            navigate('/verification-required')
         }
 
 
