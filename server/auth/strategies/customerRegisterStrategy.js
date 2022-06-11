@@ -22,21 +22,10 @@ function customerRegisterStrategy(passport) {
                 const hashedPassword = await bcrypt.hash(password, 10);
                 console.log(JSON.stringify(req.body))
                 const customer = new Customer(
-                    {contact: {
-                        email: email,
-                        phoneNumber: req.body.phoneNumber
-                    },
-                    personalInfo: {
-                        firstName: req.body.firstName,
-                        lastName: req.body.lastName,
-                        address: {
-                            suitNo: req.body.suitNo,
-                            street: req.body.street,
-                            city: req.body.city,
-                            country: req.body.country,
-                            postalCode: req.body.postalCode
-                        }
-                    },
+                    {
+                    email: email,
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
                     password: hashedPassword
                 });
                 await customer.save()
