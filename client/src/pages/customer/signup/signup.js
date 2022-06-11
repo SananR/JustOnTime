@@ -49,14 +49,13 @@ function Signup() {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        var Name = document.getElementById("first_name").value; 
-        var Lastname = document.getElementById("last_name").value;
-        var Email = document.getElementById("email").value;  
-        var Password = document.getElementById("password").value;
-        var Confirm = document.getElementById("password2").value; 
-        var Phone = document.getElementById("phone"); 
+        var firstName = document.getElementById("first_name").value; 
+        var lastName = document.getElementById("last_name").value;
+        var email = document.getElementById("email").value;  
+        var password = document.getElementById("password").value;
+        var password2 = document.getElementById("password2").value; 
 
-        const values = [Name, Lastname, Email, Password, Confirm]; 
+        const values = [firstName, lastName, email, password, password2]; 
         const names = ["Name", "Lastname", "Email", "Password", "Confirm"]; 
         const funcs = [setErrorName, setErrorLastname, setErrorEmail, setErrorPassword, setErrorConfirm]
         var empty = 0

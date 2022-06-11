@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import reportWebVitals from './reportWebVitals'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Login from './pages/login/login.js'
-import Signup from './pages/signup/signup.js'
+import Signup from './pages/customer/signup/signup.js'
 import OrganizerRegister from './pages/organizer/register.jsx'
 import Header from './components/header/Header'
 import { store } from './store.js'
