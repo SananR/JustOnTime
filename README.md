@@ -24,7 +24,7 @@ JustOnTime provides consumers with an application to book experiences last minut
      - ```npm run server```
      
 #### Frontend
-- Navigate to ```server```
+- Navigate to ```client```
      - ```npm install```
      - ```npm start```
 
