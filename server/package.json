@@ -2,9 +2,10 @@
   "name": "justontime",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "server": "nodemon server"
+    "server": "nodemon server",
+    "client": "npm start --prefix client"
   },
   "type": "module",
   "keywords": [],
