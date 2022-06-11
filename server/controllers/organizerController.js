@@ -60,6 +60,22 @@ const registerOrganizer = async (req, res, next) => {
     })(req, res, next);
 }
 
+const loginOrganizer = ((req, res, next) => {
+  passport.authenticate("organizerLogin", function(err, user, info) {  
+    if (err) { return next(err); }
+    if (!user) { 
+        return res.status(400).send({
+            message: "email or password is incorrect"
+        }); 
+    }
+    req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        console.log("The user is " + req.user)
+        return res.send(user);    
+    });
+})(req, res, next);
+})
+
 const verifyEmail = async (req, res, next) => {
   const foundToken = await VerificationToken.find();
   VerificationToken.findOne({token: req.params.token}, (err, token) => {
@@ -139,4 +155,5 @@ const resendCode = async (req, res, next) => {
   })
 }
 
-export { registerOrganizer, verifyEmail, resendCode }
+
+export { registerOrganizer, loginOrganizer, verifyEmail, resendCode }

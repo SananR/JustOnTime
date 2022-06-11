@@ -1,6 +1,4 @@
 import mongoose from 'mongoose'
-import { contactSchema } from './schemas/contact.schema.js'
-import { personalInfoSchema } from './schemas/personalInfo.schema.js';
 
 const customerSchema = mongoose.Schema({
     firstName: {
