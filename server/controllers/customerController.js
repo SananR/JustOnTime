@@ -43,22 +43,39 @@ const registerCustomer = async (req, res, next) => {
               const host = 'http://localhost:3005'
               const mailOptions = { 
                 from: process.env.EMAIL_ADDRESS, 
-                to: user.contact.email, 
+                to: user.email, 
                 subject: 'Account Verification Link', 
                 text: 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: ' 
-                + host + '\/customer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n' 
+                + host + '\/customer\/verifyemail\/' + user.email + '\/' + token.token + '\n\nThank You!\n' 
               };
               transporter.sendMail(mailOptions, function (err) {
                   if (err) { 
                       console.log(err);
                       return res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
                   }
-                  return res.status(200).send('A verification email has been sent to ' + user.contact.email + '. It will be expire after one day. If you did not get verification Email click on resend link.');
+                  return res.status(200).send('A verification email has been sent to ' + user.email + '. It will be expire after one day. If you did not get verification Email click on resend link.');
               });
             })
           });
     })(req, res, next);
 }
+
+const loginCustomer = ((req, res, next) => {
+  passport.authenticate("customerLogin", function(err, user, info) {  
+    if (err) { return next(err); }
+    if (!user) { 
+        return res.status(400).send({
+            message: "email or password is incorrect",
+            info: info
+        }); 
+    }
+    req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        console.log("The user is " + req.user)
+        return res.send(user);    
+    });
+})(req, res, next);
+})
 
 const verifyEmail = async (req, res, next) => {
   const foundToken = await VerificationToken.find();
@@ -121,17 +138,17 @@ const resendCode = async (req, res, next) => {
             const host = 'http://localhost:3005'
             const mailOptions = { 
             from: process.env.EMAIL_ADDRESS, 
-            to: user.contact.email, 
+            to: user.email, 
             subject: 'Account Verification Link', 
             text: 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: ' 
-            + host + '\/customer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n' 
+            + host + '\/customer\/verifyemail\/' + user.email + '\/' + token.token + '\n\nThank You!\n' 
             };
             transporter.sendMail(mailOptions, function (err) {
             if (err) { 
                 console.log(err);
                 return res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
             }
-            return res.status(200).send('A new verification email has been sent to ' + user.contact.email +
+            return res.status(200).send('A new verification email has been sent to ' + user.email +
              '. It will be expire after one day.\n Please use the new verification link since the old link will be invalid.');
             });
         })
@@ -139,4 +156,4 @@ const resendCode = async (req, res, next) => {
   })
 }
 
-export { registerCustomer, verifyEmail, resendCode }
+export { registerCustomer, loginCustomer, verifyEmail, resendCode }

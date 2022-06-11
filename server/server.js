@@ -13,8 +13,9 @@ await mongoose.connect(uri)
     process.exit(1)
 })
 .then(async client => {
-    await Customer.deleteOne({email: "youomachi@gmail.com"});
+    // await Customer.deleteOne({email: "youomachi@gmail.com"});
     await EventOrganizer.deleteOne({email: "youomachi@gmail.com"});
+    Customer.remove({}, () => {console.log("deleted customer")})
     await VerificationToken.deleteMany();
     console.log('connected to mongoDB '+uri);
     app.listen(port, () => {
