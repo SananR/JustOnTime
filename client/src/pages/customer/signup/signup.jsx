@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import "./signup.css";
-import {registerUser, reset} from '../../features/auth/authSlice.js'
+import {registerUser, reset} from '/Users/sanan/finalprojects22-justontime/client/src/features/auth/authSlice'
 function Signup() {
 
     const [errorName, setErrorName] = useState("");
@@ -13,14 +13,14 @@ function Signup() {
     const [errorConfirm, setErrorConfirm] = useState("");
 
     const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
         password2: ''
     })
 
-    const {first_name, last_name, email, password, password2} = formData;
+    const {firstName, lastName, email, password, password2} = formData;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -32,7 +32,7 @@ function Signup() {
             //handle error
         }
         if (isSuccess /*|| user*/) {
-            navigate('/')
+            navigate('/verification-required')
         }
 
 
@@ -48,14 +48,13 @@ function Signup() {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        var Name = document.getElementById("first_name").value; 
-        var Lastname = document.getElementById("last_name").value;
-        var Email = document.getElementById("email").value;  
-        var Password = document.getElementById("password").value;
-        var Confirm = document.getElementById("password2").value; 
-        var Phone = document.getElementById("phone"); 
+        var firstName = document.getElementById("first_name").value; 
+        var lastName = document.getElementById("last_name").value;
+        var email = document.getElementById("email").value;  
+        var password = document.getElementById("password").value;
+        var password2 = document.getElementById("password2").value; 
 
-        const values = [Name, Lastname, Email, Password, Confirm]; 
+        const values = [firstName, lastName, email, password, password2]; 
         const names = ["Name", "Lastname", "Email", "Password", "Confirm"]; 
         const funcs = [setErrorName, setErrorLastname, setErrorEmail, setErrorPassword, setErrorConfirm]
         var empty = 0
@@ -69,7 +68,8 @@ function Signup() {
         }
         if(empty == 0 ){
             const userData = {
-                first_name,
+                firstName,
+                lastName,
                 email,
                 password
             }

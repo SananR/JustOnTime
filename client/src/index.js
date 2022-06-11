@@ -3,17 +3,21 @@ import ReactDOM from 'react-dom/client'
 import reportWebVitals from './reportWebVitals'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Login from './pages/login/login.js'
-import Signup from './pages/signup/signup.js'
+import Signup from './pages/customer/signup/signup.jsx'
 import OrganizerRegister from './pages/organizer/register.jsx'
 import OrgVerifyEmail from './pages/organizer/verifyEmail/verifyEmail.jsx'
 import OrgVerificationRequired from './pages/organizer/verificationRequired/verificationRequired.jsx'
 import CustomerVerifyEmail from './pages/customer/verifyEmail/verifyEmail.jsx'
 import CustomerVerificationRequired from './pages/customer/verificationRequired/verificationRequired.jsx'
 import Header from './components/header/Header'
+import { store } from './store.js'
+import {Provider} from 'react-redux'
 
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.css'
+
 export default function App() {
   return (
+  <>
     <Router>
         <Header />
         <Routes>
@@ -39,10 +43,15 @@ export default function App() {
             </Route>
         </Routes>
     </Router>
+  </>
   );
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
 
 reportWebVitals();
