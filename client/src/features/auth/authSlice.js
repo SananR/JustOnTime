@@ -23,6 +23,19 @@ export const registerUser = createAsyncThunk('auth/register', async (user, thunk
     }
 })
 
+//Login user
+export const loginUser = createAsyncThunk('auth/login', async (user, thunkAPI) => {
+    try {
+        return await authService.loginUser(user);
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) 
+            || error.message || error.toString();
+
+        return thunkAPI.rejectWithValue(message);
+    }
+})
+
+
 export const authSlice = createSlice({
     name: 'auth',
     initialState,

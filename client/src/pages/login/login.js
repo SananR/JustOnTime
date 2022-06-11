@@ -1,5 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {useSelector, useDispatch} from 'react-redux'
+import { useNavigate } from "react-router-dom";
+import { loginUser } from '../../features/auth/authSlice'
+
 import "./login.css";
+
 
 function Login() {
 
@@ -13,42 +18,58 @@ function Login() {
         passnotfound: "Invalid Password"
     };
 
-    const handleSubmit = (e) => {
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
+
+    const {email, password} = formData;
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth) 
+
+    useEffect(() => {
+        if (isError) {
+            //handle error
+        }
+        if (isSuccess /*|| user*/) {
+            navigate('/')
+        }
+    }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+    const onChange = (e) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }))
+    }
+
+    const onSubmit = (e) => {
         e.preventDefault();
 
-        var User = document.getElementById("User").value; 
-        var Pass = document.getElementById("Pass").value;
+        var email = document.getElementById("email").value; 
+        var password = document.getElementById("password").value;
         
-        if(User === "" || Pass === ""){
-            if (User === ""  && Pass === ""){
+        if(email === "" || password === ""){
+            if (email === ""  && password === ""){
                 setErrorMessageUser(errors.username)
                 setErrorMessagePass(errors.password)
-            } else if (User === ""){
+            } else if (email === ""){
                 setErrorMessagePass("")
                 setErrorMessageUser(errors.username)
-            } else if (Pass === "") {
+            } else if (email === "") {
                 setErrorMessageUser("")
                 setErrorMessagePass(errors.password)
             }
         } else {
-            console.log(User)
-            console.log(Pass)
-            //if password and username are valid 
-            // setUserErrorMessage("")
-            // setPassErrorMessagse("")
-            // setMessage("Login Success")
-            //redirect 
-            // else if user invalid 
-            // setUserErrorMessage(errors.usernotfound)
-            // setPassErrorMessage("")
-            // setMessage("")
-            // else if password invalid 
-            // setUserErrorMessage(errors.password)
-            // setPassErrorMessage("")
-            // setMessage("")
-
+            const userData = {
+                email,
+                password
+            }
+            dispatch(loginUser(userData))
         }
-
 
     }
 
@@ -56,16 +77,24 @@ function Login() {
     const renderForm = (
         <div className= "Login-cont">
             <div className="title">Login</div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={onSubmit}>
                 <div className="User-input">
                 <label id= "user-label">Username:</label> 
-                <input id= "User" type= "text" placeholder= "Enter Username"/>
+                <input 
+                    id= "email" 
+                    type= "text" 
+                    placeholder= "Enter Username"
+                />
                 {errorMessageUser && <div className="error"> {errorMessageUser} </div>}
                 </div>
 
                 <div className="Pass-input">
                 <label id= "pass-label">Password:</label> 
-                <input id= "Pass" type= "password" placeholder= "Enter Password"/>
+                <input 
+                    id= "password" 
+                    type= "password" 
+                    placeholder= "Enter Password"
+                />
                 {errorMessagePass && <div className="error"> {errorMessagePass} </div>}
                 </div>
                 <button id= "login-button">Login</button>
