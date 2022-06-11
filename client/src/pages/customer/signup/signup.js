@@ -14,14 +14,14 @@ function Signup() {
     const [errorConfirm, setErrorConfirm] = useState("");
 
     const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
         password2: ''
     })
 
-    const {first_name, last_name, email, password, password2} = formData;
+    const {firstName, lastName, email, password, password2} = formData;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -70,7 +70,8 @@ function Signup() {
         }
         if(empty == 0 ){
             const userData = {
-                first_name,
+                firstName,
+                lastName,
                 email,
                 password
             }

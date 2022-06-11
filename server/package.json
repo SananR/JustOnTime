@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "nodemon app.js"
+    "server": "nodemon server"
   },
   "type": "module",
   "keywords": [],
