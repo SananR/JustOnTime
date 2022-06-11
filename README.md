@@ -18,9 +18,15 @@ JustOnTime provides consumers with an application to book experiences last minut
  - Install [ReactJS](https://reactjs.org/docs/getting-started.html) </br>
  - Install [MongoDB](https://www.mongodb.com/docs/manual/administration/install-community/) </br>
 
-#### Back End
+#### Backend
 - Navigate to ```server```
      - ```npm install```
+     - ```npm run server```
+     
+#### Frontend
+- Navigate to ```server```
+     - ```npm install```
+     - ```npm start```
 
 <h2>Technologies</h2>
 MERN Tech Stack</br>
