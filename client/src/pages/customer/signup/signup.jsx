@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import "./signup.css";
-import {registerUser, reset} from '/Users/sanan/finalprojects22-justontime/client/src/features/auth/authSlice'
+import {registerUser, reset} from '../../../features/auth/authSlice'
 function Signup() {
 
     const [errorName, setErrorName] = useState("");

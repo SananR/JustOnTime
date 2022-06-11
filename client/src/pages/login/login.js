@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
-import { loginUser } from '/Users/sanan/finalprojects22-justontime/client/src/features/auth/authSlice'
+import { loginUser } from '../../features/auth/authSlice'
 
 import "./login.css";
 
