@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import { EventOrganizer } from '../models/eventOrganizerModel.js';
 import { VerificationToken } from '../models/verificationTokenModel.js';
+import { sendEmail } from '../util/mailerUtil.js';
 
 const registerOrganizer = async (req, res, next) => {
     await passport.authenticate("registerOrganizer", 
@@ -32,30 +33,18 @@ const registerOrganizer = async (req, res, next) => {
             .then(async () => {
               // Send email (use credintials of SendGrid)
               console.log("Sending email")
-              const transporter = nodemailer.createTransport({ 
-                host: "smtp.mail.yahoo.com", 
-                port: 465,
-                service: "yahoo",
-                secure: false,
-                auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_APP_PASS },
-                logger: true
+              const host = 'http://localhost:3005';
+              const subject = 'Account Verification Link';
+              const text = 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: ' 
+              + host + '\/organizer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n';
+              sendEmail(user.contact.email, subject, text, function (err) {
+                if (err) { 
+                    console.log(err);
+                    return res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
+                }
+                return res.status(200).send('A verification email has been sent to ' + user.contact.email + '. It will be expire after one day. If you did not get verification Email click on resend link.');
               });
-              const host = 'http://localhost:3005'
-              const mailOptions = { 
-                from: process.env.EMAIL_ADDRESS, 
-                to: user.contact.email, 
-                subject: 'Account Verification Link', 
-                text: 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: ' 
-                + host + '\/organizer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n' 
-              };
-              transporter.sendMail(mailOptions, function (err) {
-                  if (err) { 
-                      console.log(err);
-                      return res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
-                  }
-                  return res.status(200).send('A verification email has been sent to ' + user.contact.email + '. It will be expire after one day. If you did not get verification Email click on resend link.');
-              });
-            })
+            });
           });
     })(req, res, next);
 }
