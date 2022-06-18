@@ -21,9 +21,9 @@ function organizerRegisterStrategy(passport) {
                 console.log("request body verified");
             try {
                 const hashedPassword = await bcrypt.hash(password, 10);
-                const hashedBankName = await bcrypt.hash(req.body.bankName, 10);
-                const hashedBranchNum = await bcrypt.hash(req.body.branchNum, 10);
-                const hashedAccountNum = await bcrypt.hash(req.body.accountNum, 10);
+                // const hashedBankName = await bcrypt.hash(req.body.bankName, 10);
+                // const hashedBranchNum = await bcrypt.hash(req.body.branchNum, 10);
+                // const hashedAccountNum = await bcrypt.hash(req.body.accountNum, 10);
                 
                 const eventOrganizer = new EventOrganizer(
                     {contact: {
@@ -41,11 +41,11 @@ function organizerRegisterStrategy(passport) {
                             postalCode: req.body.postalCode
                         }
                     },
-                    bankInfo: {
-                        bankName: hashedBankName,
-                        branchNum: hashedBranchNum,
-                        accountNum: hashedAccountNum
-                    },
+                    // bankInfo: {
+                    //     bankName: hashedBankName,
+                    //     branchNum: hashedBranchNum,
+                    //     accountNum: hashedAccountNum
+                    // },
                     password: hashedPassword
                 });
                 await eventOrganizer.save()

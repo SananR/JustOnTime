@@ -2,15 +2,6 @@ import mongoose from 'mongoose'
 import validator from 'validator'
 const { isEmail, isMobilePhone } = validator
 
-// const emailValidator = async (inputEmail) => {
-//     if (!isEmail(inputEmail)) return false;
-//     const result = await Customer.find({email: inputEmail})
-//     console.log(result)
-//     if (result != []) return false;
-//     console.log(inputEmail)
-//     return true;
-// }
-
 const contactSchema = mongoose.Schema({
     email: {
         type: String,
