@@ -1,6 +1,5 @@
 import passport from 'passport';
 import crypto from 'crypto';
-import nodemailer from 'nodemailer';
 import { Customer } from '../models/customerModel.js';
 import { VerificationToken } from '../models/verificationTokenModel.js';
 
@@ -32,28 +31,17 @@ const registerCustomer = async (req, res, next) => {
             .then(async () => {
               // Send email (use credintials of SendGrid)
               console.log("Sending email")
-              const transporter = nodemailer.createTransport({ 
-                host: "smtp.mail.yahoo.com", 
-                port: 465,
-                service: "yahoo",
-                secure: false,
-                auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_APP_PASS },
-                logger: true
-              });
-              const host = 'http://localhost:3005'
-              const mailOptions = { 
-                from: process.env.EMAIL_ADDRESS, 
-                to: user.email, 
-                subject: 'Account Verification Link', 
-                text: 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: ' 
-                + host + '\/customer\/verifyemail\/' + user.email + '\/' + token.token + '\n\nThank You!\n' 
-              };
-              transporter.sendMail(mailOptions, function (err) {
-                  if (err) { 
-                      console.log(err);
-                      return res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
-                  }
-                  return res.status(200).send('A verification email has been sent to ' + user.email + '. It will be expire after one day. If you did not get verification Email click on resend link.');
+              const host = 'http://localhost:3005';
+              const subject = 'Account Verification Link';
+              const text = 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: ' 
+              + host + '\/customer\/verifyemail\/' + user.email + '\/' + token.token + '\n\nThank You!\n';
+              sendEmail(user.email, subject, text, function (err) {
+                if (err) { 
+                    console.log(err);
+                    return res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
+                }
+                return res.status(200).send('A verification email has been sent to ' + user.email + 
+                '. It will be expire after one day. If you did not get verification Email click on resend link.');
               });
             })
           });
@@ -127,29 +115,17 @@ const resendCode = async (req, res, next) => {
             if(err) {
                 return res.status(500).send({msg:err.message});
             }
-            const transporter = nodemailer.createTransport({ 
-                host: "smtp.mail.yahoo.com", 
-                port: 465,
-                service: "yahoo",
-                secure: false,
-                auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_APP_PASS },
-                logger: true
-              });
-            const host = 'http://localhost:3005'
-            const mailOptions = { 
-            from: process.env.EMAIL_ADDRESS, 
-            to: user.email, 
-            subject: 'Account Verification Link', 
-            text: 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: ' 
-            + host + '\/customer\/verifyemail\/' + user.email + '\/' + token.token + '\n\nThank You!\n' 
-            };
-            transporter.sendMail(mailOptions, function (err) {
-            if (err) { 
-                console.log(err);
-                return res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
-            }
-            return res.status(200).send('A new verification email has been sent to ' + user.email +
-             '. It will be expire after one day.\n Please use the new verification link since the old link will be invalid.');
+            const host = 'http://localhost:3005';
+            const subject = 'Account Verification Link';
+            const text = 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: ' 
+            + host + '\/customer\/verifyemail\/' + user.email + '\/' + token.token + '\n\nThank You!\n';
+            sendEmail(user.email, subject, text, function (err) {
+              if (err) { 
+                  console.log(err);
+                  return res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
+              }
+              return res.status(200).send('A new verification email has been sent to ' + user.email +
+              '. It will be expire after one day.\n Please use the new verification link since the old link will be invalid.');
             });
         })
     }
