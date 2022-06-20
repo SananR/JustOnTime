@@ -1,7 +1,8 @@
 import mongoose from 'mongoose'
 import { bankInfoSchema } from './schemas/organizer/bankInfo.schema.js';
-import { contactSchema } from './schemas/contact.schema.js'
-import { personalInfoSchema } from './schemas/personalInfo.schema.js';
+import { addressSchema } from './schemas/address.schema.js';
+import validator from 'validator'
+const { isEmail, isMobilePhone } = validator
 
 const OrganizerStatus = {
     REJECTED: 0,
@@ -14,21 +15,42 @@ const OrganizerStatus = {
 Object.freeze(OrganizerStatus)
 
 const eventOrganizerSchema = mongoose.Schema({
-    contact: {
-        type: contactSchema,
-        required: true
+    firstName: {
+        type: String,
+        required: true,
+        trim: true
+    },    
+    lastName: {
+        type: String,
+        required: true,
+        trim: true
     },
-    personalInfo: {
-        type: personalInfoSchema,
-        required: true
-    },
-    bankInfo: {
-        type: bankInfoSchema,
+    address: {
+        type: addressSchema,
         required: false
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        select: false
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        validate: [isEmail, "please fill a valid email"]
+    }, 
+    phoneNumber: {
+        type: String,
+        required: true,
+        trim: true,
+        validator: [isMobilePhone, "please fill a valid phone number"]
+    },
+    bankInfo: {
+        type: bankInfoSchema,
+        required: false,
+        select: false
     },
     verificationStatus: {
         type: Number,

@@ -26,13 +26,12 @@ function organizerRegisterStrategy(passport) {
                 // const hashedAccountNum = await bcrypt.hash(req.body.accountNum, 10);
                 
                 const eventOrganizer = new EventOrganizer(
-                    {contact: {
+                    {
                         email: email,
-                        phoneNumber: req.body.phoneNumber
-                    },
-                    personalInfo: {
+                        phoneNumber: req.body.phoneNumber,
                         firstName: req.body.firstName,
                         lastName: req.body.lastName,
+                        password: hashedPassword,
                         address: {
                             suitNo: req.body.suitNo,
                             street: req.body.street,
@@ -40,13 +39,11 @@ function organizerRegisterStrategy(passport) {
                             country: req.body.country,
                             postalCode: req.body.postalCode
                         }
-                    },
                     // bankInfo: {
                     //     bankName: hashedBankName,
                     //     branchNum: hashedBranchNum,
                     //     accountNum: hashedAccountNum
                     // },
-                    password: hashedPassword
                 });
                 await eventOrganizer.save()
                 done(null, eventOrganizer, {});

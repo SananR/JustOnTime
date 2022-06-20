@@ -1,7 +1,6 @@
 import passport from 'passport';
 import crypto from 'crypto';
-import nodemailer from 'nodemailer';
-import { EventOrganizer } from '../models/eventOrganizerModel.js';
+import { EventOrganizer, OrganizerStatus } from '../models/eventOrganizerModel.js';
 import { VerificationToken } from '../models/verificationTokenModel.js';
 import { sendEmail } from '../util/mailerUtil.js';
 
@@ -36,13 +35,14 @@ const registerOrganizer = async (req, res, next) => {
               const host = 'http://localhost:3005';
               const subject = 'Account Verification Link';
               const text = 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: ' 
-              + host + '\/organizer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n';
-              sendEmail(user.contact.email, subject, text, function (err) {
+              + host + '\/organizer\/verifyemail\/' + user.email + '\/' + token.token + '\n\nThank You!\n';
+              sendEmail(user.email, subject, text, function (err) {
                 if (err) { 
                     console.log(err);
                     return res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
                 }
-                return res.status(200).send('A verification email has been sent to ' + user.contact.email + '. It will be expire after one day. If you did not get verification Email click on resend link.');
+                return res.status(200).send('A verification email has been sent to ' + user.email + 
+                '. It will be expire after one day. If you did not get verification Email click on resend link.');
               });
             });
           });
@@ -77,13 +77,13 @@ const verifyEmail = async (req, res, next) => {
                   return res.status(401).send({msg:'We were unable to find a user for this verification. Please SignUp!'});
               } 
               // user is already verified
-              else if (user.isVerified){
+              else if (user.ver){
                   return res.status(200).send('User has been already verified. Please Login');
               }
               // verify user
               else{
-                  // change isVerified to true
-                  user.isVerified = true;
+                  // change the verification status to SIGNUP_NOT_COMPLETE
+                  user.verificationStatus = OrganizerStatus.VERIFICATION_IN_PROGRESS;
                   user.save(function (err) {
                       // error occur
                       if(err){
@@ -105,8 +105,14 @@ const resendCode = async (req, res, next) => {
     if (!user){
         return res.status(400).send({msg: "We were unable to find an account with that email."})
     }
-    else if (user.isVerified){
+    else if (user.verificationStatus == OrganizerStatus.VERIFIED){
         return res.status(200).send({msg: "This account has already been verified."})
+    }
+    else if (user.verificationStatus == OrganizerStatus.SIGNUP_NOT_COMPLETE){
+      return res.status(200).send({msg: "Sign up is not complete for this account. Please complete the signup process"})
+    }
+    else if (user.verificationStatus == OrganizerStatus.VERIFICATION_IN_PROGRESS){
+      return res.status(200).send({msg: "This account is under review right now. Please give us 1-2 business days to verify your account"})
     }
     else {
         await VerificationToken.findOneAndDelete({_userId: user._id});
@@ -115,30 +121,20 @@ const resendCode = async (req, res, next) => {
             if(err) {
                 return res.status(500).send({msg:err.message});
             }
-            const transporter = nodemailer.createTransport({ 
-                host: "smtp.mail.yahoo.com", 
-                port: 465,
-                service: "yahoo",
-                secure: false,
-                auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_APP_PASS },
-                logger: true
-              });
-            const host = 'http://localhost:3005'
-            const mailOptions = { 
-            from: process.env.EMAIL_ADDRESS, 
-            to: user.contact.email, 
-            subject: 'Account Verification Link', 
-            text: 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: ' 
-            + host + '\/organizer\/verifyemail\/' + user.contact.email + '\/' + token.token + '\n\nThank You!\n' 
-            };
-            transporter.sendMail(mailOptions, function (err) {
-            if (err) { 
-                console.log(err);
-                return res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
-            }
-            return res.status(200).send('A new verification email has been sent to ' + user.contact.email +
-             '. It will be expire after one day.\n Please use the new verification link since the old link will be invalid.');
+            
+            const host = 'http://localhost:3005';
+            const subject = 'Account Verification Link';
+            const text = 'Hello '+ req.body.firstName +',\n\n' + 'Please verify your account by clicking the link: ' 
+            + host + '\/organizer\/verifyemail\/' + user.email + '\/' + token.token + '\n\nThank You!\n';
+            sendEmail(user.email, subject, text, function (err) {
+              if (err) { 
+                  console.log(err);
+                  return res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
+              }
+              return res.status(200).send('A new verification email has been sent to ' + user.email +
+              '. It will be expire after one day.\n Please use the new verification link since the old link will be invalid.');
             });
+
         })
     }
   })

@@ -11,7 +11,6 @@ const sendEmail = (email, subject, text, callback) => {
         logger: true
     });
     
-    const host = 'http://localhost:3005'
     const mailOptions = { 
     from: process.env.EMAIL_ADDRESS, 
     to: email, 

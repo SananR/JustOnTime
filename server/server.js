@@ -15,8 +15,9 @@ await mongoose.connect(uri)
     process.exit(1)
 })
 .then(async client => {
-    // mongoose.connection.db.dropDatabase();
-    await EventOrganizer.deleteOne({email: "youomachi@gmail.com"});
+    // await EventOrganizer.db.dropDatabase();
+    await mongoose.connection.db.dropDatabase();
+    // await EventOrganizer.deleteOne({email: "youomachi@gmail.com"});
     // Customer.remove({}, () => {console.log("deleted customer")})
     // await VerificationToken.deleteMany();
     console.log(await EventOrganizer.find());
