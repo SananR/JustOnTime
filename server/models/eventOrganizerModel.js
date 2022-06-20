@@ -1,28 +1,60 @@
 import mongoose from 'mongoose'
 import { bankInfoSchema } from './schemas/organizer/bankInfo.schema.js';
-import { contactSchema } from './schemas/contact.schema.js'
-import { personalInfoSchema } from './schemas/personalInfo.schema.js';
+import { addressSchema } from './schemas/address.schema.js';
+import validator from 'validator'
+const { isEmail, isMobilePhone } = validator
+
+const OrganizerStatus = {
+    REJECTED: 0,
+    VERIFIED: 1,
+    SIGNUP_NOT_COMPLETE: 2,
+    VERIFICATION_IN_PROGRESS: 3,
+    NEEDS_RESUBMISSION: 4
+}
+
+Object.freeze(OrganizerStatus)
 
 const eventOrganizerSchema = mongoose.Schema({
-    contact: {
-        type: contactSchema,
-        required: true
+    firstName: {
+        type: String,
+        required: true,
+        trim: true
+    },    
+    lastName: {
+        type: String,
+        required: true,
+        trim: true
     },
-    personalInfo: {
-        type: personalInfoSchema,
-        required: true
-    },
-    bankInfo: {
-        type: bankInfoSchema,
-        required: true
+    address: {
+        type: addressSchema,
+        required: false
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        select: false
     },
-    isVerified: {
-        type: Boolean,
-        default: false
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        validate: [isEmail, "please fill a valid email"]
+    }, 
+    phoneNumber: {
+        type: String,
+        required: true,
+        trim: true,
+        validator: [isMobilePhone, "please fill a valid phone number"]
+    },
+    bankInfo: {
+        type: bankInfoSchema,
+        required: false,
+        select: false
+    },
+    verificationStatus: {
+        type: Number,
+        default: OrganizerStatus.VERIFICATION_IN_PROGRESS
     }
 },  {
     timestamps: true,
@@ -30,4 +62,4 @@ const eventOrganizerSchema = mongoose.Schema({
 
 const EventOrganizer = mongoose.model("EventOrganizer", eventOrganizerSchema);
 
-export { EventOrganizer }
+export { EventOrganizer, OrganizerStatus }
