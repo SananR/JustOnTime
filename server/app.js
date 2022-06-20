@@ -5,7 +5,7 @@ import session from 'express-session';
 import MongoDBStore from 'connect-mongodb-session';
 import dotenv from 'dotenv';
 
-import { configPassportStrategy } from './auth/index.js';
+import { configPassportStrategies, configPassportSerialization } from './auth/passportController.js';
 import { organizerRouter } from './routes/organizerRoutes.js';
 import { customerRouter } from './routes/customerRoutes.js';
 
@@ -33,10 +33,11 @@ app.use(session({
     saveUninitialized: false
 }))
 
-// configure passport strategy
-configPassportStrategy(passport);
-app.use(passport.initialize());
-app.use(passport.session());
+// configure passport
+configPassportStrategies(passport);
+configPassportSerialization(passport);
+app.use(passport.initialize(undefined));
+app.use(passport.session(undefined));
 
 app.use("/api/organizer", organizerRouter);
 app.use("/api/customer", customerRouter);
