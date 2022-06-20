@@ -9,7 +9,7 @@ const OrganizerStatus = {
     VERIFIED: 1,
     SIGNUP_NOT_COMPLETE: 2,
     VERIFICATION_IN_PROGRESS: 3,
-    NEEDS_RESUBMISSION: 4,
+    NEEDS_RESUBMISSION: 4
 }
 
 Object.freeze(OrganizerStatus)
