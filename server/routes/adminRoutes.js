@@ -5,6 +5,6 @@ import { getUnverifiedOrganizers, updateOrganizerStatus } from '../controllers/a
 const adminRouter = express.Router();
 
 adminRouter.route("/getUnverifiedOrganizers").get(getUnverifiedOrganizers);
-adminRouter.route("/updateVerificationStatus").post(updateOrganizerStatus);
+adminRouter.route("/updateOrganizerStatus").post(updateOrganizerStatus);
 
 export { adminRouter }

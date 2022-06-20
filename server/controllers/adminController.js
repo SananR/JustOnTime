@@ -8,9 +8,6 @@ const getUnverifiedOrganizers = async (req, res, next) => {
                     message: err.message
                 })            
             }
-            const allUsers = await EventOrganizer.find();
-            console.log(JSON.stringify(allUsers))
-            console.log(users)
             return res.status(200).send({
                 users: users
             })
