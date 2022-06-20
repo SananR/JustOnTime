@@ -1,9 +1,10 @@
 import express from 'express';
 
-import { getUnverifiedEvents } from '../controllers/adminController.js';
+import { getUnverifiedOrganizers, updateOrganizerStatus } from '../controllers/adminController.js';
 
 const adminRouter = express.Router();
 
-adminRouter.route("/getUnverifiedOrganizers").get(getUnverifiedEvents);
+adminRouter.route("/getUnverifiedOrganizers").get(getUnverifiedOrganizers);
+adminRouter.route("/updateOrganizerStatus").post(updateOrganizerStatus);
 
 export { adminRouter }
