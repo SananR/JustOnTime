@@ -19,7 +19,6 @@ export const customerRegisterStrategy =
                     lastName: req.body.lastName,
                     password: hashedPassword
                 });
-                console.log(JSON.stringify(customer))
                 await customer.save()
                 done(null, customer, {});
             }

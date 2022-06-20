@@ -2,9 +2,14 @@ import passport from 'passport';
 import { Customer } from '../models/customerModel.js';
 import { VerificationToken } from '../models/verificationTokenModel.js';
 import { flagError, clientError, serverError, success } from "../util/http/httpResponse.js";
-import { createSaveToken } from "../util/email/verification/userVerfication.js";
+import { createSaveToken } from "../util/email/verification/userVerification.js";
+import { validationResult } from 'express-validator';
 
 const registerCustomer = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return clientError(res, errors.array());
+    }
     await passport.authenticate("registerCustomer", {},
     (err, user, info) => {
         if (err) {
