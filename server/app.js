@@ -4,6 +4,7 @@ import passport from 'passport';
 import session from 'express-session';
 import MongoDBStore from 'connect-mongodb-session';
 import dotenv from 'dotenv';
+import bodyParser from "body-parser";
 
 import { configPassportStrategies, configPassportSerialization } from './auth/passportController.js';
 import { organizerRouter } from './routes/organizerRoutes.js';
@@ -13,8 +14,8 @@ dotenv.config();
 
 const app = express();
 
-app.use(express.urlencoded());
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(cors());
 
 // configure session

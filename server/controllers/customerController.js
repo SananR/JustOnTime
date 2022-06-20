@@ -5,7 +5,7 @@ import { flagError, clientError, serverError, success } from "../util/http/httpR
 import { createSaveToken } from "../util/email/verification/userVerfication.js";
 
 const registerCustomer = async (req, res, next) => {
-    await passport.authenticate("registerCustomer", 
+    await passport.authenticate("registerCustomer", {},
     (err, user, info) => {
         if (err) {
             const duplicate = flagError(res, err.message, "duplicate",  400,"There is already an account with the specified email.")
@@ -21,22 +21,16 @@ const registerCustomer = async (req, res, next) => {
     })(req, res, next);
 }
 
-const loginCustomer = ((req, res, next) => {
-  passport.authenticate("customerLogin", function(err, user, info) {  
-    if (err) { return next(err); }
-    if (!user) { 
-        return res.status(400).send({
-            message: "email or password is incorrect",
-            info: info
-        }); 
-    }
-    req.logIn(user, function(err) {
+const loginCustomer = async (req, res, next) => {
+  passport.authenticate("customerLogin", {},function(err, user, info) {
+    if (err) return next(err);
+    if (!user) return clientError(res, "Invalid credentials.");
+    else req.logIn(user, function(err) {
         if (err) { return next(err); }
-        console.log("The user is " + req.user)
         return res.send(user);    
     });
-})(req, res, next);
-})
+  })(req, res, next);
+}
 
 const verifyEmail = async (req, res, next) => {
   const foundToken = await VerificationToken.find();
