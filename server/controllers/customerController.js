@@ -1,16 +1,16 @@
 import passport from 'passport';
-import { Customer } from '../models/customerModel.js';
+import { User } from '../models/userModel.js';
 import { VerificationToken } from '../models/verificationTokenModel.js';
 import { flagError, clientError, serverError, success } from "../util/http/httpResponse.js";
 import { createSaveToken } from "../util/email/verification/userVerification.js";
 import { validationResult } from 'express-validator';
 
-const registerCustomer = async (req, res, next) => {
+const registerUser = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return clientError(res, errors.array());
     }
-    await passport.authenticate("registerCustomer", {},
+    await passport.authenticate("registerUser", {},
     (err, user, info) => {
         if (err) {
             const duplicate = flagError(res, err.message, "duplicate",  400,"There is already an account with the specified email.")
@@ -26,8 +26,8 @@ const registerCustomer = async (req, res, next) => {
     })(req, res, next);
 }
 
-const loginCustomer = async (req, res, next) => {
-  passport.authenticate("customerLogin", {},function(err, user, info) {
+const loginUser = async (req, res, next) => {
+  passport.authenticate("userLogin", {},function(err, user, info) {
     if (err) return next(err);
     if (!user) return clientError(res, "Invalid credentials.");
     else req.logIn(user, function(err) {
@@ -46,7 +46,7 @@ const verifyEmail = async (req, res, next) => {
       }
       if (!token) return clientError(res, "Your verification link has expired. Please click on resend to receive a new link for verification.");
       else {
-          Customer.findOne({ _id: token._userId, email: req.params.email}, (err, user) => {
+          User.findOne({ _id: token._userId, email: req.params.email}, (err, user) => {
               if (!user)
                   return clientError(res, 'We were unable to find a user for this verification.');
               // user is already verified
@@ -69,7 +69,7 @@ const verifyEmail = async (req, res, next) => {
 }
 
 const resendCode = async (req, res, next) => {
-  Customer.findOne({ email: req.body.email }, async (err, user) => {
+  User.findOne({ email: req.body.email }, async (err, user) => {
     if (!user) return clientError(res, "We were unable to find an account with that email.");
     else if (user.isVerified)
         return clientError(res, "This account has already been verified.");
@@ -80,5 +80,5 @@ const resendCode = async (req, res, next) => {
   })
 }
 
-export { registerCustomer, loginCustomer, verifyEmail, resendCode }
+export { registerUser, loginUser, verifyEmail, resendCode }
 
