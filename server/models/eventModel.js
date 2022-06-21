@@ -16,15 +16,9 @@ const eventSchema = mongoose.Schema({
         required: false,
         trim: true
     },
-    organizerInfo: {
-        id: {
-            type: mongoose.Schema.Types.ObjectId, // referes to the eventOrganizer's id
-            required: false
-        }, 
-        name: {
-            type: String,
-            required: false
-        }
+    organizer_id: {
+        type: mongoose.Schema.Types.ObjectId, // referes to the eventOrganizer's id
+        required: false
     },
     eventImage: {
         id: {
