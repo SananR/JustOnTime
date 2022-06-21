@@ -8,6 +8,12 @@ const userSchema = mongoose.Schema({
         info: organizerInfoSchema,
         required: false
     },
+    userType: {
+        type: String,
+        required: true,
+        enum : ['Organizer','Customer'],
+        default: 'Customer'
+    },
     isVerified: {
         type: Boolean,
         default: false

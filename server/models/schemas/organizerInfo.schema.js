@@ -14,8 +14,7 @@ const organizerInfoSchema = mongoose.Schema({
     phoneNumber: {
         type: String,
         required: true,
-        trim: true,
-        validator: [isMobilePhone, "Provide a valid phone number"]
+        trim: true
     },
     verificationStatus: {
         type: Number,

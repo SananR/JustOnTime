@@ -46,7 +46,7 @@ const verifyEmail = async (req, res, next) => {
       }
       if (!token) return clientError(res, "Your verification link has expired. Please click on resend to receive a new link for verification.");
       else {
-          User.findOne({ _id: token._userId, email: req.params.email}, (err, user) => {
+          User.findOne({ _id: token._userId}, (err, user) => {
               if (!user)
                   return clientError(res, 'We were unable to find a user for this verification.');
               // user is already verified
@@ -69,7 +69,7 @@ const verifyEmail = async (req, res, next) => {
 }
 
 const resendCode = async (req, res, next) => {
-  User.findOne({ email: req.body.email }, async (err, user) => {
+  User.findOne({ userInfo: { email: req.body.email } }, async (err, user) => {
     if (!user) return clientError(res, "We were unable to find an account with that email.");
     else if (user.isVerified)
         return clientError(res, "This account has already been verified.");
