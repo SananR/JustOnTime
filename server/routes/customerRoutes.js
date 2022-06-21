@@ -10,6 +10,5 @@ customerRouter.route("/").post(validateUserRegisterSchema, registerCustomer);
 customerRouter.route("/").put(validateUserLoginSchema, loginCustomer);
 customerRouter.route("/verifyemail/:email/:token").post(verifyEmail);
 customerRouter.route("/resendcode").post(resendCode);
-customerRouter.route("/personal-info/:email").get(customerInfo); 
 
 export { customerRouter }
