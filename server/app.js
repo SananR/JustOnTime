@@ -7,8 +7,7 @@ import dotenv from 'dotenv';
 import bodyParser from "body-parser";
 
 import { configPassportStrategies, configPassportSerialization } from './auth/passportController.js';
-import { organizerRouter } from './routes/organizerRoutes.js';
-import { customerRouter } from './routes/customerRoutes.js';
+import { userRouter } from './routes/userRoutes.js';
 import { adminRouter } from './routes/adminRoutes.js';
 
 dotenv.config();
@@ -41,8 +40,8 @@ configPassportSerialization(passport);
 app.use(passport.initialize(undefined));
 app.use(passport.session(undefined));
 
-app.use("/api/organizer", organizerRouter);
-app.use("/api/customer", customerRouter);
+//app.use("/api/organizer", organizerRouter);
+app.use("/api/user", userRouter);
 app.use("/api/admin", adminRouter);
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 
