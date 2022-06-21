@@ -9,6 +9,7 @@ import OrgVerifyEmail from './pages/organizer/verifyEmail/verifyEmail.jsx'
 import OrgVerificationRequired from './pages/organizer/verificationRequired/verificationRequired.jsx'
 import CustomerVerifyEmail from './pages/customer/verifyEmail/verifyEmail.jsx'
 import CustomerVerificationRequired from './pages/customer/verificationRequired/verificationRequired.jsx'
+import CustomerInfo from './pages/customer/customerInfo/customerInfo.jsx'
 import Header from './components/header/Header'
 import { store } from './store.js'
 import {Provider} from 'react-redux'
@@ -22,6 +23,7 @@ export default function App() {
         <Header />
         <Routes>
             <Route path="/" element={<Login />} />
+            <Route path="personal-info" element={<CustomerInfo />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="register" element={<OrganizerRegister />} />
