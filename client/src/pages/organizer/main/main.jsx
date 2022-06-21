@@ -4,15 +4,6 @@ import "./main.css";
 function OrganizerMain() {
     return (
         <div id="page">
-            {/* <div class="topnav">
-                <ul>
-                    <li><a id="Home" href="/organizer/main">Home</a></li>
-                    <li><a id="Starred" href="/organizer/main">Starred</a></li>
-                    <li><input id="Searchbar" type="text" placeholder="Search..."></input></li>
-                    <li><a id="Profile" href="/organizer/main">Profile</a></li>
-                    <li><a id="Logout" href="/login">Logout</a></li>
-                </ul>
-            </div> */}
             <div>
                 <h1 id="title"> My Events </h1>
                 <button id="create_event">New Event</button>
