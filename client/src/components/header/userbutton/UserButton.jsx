@@ -8,16 +8,16 @@ import './userbutton.css'
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a
-      href="/"
+      href="/client/src/pages"
       ref={ref}
       onClick={e => {
         e.preventDefault();
         onClick(e);
       }}
     >
-    <div className="d-flex justify-content-between align-items-center">
-        <GiHamburgerMenu className="ms-2" color="grey" size={20}/>
-        <FaUserCircle color="red" size={30}/>
+    <div className="position-relative">
+        <GiHamburgerMenu className="mt-2 pt-1 ms-2 position-absolute" color="grey" size={25}/>
+        <FaUserCircle color="red" class="mt-2 ms-5 position-absolute" size={30}/>
     </div>
     </a>
   ));

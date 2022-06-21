@@ -1,9 +1,11 @@
 import React from 'react'
 
 import './loginform.css'
-import logo from "../header/logo.png";
+import logo from "../../header/logo.png";
 
 import {FaUserAlt, FaLock} from 'react-icons/fa'
+import InputField from "../input/InputField";
+import GoogleButton from 'react-google-button'
 
 function LoginForm() {
     return (
@@ -21,17 +23,25 @@ function LoginForm() {
             <p id="sub-text" className="pt-4 text-break text-muted text-center">Log in to start finding experiences and shape your life.<br/>Just the way you want, just on time.</p>
             <form class="row justify-content-center">
                 <div class="form-group col-7">
-                    <div class="position-relative mt-5">
-                        <FaUserAlt class="icon position-absolute" color="red" size={20}/>
-                        <input type="email" className="px-5 rounded-pill form-control form-control-lg" id="email-input" placeholder="Email Address" />
-                    </div>
-                    <div className="position-relative mt-3">
-                        <FaLock class="icon position-absolute" color="red" size={20}/>
-                        <input type="password" className="px-5 rounded-pill form-control form-control-lg" id="password-input" placeholder="Password"/>
-                    </div>
+                    <InputField
+                        className="mt-4"
+                        icon={<FaUserAlt class="icon position-absolute" color="red" size={20}/>}
+                        type="email"
+                        placeholder="Email Address"
+                    />
+                    <InputField
+                        className="mt-3"
+                        icon={<FaLock class="icon position-absolute" color="red" size={20}/>}
+                        type="password"
+                        placeholder="Password"
+                    />
                     <button type="submit" id="submit-button" className="mt-3 shadow-lg rounded-pill btn btn-block w-100 btn-danger">SIGN IN</button>
                     <p class="text-center w-100 mt-3">Don't have an account yet ? <a id="signup-link" class="text-danger" href="/register">Sign Up Now</a></p>
-                    <hr data-content="and" className="hr-text"/>
+                    <hr data-content="and" className="mt-4 hr-text"/>
+                    <GoogleButton
+                        class="mt-4 w-100"
+                        onClick={() => { console.log('Google button clicked') }}
+                    />
                 </div>
             </form>
         </div>
