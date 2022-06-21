@@ -4,17 +4,18 @@ import passport from 'passport';
 import session from 'express-session';
 import MongoDBStore from 'connect-mongodb-session';
 import dotenv from 'dotenv';
+import bodyParser from "body-parser";
 
-import { configPassportStrategy } from './auth/index.js';
-import { organizerRouter } from './routes/organizerRoutes.js';
-import { customerRouter } from './routes/customerRoutes.js';
+import { configPassportStrategies, configPassportSerialization } from './auth/passportController.js';
+import { userRouter } from './routes/userRoutes.js';
+import { adminRouter } from './routes/adminRoutes.js';
 
 dotenv.config();
 
 const app = express();
 
-app.use(express.urlencoded());
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(cors());
 
 // configure session
@@ -33,13 +34,15 @@ app.use(session({
     saveUninitialized: false
 }))
 
-// configure passport strategy
-configPassportStrategy(passport);
-app.use(passport.initialize());
-app.use(passport.session());
+// configure passport
+configPassportStrategies(passport);
+configPassportSerialization(passport);
+app.use(passport.initialize(undefined));
+app.use(passport.session(undefined));
 
-app.use("/api/organizer", organizerRouter);
-app.use("/api/customer", customerRouter);
+//app.use("/api/organizer", organizerRouter);
+app.use("/api/user", userRouter);
+app.use("/api/admin", adminRouter);
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 
 export default app;
