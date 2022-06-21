@@ -9,6 +9,7 @@ import OrgVerifyEmail from './pages/organizer/verifyEmail/verifyEmail.jsx'
 import OrgVerificationRequired from './pages/organizer/verificationRequired/verificationRequired.jsx'
 import CustomerVerifyEmail from './pages/customer/verifyEmail/verifyEmail.jsx'
 import CustomerVerificationRequired from './pages/customer/verificationRequired/verificationRequired.jsx'
+import OrganizerMain from './pages/organizer/main/main.jsx'
 import Header from './components/header/Header'
 import { store } from './store.js'
 import {Provider} from 'react-redux'
@@ -32,6 +33,7 @@ export default function App() {
                   <Route path=":token" element={<OrgVerifyEmail />} />
                 </Route>
               </Route>
+              <Route path="main" element={<OrganizerMain/>} />
             </Route>
             <Route path="customer">
               <Route path="verification-required" element={<CustomerVerificationRequired />} />
