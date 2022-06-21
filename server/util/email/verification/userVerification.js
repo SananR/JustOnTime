@@ -18,10 +18,10 @@ function transporter() {
 function mailOptions(user, token) {
     return {
         from: process.env.EMAIL_ADDRESS,
-        to: user.email,
+        to: user.userInfo.email,
         subject: 'Account Verification Link',
-        text: 'Hello '+ user.firstName +',\n\n' + 'Please verify your account by clicking the link: '
-            + host + '\/customer\/verifyemail\/' + user.email + '\/' + token.token + '\n\nThank You!\n'
+        text: 'Hello '+ user.userInfo.firstName +',\n\n' + 'Please verify your account by clicking the link: '
+            + host + '\/user\/verifyemail\/' + user.userInfo.email + '\/' + token.token + '\n\nThank You!\n'
     }
 }
 
@@ -33,7 +33,6 @@ function createSaveToken(res, user, successMessage) {
         // Send email (use credentials of SendGrid)
         await trans.sendMail(mailOptions(user, token), function (err) {
             if (err) {
-                console.log("TEST");
                 console.error(err);
                 return serverError(res, err.message);
             }

@@ -1,7 +1,8 @@
-import { EventOrganizer, OrganizerStatus  } from "../models/eventOrganizerModel.js"
+import { User  } from "../models/userModel.js"
+import { OrganizerStatus } from "../models/schemas/organizerInfo.schema.js";
 
 const getUnverifiedOrganizers = async (req, res, next) => {
-    EventOrganizer.find({verificationStatus: OrganizerStatus.VERIFICATION_IN_PROGRESS}, 
+    User.find({organizer: { info: { verificationStatus: OrganizerStatus.VERIFICATION_IN_PROGRESS } } },
         async (err, users) => {
             if (err){
                 return res.status(400).send({
@@ -25,11 +26,11 @@ const updateOrganizerStatus = async (req, res, next) => {
             message: "body field 'verificationStatus' is missing"
         })
     }
-    const filter = {email: req.user.email}    
-    const update = {verificationStatus: req.body.verificationStatus}
+    const filter = {userInfoL: { email: req.user.email } }
+    const update = {organizer: { info: { verificationStatus: req.body.verificationStatus } } }
     const options = { new: true };
 
-    EventOrganizer.findOneAndUpdate(filter, update, options, (err, user) => {
+    User.findOneAndUpdate(filter, update, options, (err, user) => {
         if(err){
             return res.status(400).send({
                 message: err

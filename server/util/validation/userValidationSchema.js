@@ -1,21 +1,20 @@
 import {checkSchema} from "express-validator";
 
-//Possibly not needed?
 const validateUserLoginSchema = checkSchema({
     email: {
         isEmail: true,
         trim: true,
+        isEmpty: {
+            negated: true,
+            errorMessage: "Email cannot be empty",
+        },
         errorMessage: "Invalid email provided."
     },
     password: {
-        isLength: {
-            errorMessage: 'Password must be between 6 and 50 characters long',
-            options: { min: 6, max: 50},
-        },
-        matches: {
-            options: /\d/,
-            errorMessage: "Password must contain a number",
-        },
+        isEmpty: {
+            negated: true,
+            errorMessage: "Password cannot be empty",
+        }
     },
 });
 
