@@ -1,29 +1,27 @@
 import React, {useEffect, useState} from "react";
+import { render } from "react-dom";
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
-import { loginUser } from '../../features/auth/authSlice'
+import "./signup.css";
+import {registerUser, reset} from '../../../features/auth/authSlice'
 
-import "./login.css";
+function Signup() {
 
-
-function Login() {
-
-    const [errorMessageUser, setErrorMessageUser] = useState("");
-    const [errorMessagePass, setErrorMessagePass] = useState("");
-
-     const errors = {
-        username: "Username Required",
-        usernotfound: "Username not found",
-        password: "Password Required",
-        passnotfound: "Invalid Password"
-    };
+    const [errorName, setErrorName] = useState("");
+    const [errorLastname, setErrorLastname] = useState("");
+    const [errorEmail, setErrorEmail] = useState("");
+    const [errorPassword, setErrorPassword] = useState("");
+    const [errorConfirm, setErrorConfirm] = useState("");
 
     const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
-    });
+        password2: ''
+    })
 
-    const {email, password} = formData;
+    const {firstName, lastName, email, password, password2} = formData;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -35,8 +33,10 @@ function Login() {
             //handle error
         }
         if (isSuccess /*|| user*/) {
-            navigate('/')
+            navigate('/verification-required')
         }
+
+
     }, [user, isError, isSuccess, message, navigate, dispatch]);
 
     const onChange = (e) => {
@@ -49,58 +49,116 @@ function Login() {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        var email = document.getElementById("email").value; 
+        var firstName = document.getElementById("first_name").value; 
+        var lastName = document.getElementById("last_name").value;
+        var email = document.getElementById("email").value;  
         var password = document.getElementById("password").value;
-        
-        if(email === "" || password === ""){
-            if (email === ""  && password === ""){
-                setErrorMessageUser(errors.username)
-                setErrorMessagePass(errors.password)
-            } else if (email === ""){
-                setErrorMessagePass("")
-                setErrorMessageUser(errors.username)
-            } else if (email === "") {
-                setErrorMessageUser("")
-                setErrorMessagePass(errors.password)
+        var password2 = document.getElementById("password2").value; 
+
+        const values = [firstName, lastName, email, password, password2]; 
+        const names = ["Name", "Lastname", "Email", "Password", "Confirm"]; 
+        const funcs = [setErrorName, setErrorLastname, setErrorEmail, setErrorPassword, setErrorConfirm]
+        var empty = 0
+        for (var i in values){
+            if(values[i] === ""){
+                funcs[i](names[i] + " Required")
+                empty++;
+            } else {
+                funcs[i]("")
             }
-        } else {
+        }
+        if(empty == 0 ){
             const userData = {
+                firstName,
+                lastName,
                 email,
                 password
             }
-            dispatch(loginUser(userData))
+
+            dispatch(registerUser(userData))
         }
 
     }
 
 
     const renderForm = (
-        <div className= "Login-cont">
-            <div className="title">Login</div>
-            <form onSubmit={onSubmit}>
-                <div className="User-input">
-                <label id= "user-label">Username:</label> 
-                <input 
-                    id= "email" 
-                    type= "text" 
-                    placeholder= "Enter Username"
-                />
-                {errorMessageUser && <div className="error"> {errorMessageUser} </div>}
-                </div>
+        <div className= "Signup-cont">
+            <div className="title">Create a new account</div>
+            <div className="sub">Get Started</div>
 
-                <div className="Pass-input">
-                <label id= "pass-label">Password:</label> 
-                <input 
-                    id= "password" 
-                    type= "password" 
-                    placeholder= "Enter Password"
-                />
-                {errorMessagePass && <div className="error"> {errorMessagePass} </div>}
+            <form onSubmit={onSubmit}>
+                <div className="wrapper">
+                    <div className="Name-input">
+                    <label id= "name-label">First Name:</label> 
+                    <input 
+                        id= "first_name" 
+                        type= "text" 
+                        placeholder= "First Name"
+                        onChange={onChange}
+                    />
+                    {errorName && <div className="error"> {errorName} </div>}
+                    </div>
+
+                    <div className="Lastname-input">
+                    <label id= "Lastname-label">Last Name:</label> 
+                    <input 
+                        id= "last_name" 
+                        type= "text" 
+                        placeholder= "Last Name"
+                        onChange={onChange}
+                    />
+                    {errorLastname && <div className="error"> {errorLastname} </div>}
+                    </div> 
                 </div>
-                <button id= "login-button">Login</button>
+                
+                <div className="wrapper">
+                    <div className="Email-input">
+                    <label id= "email-label">Email:</label> 
+                    <input 
+                        id= "email" 
+                        type= "text" 
+                        placeholder= "Email Address"
+                        onChange={onChange}
+                    />
+                    {errorEmail && <div className="error"> {errorEmail} </div>}
+                    </div>
+
+                    <div className="Phone-input">
+                        <label id= "Phone-label">Phone Number: </label> 
+                        <input 
+                            id= "phone" 
+                            type= "phone" 
+                            placeholder= "Phone Number"
+                            onChange={onChange}
+                        />
+                    </div>
+                </div>
+                <div className="Password-input">
+                    <label id= "pass-label">Password:</label> 
+                    <input 
+                        id= "password" 
+                        type= "password" 
+                        placeholder= "Password"
+                        onChange={onChange}
+                    />
+                    {errorPassword && <div className="error"> {errorPassword} </div>}
+                </div>
+                
+                <div className="Conf-input">
+                    <label id= "Conf-label">Confirm Password:</label> 
+                    <input 
+                        id= "password2" 
+                        type= "password" 
+                        placeholder= "Confirm Password"
+                        onChange={onChange}
+                    />                
+                    {errorConfirm && <div className="error"> {errorConfirm} </div>}
+                </div>
+                <button id= "signup-button" type="submit" className="btn btn-block">Sign Up</button>
             </form>
-            
-            <a id= "user-button" href= "/signup">New User?</a>
+
+
+            <a id= "signin-button" href="/login">Already have an account?</a>
 
         </div>
     )
@@ -172,9 +230,7 @@ function Login() {
             </div>
 
             <div id="tri7">
-              {/*   <div id="grey"></div> */}
                 <div id="pink"></div>
-               {/*  <div id="red"></div> */}
                 <div id="lightgrey"></div>
                 <div id="grey2"></div>
                 <div id="pink2"></div>
@@ -225,11 +281,11 @@ function Login() {
     )
 
     return (
-        <div className="Login">
+        <div className="Signup">
             {renderForm}
             {renderback}
         </div>
     );
 }
-   export default Login;
+   export default Signup;
   
