@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const addressSchema = mongoose.Schema({
     suitNo: {
         type: String,
-        required: true,
+        required: false,
         trim: true
     },
     street: {

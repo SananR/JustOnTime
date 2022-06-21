@@ -29,12 +29,13 @@ const eventInfoSchema = mongoose.Schema({
     },
     address: {
         type: addressSchema,
-        required: true
+        required: false
     },
-    Status: {
+    status: {
         type: String,
-        required: true,
-        validator: [eventStatusValidator, "EventStatus is not valid"]
+        required: false,
+        enum : ['Completed','Ongoing', 'UnderReview','Cancelled'],
+        default: 'UnderReview'
     }
 });
 
