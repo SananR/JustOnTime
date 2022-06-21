@@ -9,23 +9,24 @@ const eventSchema = mongoose.Schema({
     },
     tags: {
         type: [String],
-        required: true
+        required: false
     },
     bidHistory: {
         type: [bidInfoSchema],
-        required: true,
+        required: false,
         trim: true
     },
-    organizerInfo: {
+    organizer_id: {
+        type: mongoose.Schema.Types.ObjectId, // referes to the eventOrganizer's id
+        required: false
+    },
+    eventImage: {
         id: {
-            type: mongoose.Schema.Types.ObjectId, // referes to the eventOrganizer's id
-            required: true
-        }, 
-        name: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId, // referes to the eventImage's id
             required: true
         }
     }
+
 });
 
 const Event = mongoose.model("Event", eventSchema);
