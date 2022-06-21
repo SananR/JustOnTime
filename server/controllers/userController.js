@@ -27,7 +27,11 @@ const registerUser = async (req, res, next) => {
 }
 
 const loginUser = async (req, res, next) => {
-  passport.authenticate("userLogin", {},function(err, user, info) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return clientError(res, errors.array());
+    }
+  passport.authenticate("loginUser", {},function(err, user, info) {
     if (err) return next(err);
     if (!user) return clientError(res, "Invalid credentials.");
     else req.logIn(user, function(err) {

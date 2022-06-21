@@ -17,8 +17,9 @@ const organizerInfoSchema = mongoose.Schema({
         trim: true
     },
     verificationStatus: {
-        type: Number,
-        default: OrganizerStatus.VERIFICATION_IN_PROGRESS
+        type: String,
+        enum: ["REJECTED", "VERIFIED", "SIGNUP_NOT_COMPLETE", "VERIFICATION_IN_PROGRESS", "NEEDS_RESUBMISSION"],
+        default: "SIGNUP_NOT_COMPLETE"
     }
 });
 

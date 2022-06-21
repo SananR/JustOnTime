@@ -35,9 +35,9 @@ export const userLoginStrategy =
         {usernameField: "email"},
         async (email, password, done) => {
             try {
-                const customer = await Customer.findOne({email: email}); //This line must search users using email and password
-                if (await bcrypt.compare(password, customer.password)) {
-                    return done(null, customer, {message: "Login successful"});
+                const user = await User.findOne({ 'userInfo.email': email }); //This line must search users using email and password
+                if (await bcrypt.compare(password, user.userInfo.password)) {
+                    return done(null, user, {message: "Login successful"});
                 }
                 else {
                     done(null, false, {message: "Wrong password"});
