@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
-import { loginUser } from '../../../features/auth/authSlice'
+import { loginUser } from '../../features/auth/authSlice'
 
-import LoginForm from '../../../components/login/LoginForm'
-
-import "./login.css";
+import LoginForm from '../../components/forms/login/LoginForm'
 
 function Login() {
 

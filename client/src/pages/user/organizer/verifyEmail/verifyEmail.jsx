@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import "./verifyEmail.css";
 import { useParams, useNavigate } from 'react-router-dom';
-import { verifyEmail } from '../../../features/emailVerification/organizer/verifyEmail';
+import { verifyEmail } from '../../../../features/emailVerification/organizer/verifyEmail';
 import { Component } from 'react';
 
 function OrgVerifyEmail() {

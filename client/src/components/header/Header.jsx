@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Navbar from 'react-bootstrap/Navbar'
-import UserButton from '../userbutton/UserButton'
+import UserButton from './userbutton/UserButton'
 
 import logo from './logo.png'
 

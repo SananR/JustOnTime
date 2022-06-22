@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import "./verificationRequired.css";
-import { resendCode } from '../../../features/emailVerification/organizer/resendCode.js';
+import { resendCode } from '../../../../features/emailVerification/organizer/resendCode.js';
 
 function OrgVerificationRequired() {
     const [message, setMessage] = useState({message: "", visible: false});
