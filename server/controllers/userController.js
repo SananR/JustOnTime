@@ -4,6 +4,7 @@ import { VerificationToken } from '../models/verificationTokenModel.js';
 import { flagError, clientError, serverError, success } from "../util/http/httpResponse.js";
 import { createSaveToken } from "../util/email/verification/userVerification.js";
 import { validationResult } from 'express-validator';
+import { checkAuthentication } from "../util/passport/authentication.js"
 
 const registerUser = async (req, res, next) => {
     const errors = validationResult(req);
@@ -84,5 +85,20 @@ const resendCode = async (req, res, next) => {
   })
 }
 
-export { registerUser, loginUser, verifyEmail, resendCode }
+
+// request body {"update": {{userInfo.field: newValue},{organizer.field: newValue}} , filter: {"userInfo.email": email}}
+//cannot update email or password with this
+const updateInformation = async (req, res, next) => {
+    if (checkAuthentication([]). )
+    const filter = req.body.filter
+    const update = req.body.update; 
+    User.findOneAndUpdate(filter, update, {new: true},  async (err, user) => {
+      console.log(user); 
+      if (!user) return clientError(res, "Unable to update the field at this time. Please try again later. ");
+      else return success(res, user, false);
+    }); 
+   
+  }
+
+export { registerUser, loginUser, verifyEmail, resendCode, updateInformation, add}
 
