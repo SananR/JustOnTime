@@ -20,8 +20,8 @@ const eventSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, // referes to the eventOrganizer's id
         required: false
     },
-    eventImage_id:{
-        type: mongoose.Schema.Types.ObjectId, // referes to the eventImage's id
+    eventImage_path:{
+        type: String, // referes to the eventImage's id
         required: true
     }
 

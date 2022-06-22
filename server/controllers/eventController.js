@@ -1,12 +1,13 @@
 import { flagError, clientError, serverError, success } from "../util/http/httpResponse.js";
 import {Event} from '../models/eventModel.js'
-import { eventImageService } from "../util/gridFs.js";
+import { eventImageService } from "../util/multer.js";
 import { validationResult } from 'express-validator';
 import {User} from '../models/userModel.js'
 
 const addEvent = async (req, res, next) => {
     const { file } = req;
-    const { id } = file;
+    const { path } = file;
+    console.log(file)
     let user;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -41,12 +42,13 @@ const addEvent = async (req, res, next) => {
                     tags: req.body.tags,
                     bidHistory: req.body.bidHistory,
                     organizer_id: user._id,
-                    eventImage_id:id
+                    eventImage_path:path
                 }
             )
             await event.save();
             return success(res, "Event Successfully added");
         } catch(err) {
+            console.log(err)
             return clientError(res, "Event couldnot be added")
         }
     }
