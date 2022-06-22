@@ -25,13 +25,6 @@ function OrganizerMain() {
                 <button class="event">Event 14</button>
                 <button class="event">Event 15</button>
             </div>
-            <div class="pagination">
-                <a href="/organizer/main" class="page">1</a>
-                <a href="/organizer/main" class="page">2</a>
-                <a href="/organizer/main" class="page">3</a>
-                <a href="/organizer/main" class="page">4</a>
-                <a href="/organizer/main" class="page">5</a>
-            </div>
         </div>
     );
 }

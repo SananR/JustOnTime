@@ -38,15 +38,3 @@
     border-radius: 4px;
     text-align: left;
 }
-
-.pagination {
-    margin-bottom: 2%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.page {
-    display: inline-block;
-    margin-right: 2%;
-}
