@@ -89,7 +89,6 @@ const resendCode = async (req, res, next) => {
 // request body {"update": {{userInfo.field: newValue},{organizer.field: newValue}} , filter: {"userInfo.email": email}}
 //cannot update email or password with this
 const updateInformation = async (req, res, next) => {
-    if (checkAuthentication([]). )
     const filter = req.body.filter
     const update = req.body.update; 
     User.findOneAndUpdate(filter, update, {new: true},  async (err, user) => {
