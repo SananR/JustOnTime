@@ -7,7 +7,6 @@ import {User} from '../models/userModel.js'
 const addEvent = async (req, res, next) => {
     const { file } = req;
     const { path } = file;
-    console.log(file)
     let user;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -48,7 +47,6 @@ const addEvent = async (req, res, next) => {
             await event.save();
             return success(res, "Event Successfully added");
         } catch(err) {
-            console.log(err)
             return clientError(res, "Event couldnot be added")
         }
     }

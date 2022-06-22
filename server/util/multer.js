@@ -1,12 +1,8 @@
 import { flagError, clientError, serverError, success } from "./http/httpResponse.js";
 import mongoose from 'mongoose';
-import {GridFsStorage} from 'multer-gridfs-storage';
 import multer from 'multer';
-import crypto from 'crypto';
 import path from 'path'
 import { validationResult } from 'express-validator';
-import dotenv from 'dotenv';
-dotenv.config();
 
 class imageService {
   constructor(fileType){
@@ -14,10 +10,8 @@ class imageService {
   }
   storage = multer.diskStorage({
     destination: function(req, file, cb) {
-      const { location } = req.body
-      console.log(req.body)
-      console.log(req.body.location)
-      const dir = `./server/uploads/${location}`
+      let location = req.body.location
+      const dir = `../uploads/${location}`
       cb(null, dir);
     },
     filename: function(req, file, cb) {
@@ -48,7 +42,6 @@ class imageService {
         if (err instanceof multer.MulterError) {
         return clientError(res, "File too large");
         } else if (err) {
-          console.log(err)
           if (err === 'invalid file') return clientError(res, "Invalid image type");
           return serverError(res, "some upload error");
         }
