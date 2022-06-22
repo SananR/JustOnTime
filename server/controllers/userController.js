@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { User } from '../models/userModel.js';
 import { VerificationToken } from '../models/verificationTokenModel.js';
-import { flagError, clientError, serverError, success } from "../util/http/httpResponse.js";
+import { flagError, clientError, serverError, success, successWithData } from "../util/http/httpResponse.js";
 import { createSaveToken } from "../util/email/verification/userVerification.js";
 import { validationResult } from 'express-validator';
 
@@ -21,7 +21,7 @@ const registerUser = async (req, res, next) => {
           req.logIn(user, function(err) {
             if (err) return next(err);
             //Create verification token
-            return createSaveToken(res, user, "");
+            return createSaveToken(res, user, user);
           });
     })(req, res, next);
 }
@@ -36,7 +36,7 @@ const loginUser = async (req, res, next) => {
     if (!user) return clientError(res, "Invalid credentials.");
     else req.logIn(user, function(err) {
         if (err) { return next(err); }
-        return res.send(user);    
+        return successWithData(res, user, false);
     });
   })(req, res, next);
 }

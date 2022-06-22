@@ -2,16 +2,19 @@ import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import {registerUser, reset} from '../../features/auth/authSlice'
+import {InputValidator} from "../../util/validation/InputValidator";
 
 import SignUpForm from "../../components/forms/signup/SignUpForm";
 
 function Signup() {
 
-    const [errorName, setErrorName] = useState("");
-    const [errorLastname, setErrorLastname] = useState("");
-    const [errorEmail, setErrorEmail] = useState("");
-    const [errorPassword, setErrorPassword] = useState("");
-    const [errorConfirm, setErrorConfirm] = useState("");
+    const [formError, setFormError] = useState({
+        firstNameError: false,
+        lastNameError: false,
+        emailError: false,
+        passwordError: false,
+        password2Error: false
+    })
 
     const [formData, setFormData] = useState({
         firstName: '',
@@ -30,14 +33,12 @@ function Signup() {
 
     useEffect(() => {
         if (isError) {
-            //handle error
+            console.log(message);
         }
-        if (isSuccess /*|| user*/) {
-            navigate('/verification-required')
+        if (isSuccess /* TODO: uncomment */ /*|| user */) {
+            navigate('/dashboard')
         }
-
-
-    }, [user, isError, isSuccess, message, navigate, dispatch]);
+    }, [user, isError, isSuccess, message, isLoading]);
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -48,41 +49,29 @@ function Signup() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-
-        var firstName = document.getElementById("first_name").value; 
-        var lastName = document.getElementById("last_name").value;
-        var email = document.getElementById("email").value;  
-        var password = document.getElementById("password").value;
-        var password2 = document.getElementById("password2").value; 
-
-        const values = [firstName, lastName, email, password, password2]; 
-        const names = ["Name", "Lastname", "Email", "Password", "Confirm"]; 
-        const funcs = [setErrorName, setErrorLastname, setErrorEmail, setErrorPassword, setErrorConfirm]
-        var empty = 0
-        for (var i in values){
-            if(values[i] === ""){
-                funcs[i](names[i] + " Required")
-                empty++;
-            } else {
-                funcs[i]("")
-            }
+        let firstNameValid = new InputValidator(firstName).minLength(5).maxLength(10).isValid;
+        let lastNameValid = new InputValidator(firstName).minLength(5).maxLength(10).isValid;
+        if (!firstNameValid) {
+            setFormError((prevState) => ({
+                ...prevState,
+                ["firstNameError"]: !firstNameValid,
+                ["lastNameError"]: !lastNameValid
+            }))
         }
-        if(empty == 0 ){
+        else {
             const userData = {
-                firstName,
-                lastName,
-                email,
-                password
+                "firstName": firstName,
+                "lastName": lastName,
+                "email": email,
+                "password": password,
             }
-
             dispatch(registerUser(userData))
         }
-
     }
 
     return (
         <div className="Signup">
-            <SignUpForm />
+            <SignUpForm onSubmit={onSubmit} onChange={onChange} error={formError}/>
         </div>
     );
 }
