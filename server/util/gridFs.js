@@ -19,7 +19,7 @@ class OrganizerImageService {
   }
 }
 
-export class FileServiceFactory{
+class FileServiceFactory{
   create = (options, bucketName) => {
 
     let imageService
