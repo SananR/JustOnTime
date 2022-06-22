@@ -4,7 +4,7 @@ import "./main.css";
 function OrganizerMain() {
     return (
         <div id="page">
-            <div>
+            <div id="top">
                 <h1 id="title"> My Events </h1>
                 <button id="create_event">New Event</button>
             </div>
