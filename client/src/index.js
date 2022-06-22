@@ -23,13 +23,10 @@ export default function App() {
     <Router>
         <Header />
         <Routes>
-            {/* <Header /> */}
-            {/* <Routes> */}
               <Route path="/" element={<Login />} />
               <Route path="personal-info" element={<CustomerInfo />} />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
-            {/* </Routes> */}
             <Route path="organizer">
               <Route path="verification-required" element={<OrgVerificationRequired />} />
               <Route path="verifyemail">

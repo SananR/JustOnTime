@@ -1,103 +1,40 @@
-/* #page {
-    background-color: ;
-} */
-
-/* #top { */
-    /* display: flex; */
-    /* justify-content: center; */
-/* } */
-
-#title {
-        /* color: lightgrey; */
-        /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
-        /* margin-left: 5%; */
+.top {
     margin-left: 11%;
-    display: inline-block;
-    /* margin-top: 2%; */
-    /* margin-top: 2%; */
-    /* margin-bottom: 2%; */
-    margin-top: 3%;
-    margin-bottom: 2%;
-        /* padding-top: 2%; */
-        /* padding: 1%; */
-        /* margin-bottom: 5%; */
-        /* text-align: center; */
-    /* text-align: left; */
-        vertical-align: middle;
 }
 
-#create_event {
-    /* text-align: center; */
+#title {
+    margin-top: 3%;
+    margin-bottom: 2%;
     display: inline-block;
+    vertical-align: middle;
+}
+
+#createEvent {
     font-size: medium;
-        vertical-align: middle;
-        /* vertical-align: top; */
-        /* font-size: medium; */
-        /* font-size: large; */
-        /* text-align: left; */
-    padding: 1%;
-    /* margin-top: 2%; */
-    /* margin-left: 56%; */
-    /* margin-bottom: 2%; */
-    margin-left: 55%;
-    margin-top: 1%;
     width: 10%;
-        /* height: 50%; */
-        /* height: 150%; */
+    margin-top: 1%;
+    margin-left: 63%;
+    padding: 1%;
     fill: lightgray;
     border: lightgray;
     border-radius: 4px;
-        /* display: flex;
-        flex-direction: column; */
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .list {
-    /* text-align: center; */
-    /* margin-top: 2%; */
+    width: 80%;
     margin-left: 10%;
     margin-bottom: 2%;
-    width: 80%;
-    /* height: 67vh; */
-    /* height: 1%; */
-    /* height: 100px; */
-    /* overflow-y: scroll; */
-    /* max-height: auto; */
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* overflow-y: hidden; */
-    /* overflow-y: auto; */
-    /* flex-grow: 1; */
-    /* overflow-y: scroll; */
-    /* overflow-y: hidden; */
-    /* scroll-behavior: smooth; */
-    /* -ms-overflow-style: none;  IE and Edge */
-    /* scrollbar-width: none;  Firefox */
 }
 
 .event {
     font-size: medium;
-    /* font-size: medium; */
-    /* font-size: large; */
-    text-align: left;
-    padding: 1%;
-    margin-top: 0.4%;
     width: 100%;
-    /* height: 50%; */
-    /* height: 150%; */
+    margin-top: 0.4%;
+    padding: 1%;
     fill: lightgray;
     border: lightgray;
     border-radius: 4px;
-    /* display: flex;
-    flex-direction: column; */
+    text-align: left;
 }
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-/* .list::-webkit-scrollbar {
-    display: none;
-  } */
-  
-  /* Hide scrollbar for IE, Edge and Firefox */
-  /* .example { */
-    /* -ms-overflow-style: none;  IE and Edge */
-    /* scrollbar-width: none;  Firefox */
-  /* } */
