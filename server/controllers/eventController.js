@@ -1,6 +1,6 @@
 import { flagError, clientError, serverError, success } from "../util/http/httpResponse.js";
 import {Event} from '../models/eventModel.js'
-import { deleteImage } from "../util/gridFs.js";
+import { eventImageService } from "../util/gridFs.js";
 import { validationResult } from 'express-validator';
 import {User} from '../models/userModel.js'
 
@@ -10,19 +10,18 @@ const addEvent = async (req, res, next) => {
     let user;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        deleteImage(id);
+        eventImageService.deleteImage(id);
         return clientError(res, errors.array());
     }
     else{
         if (file.size > 10000000) {
-        deleteImage(id);
-        return  clientError(res, "File may not extend 10 mb");
+            eventImageService.deleteImage(id);
+            return  clientError(res, "File may not extend 10 mb");
         }
         try{
-            console.log(req.body.email)
             user = await User.findOne({ 'userInfo.email': req.body.email });
         }catch(err){
-            deleteImage(id);
+            eventImageService.deleteImage(id);
             return clientError(res, "No such organizer")
         }
         try{
@@ -48,7 +47,6 @@ const addEvent = async (req, res, next) => {
             await event.save();
             return success(res, "Event Successfully added");
         } catch(err) {
-            console.log(err)
             return clientError(res, "Event couldnot be added")
         }
     }
