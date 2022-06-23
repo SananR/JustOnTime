@@ -1,6 +1,6 @@
 import {VerificationToken} from "../../../models/verificationTokenModel.js";
 import crypto from "crypto";
-import {clientError, serverError, success} from "../../http/httpResponse.js";
+import { clientError, serverError, successWithData } from "../../http/httpResponse.js";
 import nodemailer from "nodemailer";
 
 const host = 'http://localhost:3005'
@@ -25,7 +25,7 @@ function mailOptions(user, token) {
     }
 }
 
-function createSaveToken(res, user, successMessage) {
+function createSaveToken(res, user, data) {
     //generate token to verify email address
     let trans = transporter();
     const token = VerificationToken({_userId: user._id, token: crypto.randomBytes(16).toString('hex')});
@@ -36,7 +36,7 @@ function createSaveToken(res, user, successMessage) {
                 console.error(err);
                 return serverError(res, err.message);
             }
-            return success(res, successMessage, false);
+            return successWithData(res, data, false);
         });
     }).catch(err => {
         console.error(err);
