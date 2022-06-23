@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { EditText, EditTextarea } from 'react-edit-text';
+import React from 'react'
+import { EditText } from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
 
 
@@ -42,7 +42,7 @@ function CustomerInfo() {
 
     const displaytype = () => {
         //check of the user is a regular user or organizer and dsiplay the information accordingly
-        if(user.userType == "Customer"){
+        if(user.userType === "Customer"){
             return basicInfo
         } else {
             return (

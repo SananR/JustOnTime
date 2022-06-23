@@ -15,4 +15,14 @@ export class InputValidator {
         return this;
     }
 
+    equals(string) {
+        this.isValid = string.length>0 ? this.isValid && this.input === string && this.input.length > 0 : true;
+        return this;
+    }
+
+    matches(string) {
+        this.isValid = this.isValid && this.input.match(string);
+        return this;
+    }
+
 }

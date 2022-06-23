@@ -7,7 +7,7 @@ import {FaUserAlt, FaLock} from 'react-icons/fa'
 import InputField from "../input/InputField";
 import GoogleButton from 'react-google-button'
 
-function LoginForm() {
+function LoginForm(props) {
     return (
         <div id="login-container" class="mt-5 mb-5 shadow-lg container">
             <h1 id="welcome-text" class="pt-5 text-center"><strong>WELCOME TO</strong></h1>
@@ -21,16 +21,19 @@ function LoginForm() {
                 />
             </div>
             <p id="sub-text" className="pt-4 text-break text-muted text-center">Log in to start finding experiences and shape your life.<br/>Just the way you want, just on time.</p>
-            <form class="row justify-content-center">
+            <form onSubmit={props.onSubmit} class="row justify-content-center">
                 <div class="form-group col-7">
                     <InputField
                         className="mt-4"
+                        onChange={props.onChange}
                         icon={<FaUserAlt class="icon position-absolute" color="red" size={20}/>}
                         type="email"
                         placeholder="Email Address"
                     />
                     <InputField
+                        error={props.error}
                         className="mt-3"
+                        onChange={props.onChange}
                         icon={<FaLock class="icon position-absolute" color="red" size={20}/>}
                         type="password"
                         placeholder="Password"

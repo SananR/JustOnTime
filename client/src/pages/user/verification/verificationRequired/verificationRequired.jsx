@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
+import { resendCode } from '../../../../features/emailVerification/customer/resendCode.js';
+
 import "./verificationRequired.css";
-import { resendCode } from '../../../features/emailVerification/customer/resendCode.js';
 
 function CustomerVerificationRequired() {
     const [message, setMessage] = useState({message: "", visible: false});
@@ -12,7 +13,7 @@ function CustomerVerificationRequired() {
         }).catch(err => {
             console.log(err)
             console.log(err.response)
-            if (err.response.status / 100 == 4){
+            if (err.response.status / 100 === 4){
                 setMessage({message: err.response.data.msg})
             }
             else{

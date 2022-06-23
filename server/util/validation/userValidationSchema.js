@@ -27,14 +27,14 @@ const validateUserRegisterSchema = checkSchema({
     firstName: {
         errorMessage: 'First name must be between 3 and 50 characters long',
         isLength: {
-            options: { min: 3, max: 50 }
+            options: { min: 2, max: 50 }
         },
         trim: true
     },
     lastName: {
         errorMessage: 'Last name must be between 3 and 50 characters long',
         isLength: {
-            options: { min: 3, max: 50 }
+            options: { min: 2, max: 50 }
         },
         trim: true,
     },

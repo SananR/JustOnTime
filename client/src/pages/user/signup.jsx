@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
-import {registerUser, reset} from '../../features/auth/authSlice'
+import {registerUser} from '../../features/auth/authSlice'
 import {InputValidator} from "../../util/validation/InputValidator";
 
 import SignUpForm from "../../components/forms/signup/SignUpForm";
@@ -49,23 +49,31 @@ function Signup() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        let firstNameValid = new InputValidator(firstName).minLength(5).maxLength(10).isValid;
-        let lastNameValid = new InputValidator(firstName).minLength(5).maxLength(10).isValid;
-        if (!firstNameValid) {
-            setFormError((prevState) => ({
-                ...prevState,
-                ["firstNameError"]: !firstNameValid,
-                ["lastNameError"]: !lastNameValid
-            }))
-        }
-        else {
+
+        let firstNameValid = new InputValidator(firstName).minLength(2).maxLength(50).isValid;
+        let lastNameValid = new InputValidator(lastName).minLength(2).maxLength(50).isValid;
+        let emailValid = new InputValidator(email).minLength(5).maxLength(50).isValid;
+        let passwordValid = new InputValidator(password).minLength(6).maxLength(50).matches(/\d/).isValid;
+        let password2Valid = new InputValidator(password2).equals(password).isValid;
+
+        setFormError((prevState) => ({
+            ...prevState,
+            "firstNameError": firstNameValid ? false : "Enter a valid first name",
+            "lastNameError": lastNameValid ? false : "Enter a valid last name",
+            "emailError": emailValid ? false : "Enter a valid email address",
+            "passwordError": passwordValid ? false : "Enter a valid password",
+            "password2Error": password2Valid ? false : "Passwords must match"
+        }))
+        let formValid = firstNameValid && lastNameValid && emailValid && passwordValid && password2Valid;
+
+        if (formValid) {
             const userData = {
                 "firstName": firstName,
                 "lastName": lastName,
                 "email": email,
                 "password": password,
             }
-            dispatch(registerUser(userData))
+            dispatch(registerUser(userData));
         }
     }
 

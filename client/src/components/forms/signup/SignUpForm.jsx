@@ -10,7 +10,7 @@ import GoogleButton from "react-google-button";
 function SignUpForm(props) {
     return (
         <div id="signup-container" className="d-flex gx-0 mt-5 mb-5 shadow-lg container-sm">
-            <div id="left-container" className="col">
+            <div id="left-container" className="col pb-5">
                 <h1 id="signup-text" className="text-center mt-5"><strong>SIGN UP</strong></h1>
                 <p className="pt-3 text-break text-muted text-center">Sign up and start bidding on experiences immediately.<br/>You're never late, always just on time.</p>
                 <form onSubmit={props.onSubmit} className="row justify-content-center">
@@ -20,7 +20,7 @@ function SignUpForm(props) {
                                 error={props.error.firstNameError}
                                 name="firstName"
                                 onChange={props.onChange}
-                                className="col mt-2"
+                                className="col mt-3"
                                 icon={<FaUserAlt className="icon position-absolute" color="grey" size={20}/>}
                                 type="text"
                                 placeholder="First Name"
@@ -30,7 +30,7 @@ function SignUpForm(props) {
                                 error={props.error.lastNameError}
                                 name="lastName"
                                 onChange={props.onChange}
-                                className="col mt-2"
+                                className="col mt-3"
                                 icon={<FaUserAlt className="icon position-absolute" color="grey" size={20}/>}
                                 type="text"
                                 placeholder="Last Name"
@@ -41,7 +41,7 @@ function SignUpForm(props) {
                             error={props.error.emailError}
                             name="email"
                             onChange={props.onChange}
-                            className="col mt-3"
+                            className="col mt-2"
                             icon={<MdEmail className="icon position-absolute" color="grey" size={20}/>}
                             type="email"
                             placeholder="Email Address"
@@ -50,7 +50,7 @@ function SignUpForm(props) {
                             error={props.error.passwordError}
                             name="password"
                             onChange={props.onChange}
-                            className="mt-3"
+                            className="mt-2"
                             icon={<FaLock className="icon position-absolute" color="grey" size={20}/>}
                             type="password"
                             placeholder="Password"
@@ -59,7 +59,7 @@ function SignUpForm(props) {
                             error={props.error.password2Error}
                             name="password2"
                             onChange={props.onChange}
-                            className="mt-3"
+                            className="mt-2"
                             icon={<FaLock className="icon position-absolute" color="grey" size={20}/>}
                             type="password"
                             placeholder="Confirm Password"
