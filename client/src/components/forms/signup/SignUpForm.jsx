@@ -66,6 +66,7 @@ function SignUpForm(props) {
                             type="password"
                             placeholder="Confirm Password"
                         />
+                        <p className="text-center w-100 mt-3 text-danger">{props.error.formError}</p>
                         <button type="submit" id="submit-button" className="mt-3 shadow-lg rounded-pill btn btn-block w-100 btn-danger">SIGN UP</button>
                         <p className="text-center w-100 mt-3">Already have an account ? <a id="login-link" className="text-danger" href="/login">Log In Now</a></p>
                         <hr data-content="and" className="mt-4 hr-text"/>

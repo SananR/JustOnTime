@@ -13,7 +13,8 @@ function Signup() {
         lastNameError: false,
         emailError: false,
         passwordError: false,
-        password2Error: false
+        password2Error: false,
+        formError: false
     })
 
     const [formData, setFormData] = useState({
@@ -33,7 +34,10 @@ function Signup() {
 
     useEffect(() => {
         if (isError) {
-            console.log(message);
+            setFormError((prevState) => ({
+                ...prevState,
+                "formError": message
+            }))
         }
         else if (isSuccess /* TODO: uncomment */ /*|| user */) {
             navigate('/dashboard')
