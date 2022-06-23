@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { registerUser, loginUser, verifyEmail, resendCode, registerOrganizer } from '../controllers/userController.js';
-import { checkAuthentication,checkAuthentication_id } from '../util/passport/authentication.js';
+import { checkAuthentication } from '../util/passport/authentication.js';
 import { validateUserRegisterSchema, validateUserLoginSchema,validateOrganizerRegisterSchema } from "../util/validation/userValidationSchema.js";
 
 const userRouter = express.Router();
