@@ -26,7 +26,7 @@ const updateOrganizerStatus = async (req, res, next) => {
             message: "body field 'verificationStatus' is missing"
         })
     }
-    const filter = {userInfoL: { email: req.user.email } }
+    const filter = {userInfo: { email: req.user.email } }
     const update = {organizer: { info: { verificationStatus: req.body.verificationStatus } } }
     const options = { new: true };
 

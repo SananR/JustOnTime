@@ -17,7 +17,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     >
     <div className="position-relative">
         <GiHamburgerMenu className="mt-2 pt-1 ms-2 position-absolute" color="grey" size={25}/>
-        <FaUserCircle color="red" class="mt-2 ms-5 position-absolute" size={30}/>
+        <FaUserCircle color="red" className="mt-2 ms-5 position-absolute" size={30}/>
     </div>
     </a>
   ));

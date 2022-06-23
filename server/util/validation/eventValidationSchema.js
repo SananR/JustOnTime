@@ -3,16 +3,16 @@ import {checkSchema} from "express-validator";
 const validateEventCreationSchema = checkSchema({
     name: {
         trim: true,
-        isEmpty: {
-            negated: true,
-            errorMessage: "Name cannot be empty",
+        errorMessage: 'Event name must be between 3 and 50 characters long',
+        isLength: {
+            options: { min: 3, max: 50 }
         }
     },
     description: {
         trim: true,
-        isEmpty: {
-            negated: true,
-            errorMessage: "Description cannot be empty",
+        errorMessage: 'Description must be atleast 20 characters',
+        isLength: {
+            options: { min: 20 }
         }
     },
     time: {
@@ -23,30 +23,30 @@ const validateEventCreationSchema = checkSchema({
     },
     street: {
         trim: true,
-        isEmpty: {
-            negated: true,
-            errorMessage: "Street cannot be empty",
+        errorMessage: 'Street must be between 3 and 50 characters long',
+        isLength: {
+            options: { min: 3, max: 50 }
         }
     },
     city: {
         trim: true,
-        isEmpty: {
-            negated: true,
-            errorMessage: "City cannot be empty",
+        errorMessage: 'City must be between 3 and 50 characters long',
+        isLength: {
+            options: { min: 3, max: 50 }
         }
     },
     country: {
         trim: true,
-        isEmpty: {
-            negated: true,
-            errorMessage: "Country cannot be empty",
+        errorMessage: 'Country must be between 3 and 50 characters long',
+        isLength: {
+            options: { min: 3, max: 50 }
         }
     },
     postalCode: {
         trim: true,
-        isEmpty: {
-            negated: true,
-            errorMessage: "postalCode cannot be empty",
+        errorMessage: "invalid Postal Code",
+        isPostalCode: {
+            options:'CA'
         }
     }
 });

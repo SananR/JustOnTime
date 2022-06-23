@@ -4,13 +4,11 @@ import reportWebVitals from './reportWebVitals'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Login from './pages/user/login.jsx'
 import Signup from "./pages/user/signup.jsx";
-import OrgVerifyEmail from './pages/user/organizer/verifyEmail/verifyEmail.jsx'
-import OrgVerificationRequired from './pages/user/organizer/verificationRequired/verificationRequired.jsx'
-import CustomerVerifyEmail from './pages/user/verifyEmail/verifyEmail.jsx'
-import CustomerVerificationRequired from './pages/user/verificationRequired/verificationRequired.jsx'
-// import CustomerInfo from './pages/user/customer/customerInfo/customerInfo.jsx'
+import CustomerVerifyEmail from './pages/user/verification/verifyEmail/verifyEmail.jsx'
+import CustomerVerificationRequired from './pages/user/verification/verificationRequired/verificationRequired.jsx'
+import CustomerInfo from './pages/user/customer/customerInfo/customerInfo.jsx'
+import CustomerHome from "./pages/user/customer/home/CustomerHome";
 import OrganizerMain from './pages/organizer/main/main.jsx'
-import CustomerInfo from './pages/user/customerInfo/customerInfo.jsx'
 import Header from './components/header/Header'
 import { store } from './store.js'
 import {Provider} from 'react-redux'
@@ -24,19 +22,11 @@ export default function App() {
     <Router>
         <Header />
         <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="personal-info" element={<CustomerInfo />} />
-              <Route path="login" element={<Login />} />
-              <Route path="signup" element={<Signup />} />
-            <Route path="organizer">
-              <Route path="verification-required" element={<OrgVerificationRequired />} />
-              <Route path="verifyemail">
-                <Route path=":email">
-                  <Route path=":token" element={<OrgVerifyEmail />} />
-                </Route>
-              </Route>
-              <Route path="main" element={<OrganizerMain/>} />
-            </Route>
+            <Route path="/" element={<Login />} />
+            <Route path="personal-info" element={<CustomerInfo />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="dashboard" element={<CustomerHome />} />
             <Route path="customer">
               <Route path="verification-required" element={<CustomerVerificationRequired />} />
               <Route path="verifyemail">              
@@ -45,6 +35,7 @@ export default function App() {
                 </Route>
               </Route>
             </Route>
+            <Route path="main" element={<OrganizerMain/>} />
         </Routes>
     </Router>
   </>
@@ -59,3 +50,4 @@ root.render(
 );
 
 reportWebVitals();
+
