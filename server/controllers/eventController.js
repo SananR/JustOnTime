@@ -19,7 +19,7 @@ const addEvent = async (req, res, next) => {
             return  clientError(res, "File may not extend 10 mb");
         }
         try{
-            user = await User.findById(req.body.id);
+            user = await User.findById(req.query.id);
         }catch(err){
             eventImageService.deleteImage(path);
             return clientError(res, "No such organizer")
@@ -55,7 +55,7 @@ const addEvent = async (req, res, next) => {
 
 const getEvents = async (req, res, next) => {
     try{
-        Event.find()
+        Event.find({ 'eventInfo.status': 'Ongoing' })
             .exec()
             .then(output => {
                 const response = {
@@ -84,7 +84,7 @@ const getEvents = async (req, res, next) => {
 
 const getOrganizerEvents =  async (req, res, next) => {
     try{
-        Event.find({ 'organizer_id': req.body.id })
+        Event.find({ 'organizer_id': req.query.id })
             .exec()
             .then(output => {
                 const response = {
