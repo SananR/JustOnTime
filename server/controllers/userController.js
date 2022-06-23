@@ -21,8 +21,9 @@ const registerUser = async (req, res, next) => {
           if (!user) return clientError(res, info.message);
           req.logIn(user, function(err) {
             if (err) return next(err);
-            //Create verification token
-            return createSaveToken(res, user, user);
+            return successWithData(res, user, false)
+            //Create verification token (commented out for now)
+            // return createSaveToken(res, user, user);
           });
     })(req, res, next);
 }
