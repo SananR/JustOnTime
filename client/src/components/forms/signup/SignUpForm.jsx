@@ -6,11 +6,13 @@ import InputField from '../input/InputField'
 import {FaLock, FaUserAlt} from "react-icons/fa";
 import {MdEmail} from "react-icons/md"
 import GoogleButton from "react-google-button";
+import Spinner from "../../spinner/Spinner";
 
 function SignUpForm(props) {
     return (
         <div id="signup-container" className="d-flex gx-0 mt-5 mb-5 shadow-lg container-sm">
-            <div id="left-container" className="col pb-5">
+            <div id="left-container" className="position-relative col pb-5">
+                <Spinner color={"#ff6178"} loading={props.loading} size={75} />
                 <h1 id="signup-text" className="text-center mt-5"><strong>SIGN UP</strong></h1>
                 <p className="pt-3 text-break text-muted text-center">Sign up and start bidding on experiences immediately.<br/>You're never late, always just on time.</p>
                 <form onSubmit={props.onSubmit} className="row justify-content-center">
@@ -75,9 +77,9 @@ function SignUpForm(props) {
                     </div>
                 </form>
             </div>
-            <div id="right-container" className="bg-image col container justify-content-center align-content-center">
-                <h1 id="boundless-text" className="text-center row"><strong>BOUNDLESS EXPERIENCE</strong></h1>
-                <h2 id="clicks-text" className="text-center row"><strong>Just a few clicks away...<HiCursorClick id="cursor-icon" className="mb-4 ms-2" color="white" size={50}/></strong></h2>
+            <div id="right-container" className="bg-image col d-flex flex-column container justify-content-center align-items-center">
+                <h1 id="boundless-text" className="text-center"><strong>BOUNDLESS EXPERIENCE</strong></h1>
+                <h2 id="clicks-text" className="text-center"><strong>Just a few clicks away...<HiCursorClick id="cursor-icon" className="mb-4 ms-2" color="white" size={50}/></strong></h2>
             </div>
         </div>
     );

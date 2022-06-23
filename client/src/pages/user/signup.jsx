@@ -35,7 +35,7 @@ function Signup() {
         if (isError) {
             console.log(message);
         }
-        if (isSuccess /* TODO: uncomment */ /*|| user */) {
+        else if (isSuccess /* TODO: uncomment */ /*|| user */) {
             navigate('/dashboard')
         }
     }, [user, isError, isSuccess, message, isLoading]);
@@ -79,7 +79,7 @@ function Signup() {
 
     return (
         <div className="Signup">
-            <SignUpForm onSubmit={onSubmit} onChange={onChange} error={formError}/>
+            <SignUpForm loading={isLoading} onSubmit={onSubmit} onChange={onChange} error={formError}/>
         </div>
     );
 }
