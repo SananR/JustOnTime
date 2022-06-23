@@ -1,8 +1,9 @@
 import { User  } from "../models/userModel.js"
 import { OrganizerStatus } from "../models/schemas/organizerInfo.schema.js";
+import { clientError, successWithData } from "../util/http/httpResponse.js";
 
 const getUnverifiedOrganizers = async (req, res, next) => {
-    User.find({organizer: { info: { verificationStatus: OrganizerStatus.VERIFICATION_IN_PROGRESS } } },
+    User.find({verificationStatus: OrganizerStatus.VERIFICATION_IN_PROGRESS},
         async (err, users) => {
             if (err){
                 return res.status(400).send({
@@ -16,29 +17,18 @@ const getUnverifiedOrganizers = async (req, res, next) => {
 }
 
 const updateOrganizerStatus = async (req, res, next) => {
-    if (!req.user) {
-        return res.status(404).send({
-            message: "The user is not in the session"
-        })
-    }    
     if (!req.body.verificationStatus) {
-        return res.status(400).send({
-            message: "body field 'verificationStatus' is missing"
-        })
+        return clientError(res, "body field 'verificationStatus' is missing")
     }
-    const filter = {userInfoL: { email: req.user.email } }
+    const filter = {userInfoL: { email: req.body.email } }
     const update = {organizer: { info: { verificationStatus: req.body.verificationStatus } } }
     const options = { new: true };
 
     User.findOneAndUpdate(filter, update, options, (err, user) => {
         if(err){
-            return res.status(400).send({
-                message: err
-            })
+            return clientError(res, err)
         }
-        return res.status(200).send({
-            user: user
-        })
+        return successWithData(res, {user: user})
     })
 }
 
