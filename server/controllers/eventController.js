@@ -10,18 +10,18 @@ const addEvent = async (req, res, next) => {
     let user;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        eventImageService.deleteImage(id);
+        eventImageService.deleteImage(path);
         return clientError(res, errors.array());
     }
     else{
         if (file.size > 10000000) {
-            eventImageService.deleteImage(id);
+            eventImageService.deleteImage(path);
             return  clientError(res, "File may not extend 10 mb");
         }
         try{
-            user = await User.findOne({ 'userInfo.email': req.body.email });
+            user = await User.findById(req.body.id);
         }catch(err){
-            eventImageService.deleteImage(id);
+            eventImageService.deleteImage(path);
             return clientError(res, "No such organizer")
         }
         try{
@@ -47,11 +47,67 @@ const addEvent = async (req, res, next) => {
             await event.save();
             return success(res, "Event Successfully added");
         } catch(err) {
+            eventImageService.deleteImage(path);
             return clientError(res, "Event couldnot be added")
         }
     }
 }
 
-    
+const getEvents = async (req, res, next) => {
+    try{
+        Event.find()
+            .exec()
+            .then(output => {
+                const response = {
+                    count: output.length,
+                    events: output.map(out => {
+                        return {
+                            name: out.eventInfo.name,
+                            description: out.eventInfo.description,
+                            address:{
+                                street: out.eventInfo.address.street,
+                                city: out.eventInfo.address.city,
+                                country: out.eventInfo.address.country,
+                                postalCode: out.eventInfo.address.postalCode
+                            },
+                            eventImage_path: out.eventImage_path,
+                            bidHistory: out.bidHistory
+                        };
+                    })
+                };
+            return res.status(200).json(response);
+            });
+    } catch(err){
+        return clientError(res, "No events found");
+    }
+}
 
-export {addEvent}
+const getOrganizerEvents =  async (req, res, next) => {
+    try{
+        Event.find({ 'organizer_id': req.body.id })
+            .exec()
+            .then(output => {
+                const response = {
+                    count: output.length,
+                    events: output.map(out => {
+                        return {
+                            name: out.eventInfo.name,
+                            description: out.eventInfo.description,
+                            address:{
+                                street: out.eventInfo.address.street,
+                                city: out.eventInfo.address.city,
+                                country: out.eventInfo.address.country,
+                                postalCode: out.eventInfo.address.postalCode
+                            },
+                            eventImage_path: out.eventImage_path,
+                            bidHistory: out.bidHistory
+                        };
+                    })
+                };
+            return res.status(200).json(response);
+            });
+    } catch(err){
+        return clientError(res, "No events found");
+    }
+}
+export {addEvent, getEvents, getOrganizerEvents}
