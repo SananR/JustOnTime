@@ -53,7 +53,7 @@ const validateUserRegisterSchema = checkSchema({
 const validateOrganizerRegisterSchema = checkSchema({
     phoneNumber:{
         isMobilePhone: true,
-        errorMessage: "bankNo cannot be empty",
+        errorMessage: "Invalid phoneNumber",
     }
 });
 export { validateUserRegisterSchema, validateUserLoginSchema, validateOrganizerRegisterSchema }

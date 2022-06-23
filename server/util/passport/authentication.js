@@ -1,4 +1,3 @@
-import passport from 'passport'
 import { clientError } from '../http/httpResponse.js';
 
 const checkAuthentication_id = (list) => {
@@ -42,8 +41,7 @@ const checkAuthentication = (list) => {
                 }
                 else{
                     return clientError(res, "user is not authorized")
-                }
-                
+                } 
             }
         }
         else{
