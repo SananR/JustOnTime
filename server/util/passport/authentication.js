@@ -5,11 +5,18 @@ const checkAuthentication = (list) => {
     return (req, res, next) => {
         if(req.isAuthenticated()){
             if(list.length === 0){
-                return next();
+                if(req.user._id.toString() === req.query.id){
+                    return next();
+                }
+                return clientError(res, "user is not authorized")
             }
             else{
                 if(list.indexOf(req.user.userType) != -1){
-                    return next();
+                    
+                    if(req.user._id.toString() === req.query.id){
+                        return next();
+                    }
+                    return clientError(res, "user is not authorized")
                 }
                 else{
                     return clientError(res, "user is not authorized")

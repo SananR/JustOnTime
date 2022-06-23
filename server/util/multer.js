@@ -1,8 +1,7 @@
 import { flagError, clientError, serverError, success } from "./http/httpResponse.js";
-import mongoose from 'mongoose';
 import multer from 'multer';
 import path from 'path'
-import { validationResult } from 'express-validator';
+import { unlink } from 'node:fs';
 
 class imageService {
   constructor(fileType){
@@ -15,7 +14,7 @@ class imageService {
       cb(null, dir);
     },
     filename: function(req, file, cb) {
-      cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
+      cb(null, new Date().toISOString().replace(/:/g, '-') + path.extname(file.originalname));
     }
   });
 
@@ -51,8 +50,7 @@ class imageService {
 
   deleteImage = (id) => {
     if (!id || id === 'undefined') return clientError(res, "No image id");
-    const _id = new mongoose.Types.ObjectId(id);
-    imageService.gfs.delete(_id, (err) => {
+    unlink(id, (err) => {
       if (err) return serverError(res, "Image deletion error");
     });
   };
