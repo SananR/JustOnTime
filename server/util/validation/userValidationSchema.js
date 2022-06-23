@@ -49,4 +49,11 @@ const validateUserRegisterSchema = checkSchema({
         },
     },
 });
-export { validateUserRegisterSchema, validateUserLoginSchema }
+
+const validateOrganizerRegisterSchema = checkSchema({
+    phoneNumber:{
+        isMobilePhone: true,
+        errorMessage: "bankNo cannot be empty",
+    }
+});
+export { validateUserRegisterSchema, validateUserLoginSchema, validateOrganizerRegisterSchema }
