@@ -25,18 +25,22 @@ function LoginForm(props) {
                 <div class="form-group col-7">
                     <InputField
                         className="mt-4"
+                        name="email"
                         onChange={props.onChange}
                         icon={<FaUserAlt class="icon position-absolute" color="red" size={20}/>}
                         type="email"
                         placeholder="Email Address"
+                        errorMargin="90%"
                     />
                     <InputField
                         error={props.error}
                         className="mt-3"
+                        name="password"
                         onChange={props.onChange}
                         icon={<FaLock class="icon position-absolute" color="red" size={20}/>}
                         type="password"
                         placeholder="Password"
+                        errorMargin="90%"
                     />
                     <button type="submit" id="submit-button" className="mt-3 shadow-lg rounded-pill btn btn-block w-100 btn-danger">SIGN IN</button>
                     <p class="text-center w-100 mt-3">Don't have an account yet ? <a id="signup-link" class="text-danger" href="/register">Sign Up Now</a></p>

@@ -7,10 +7,10 @@ import Signup from "./pages/user/signup.jsx";
 import CustomerVerifyEmail from './pages/user/verification/verifyEmail/verifyEmail.jsx'
 import CustomerVerificationRequired from './pages/user/verification/verificationRequired/verificationRequired.jsx'
 import CustomerInfo from './pages/user/customer/customerInfo/customerInfo.jsx'
+import CustomerHome from "./pages/user/customer/home/CustomerHome";
 import Header from './components/header/Header'
 import { store } from './store.js'
 import {Provider} from 'react-redux'
-import {reset} from "./features/auth/authSlice";
 
 import 'bootstrap/dist/css/bootstrap.css'
 import './stylesheet.css'
@@ -25,6 +25,7 @@ export default function App() {
             <Route path="personal-info" element={<CustomerInfo />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
+            <Route path="dashboard" element={<CustomerHome />} />
             <Route path="customer">
               <Route path="verification-required" element={<CustomerVerificationRequired />} />
               <Route path="verifyemail">              
@@ -48,7 +49,3 @@ root.render(
 
 reportWebVitals();
 
-/*
-TODO: Remove
- */
-reset();
