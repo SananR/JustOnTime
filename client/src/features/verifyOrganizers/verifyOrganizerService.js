@@ -8,4 +8,23 @@ const loadOrganizers = async () => {
     return response.data;
 }
 
+const OrganizerStatus = {
+    REJECTED: "REJECTED",
+    VERIFIED: "VERIFIED",
+    SIGNUP_NOT_COMPLETE: "SIGNUP_NOT_COMPLETE",
+    VERIFICATION_IN_PROGRESS: "VERIFICATION_IN_PROGRESS",
+    NEEDS_RESUBMISSION: "NEEDS_RESUBMISSION"
+}
+
+//Verify Organizer
+const verifyOrganizer = async (email) => {
+    const body = {
+        email: email,
+        verificationStatus: OrganizerStatus.VERIFIED
+    }
+    const response = await axios.post(API_URL + 'admin/updateOrganizerStatus', body);
+    console.log(response.data)
+    return response.data;
+}
+
 export default {loadOrganizers}

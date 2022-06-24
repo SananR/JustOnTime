@@ -3,16 +3,12 @@ import { OrganizerStatus } from "../models/schemas/organizerInfo.schema.js";
 import { clientError, successWithData } from "../util/http/httpResponse.js";
 
 const getUnverifiedOrganizers = async (req, res, next) => {
-    User.find({verificationStatus: OrganizerStatus.VERIFICATION_IN_PROGRESS},
+    User.find({'organizer.info.verificationStatus': OrganizerStatus.VERIFICATION_IN_PROGRESS},
         async (err, users) => {
             if (err){
-                return res.status(400).send({
-                    message: err.message
-                })            
+                return clientError(res,  err.message)            
             }
-            return res.status(200).send({
-                users: users
-            })
+            return successWithData(res, {user: users})
         })
 }
 

@@ -20,11 +20,10 @@ function VerifyOrganizerForm(props){
     const organizerList = () => {
         const {data, isLoading, isError, isSuccess, message} = useSelector((state) => state.verifyOrganizer)
 
-        console.log(data)
-        console.log(typeof(data))
         if (!data.users){ return }
         const renderedList = data.users.map(organizer => {
-            return <VerifyOrganizerNode name={organizer.userInfo.firstName} email={organizer.userInfo.email}/>
+            const name = organizer.userInfo.firstName + " " + organizer.userInfo.lastName
+            return <VerifyOrganizerNode name={name} email={organizer.userInfo.email}/>
         })
 
         return renderedList
