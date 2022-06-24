@@ -53,7 +53,7 @@ function Login() {
 
     return (
         <div className="Login">
-            <LoginForm onSubmit={onSubmit} onChange={onChange} error={formError}/>
+            <LoginForm loading={isLoading} onSubmit={onSubmit} onChange={onChange} error={formError}/>
         </div>
     );
 }
