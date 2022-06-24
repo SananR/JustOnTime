@@ -45,6 +45,7 @@ function EventSlider(props) {
     function createEventCards() {
         return props.events.map(event => {
             return <EventCard
+                key={event.id.toString()}
                 title={event.title}
                 date={event.date}
                 time={event.time}
@@ -68,7 +69,7 @@ function EventSlider(props) {
             showDots={true}
             ssr={true}
             infinite={true}
-            partialVisbile={true}
+            partialVisible={true}
         >
             {createEventCards()}
         </Carousel>

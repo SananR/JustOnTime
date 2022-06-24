@@ -12,6 +12,7 @@ import EventSlider from "../../../../components/event/slider/EventSlider";
 function CustomerHome() {
     const events = [
         {
+            id: 1,
             title: "Harry Styles",
             date: "Tue 8/16",
             time: "8:30 PM",
@@ -23,6 +24,7 @@ function CustomerHome() {
             icon: <GiMusicalNotes className="position-absolute start-0 top-0 ms-2 mt-2" size={40} color={"white"}/>
         },
         {
+            id: 2,
             title: "Toronto Blue Jays",
             date: "Mon 6/27",
             time: "7:07 PM",
@@ -35,6 +37,7 @@ function CustomerHome() {
             icon: <MdSportsFootball className="position-absolute start-0 top-0 ms-2 mt-2" size={40} color={"white"}/>
         },
         {
+            id: 3,
             title: "Graydon Hall Manor",
             date: "Mon 8/1",
             time: "7:00 AM",
@@ -47,6 +50,7 @@ function CustomerHome() {
             icon: <GiBigDiamondRing className="position-absolute start-0 top-0 ms-2 mt-2" size={40} color={"white"}/>
         },
         {
+            id: 4,
             title: "Harry Styles",
             date: "Tue 8/16",
             time: "8:30 PM",
@@ -58,6 +62,7 @@ function CustomerHome() {
             icon: <GiMusicalNotes className="position-absolute start-0 top-0 ms-2 mt-2" size={40} color={"white"}/>
         },
         {
+            id: 5,
             title: "Toronto Blue Jays",
             date: "Mon 6/27",
             time: "7:07 PM",
@@ -70,6 +75,7 @@ function CustomerHome() {
             icon: <MdSportsFootball className="position-absolute start-0 top-0 ms-2 mt-2" size={40} color={"white"}/>
         },
         {
+            id: 6,
             title: "Graydon Hall Manor",
             date: "Mon 8/1",
             time: "7:00 AM",
@@ -82,6 +88,7 @@ function CustomerHome() {
             icon: <GiBigDiamondRing className="position-absolute start-0 top-0 ms-2 mt-2" size={40} color={"white"}/>
         },
         {
+            id: 7,
             title: "Harry Styles",
             date: "Tue 8/16",
             time: "8:30 PM",
