@@ -1,6 +1,8 @@
 import React from 'react';
 import "./main.css";
 
+import logo from "./logo.png";
+
 function OrganizerMain() {
     return (
         <div>
@@ -9,6 +11,20 @@ function OrganizerMain() {
                 <button id="createEvent">New Event</button>
             </div>
             <div class="list">
+            import logo from './logo.png'
+                <button id="button1" class="event">
+                    <img src={logo} alt='JustOnTime' width="300" height="100"/><br></br>
+                    Event 1<br></br>
+                    Date: Jan 1<br></br>
+                    Highest: $0
+                </button>
+
+                <div id="div1">
+                    <img src={logo} alt='JustOnTime' width="300" height="100"/><br></br>
+                    Event 1<br></br>
+                    Date: Jan 1<br></br>
+                    Highest: $0
+                </div>
                 <button class="event">Event 1</button>
                 <button class="event">Event 2</button>
                 <button class="event">Event 3</button>
