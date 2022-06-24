@@ -26,7 +26,7 @@ function Login() {
             setFormError(() => ("Invalid credentials. Please try again."))
         }
         if (isSuccess /* TODO: uncomment */ /*|| user */) {
-            navigate('/dashboard')
+            navigate('/')
         }
     }, [user, isError, isSuccess, message, isLoading]);
 
