@@ -14,9 +14,22 @@ const loadOrganizers = createAsyncThunk('verifyOrganizer/load', async (thunkAPI)
     }
 })
 
+//Verify Organizer
+const verifyOrganizer = createAsyncThunk('verifyOrganizer/verify', async (email, thunkAPI) => {
+    try {
+        console.log(email)
+        return await verifyOrganizerService.verifyOrganizer(email);
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) 
+            || error.message || error.toString();
+        console.log(error)
+        return thunkAPI.rejectWithValue(message);    
+    }
+})
+
 
 const initialState = {
-    data: {},
+    unverifiedOrganizers: [],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -27,10 +40,6 @@ const verifyOrganizerSlice = createSlice({
     name: "verifyOrganizer",
     initialState,
     reducers: {
-        organizersLoaded(state, action){
-            // console.log(action.payload)
-            state.data = action.payload
-        }
     },
     extraReducers: (builder) => {
         builder
@@ -39,7 +48,7 @@ const verifyOrganizerSlice = createSlice({
             })
             .addCase(loadOrganizers.fulfilled, (state, action) => {
                 // console.log(action.payload)
-                state.data = action.payload
+                state.unverifiedOrganizers = action.payload.users //reconside the name
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.message = "";
@@ -49,10 +58,32 @@ const verifyOrganizerSlice = createSlice({
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
-                state.data = {};
+                state.unverifiedOrganizers = [];
+            })
+            .addCase(verifyOrganizer.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(verifyOrganizer.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.message = "";
+                try {
+                    state.unverifiedOrganizers = state.unverifiedOrganizers.filter(organizer => {
+                        return organizer._id !== action.payload.user._id
+                    })
+                } catch (e) {
+                    console.log(e)
+                }
+                
+            })
+            .addCase(verifyOrganizer.rejected, (state, action) => {
+                console.log("verifyOrganizer was rejected: " + action.payload)
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
             })
     }
 })
 
-export { loadOrganizers }
+export { loadOrganizers, verifyOrganizer }
 export default verifyOrganizerSlice.reducer;

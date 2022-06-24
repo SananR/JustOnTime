@@ -7,7 +7,7 @@ function VerifyOrganizerNode(props){
             <div class="row p-3">            
                 <p id="verify-organizer-node-name" class="col m-2 text-center my-auto overflow-auto hide-scroll-bar">{props.name}</p>
                 <p id="verify-organizer-node-email" class="col m-2 text-center my-auto overflow-auto hide-scroll-bar">{props.email}</p>
-                <button id="verify-organizer-node-button" class="col m-2 btn btn-outline-success">Verify</button>
+                <button id="verify-organizer-node-button" class="col m-2 btn btn-outline-success" onClick={props.onClick}>Verify</button>
             </div>
 
         </div>
