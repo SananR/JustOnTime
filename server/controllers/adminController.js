@@ -8,7 +8,7 @@ const getUnverifiedOrganizers = async (req, res, next) => {
             if (err){
                 return clientError(res,  err.message)            
             }
-            return successWithData(res, {user: users})
+            return successWithData(res, {users: users})
         })
 }
 
@@ -16,8 +16,8 @@ const updateOrganizerStatus = async (req, res, next) => {
     if (!req.body.verificationStatus) {
         return clientError(res, "body field 'verificationStatus' is missing")
     }
-    const filter = {userInfoL: { email: req.body.email } }
-    const update = {organizer: { info: { verificationStatus: req.body.verificationStatus } } }
+    const filter = {'userInfo.email': req.body.email } 
+    const update = {'organizer.info.verificationStatus': req.body.verificationStatus }
     const options = { new: true };
 
     User.findOneAndUpdate(filter, update, options, (err, user) => {

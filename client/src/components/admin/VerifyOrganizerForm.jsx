@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch, getState} from 'react-redux'
+import {Modal, Button} from 'react-bootstrap';
 import { loadOrganizers, verifyOrganizer } from "../../features/verifyOrganizers/verifyOrganizerSlice"
 import VerifyOrganizerNode from './node/verifyOrganizerNode'
 import './verifyOrganizerForm.css'
@@ -24,8 +25,7 @@ function VerifyOrganizerForm(props){
         const {unverifiedOrganizers, isLoading, isError, isSuccess, message} = useSelector((state) => state.verifyOrganizer)
         if (!unverifiedOrganizers){ return }
         const renderedList = unverifiedOrganizers.map(organizer => {
-            const name = organizer.userInfo.firstName + " " + organizer.userInfo.lastName
-            return <VerifyOrganizerNode name={name} email={organizer.userInfo.email} onClick={() => {onClick(organizer.userInfo.email)}}/>
+            return <VerifyOrganizerNode organizer={organizer} onClick={() => {onClick(organizer.userInfo.email)}}/>
         })
 
         return renderedList
