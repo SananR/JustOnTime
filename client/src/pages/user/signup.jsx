@@ -40,7 +40,7 @@ function Signup() {
             }))
         }
         else if (isSuccess /* TODO: uncomment */ /*|| user */) {
-            navigate('/dashboard')
+            navigate('/')
         }
     }, [user, isError, isSuccess, message, isLoading]);
 
