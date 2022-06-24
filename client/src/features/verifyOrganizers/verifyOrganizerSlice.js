@@ -28,7 +28,7 @@ const verifyOrganizerSlice = createSlice({
     initialState,
     reducers: {
         organizersLoaded(state, action){
-            console.log(action.payload)
+            // console.log(action.payload)
             state.data = action.payload
         }
     },
