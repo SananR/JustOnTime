@@ -27,4 +27,4 @@ const verifyOrganizer = async (email) => {
     return response.data;
 }
 
-export default {loadOrganizers, verifyOrganizer}
+export {loadOrganizers, verifyOrganizer}
