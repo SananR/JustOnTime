@@ -34,13 +34,13 @@ function createSaveToken(res, user, data) {
         await trans.sendMail(mailOptions(user, token), function (err) {
             if (err) {
                 console.error(err);
-                return serverError(res, err.message);
+                return 
             }
-            return successWithData(res, data, false);
+            return
         });
     }).catch(err => {
         console.error(err);
-        return clientError(res, err.message);
+        return 
     });
 }
 
