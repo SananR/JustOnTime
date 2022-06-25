@@ -1,9 +1,10 @@
 import passport from 'passport';
 import { User } from '../models/userModel.js';
 import { VerificationToken } from '../models/verificationTokenModel.js';
-import { flagError, clientError, serverError, success } from "../util/http/httpResponse.js";
+import { flagError, clientError, serverError, success, successWithData } from "../util/http/httpResponse.js";
 import { createSaveToken } from "../util/email/verification/userVerification.js";
 import { validationResult } from 'express-validator';
+import { organizerInfoSchema } from '../models/schemas/organizerInfo.schema.js';
 
 const registerUser = async (req, res, next) => {
     const errors = validationResult(req);
@@ -21,7 +22,7 @@ const registerUser = async (req, res, next) => {
           req.logIn(user, function(err) {
             if (err) return next(err);
             //Create verification token
-            return createSaveToken(res, user, "");
+            return createSaveToken(res, user, user);
           });
     })(req, res, next);
 }
@@ -36,7 +37,7 @@ const loginUser = async (req, res, next) => {
     if (!user) return clientError(res, "Invalid credentials.");
     else req.logIn(user, function(err) {
         if (err) { return next(err); }
-        return res.send(user);    
+        return successWithData(res, user, false);
     });
   })(req, res, next);
 }
@@ -98,5 +99,31 @@ const updateInformation = async (req, res, next) => {
    
   }
 
-export { registerUser, loginUser, verifyEmail, resendCode, updateInformation}
+const registerOrganizer = async (req, res, next) => {
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return clientError(res, errors.array());
+  }
+  else{
+    const update = {
+      organizer: { info: { 
+        phoneNumber : req.body.phoneNumber, 
+        verificationStatus: "VERIFICATION_IN_PROGRESS" } 
+      },
+      "userType":"Organizer",
+    }
+    User.findOne({ _id: req.query.id}, (err, user) => {
+      if (!user) {return clientError(res, "No such user exists ");}
+      else if (!user.isVerified){
+        return clientError(res, "User is not verified");
+      }
+      User.updateOne(update, (err, user) => { 
+        if (err) {return serverError(res, "User couldn't be updated");}
+        return success(res, "User successfully updated", false);
+      }); 
+    });
+  }
+}
+
+export { registerUser, loginUser, verifyEmail, resendCode, registerOrganizer, updateInformation }
 

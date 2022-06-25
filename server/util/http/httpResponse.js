@@ -20,6 +20,11 @@ function success(res, message, create) {
     return res.status(code).send({message: message});
 }
 
+function successWithData(res, data, create) {
+    const code = create ? 201 : 200;
+    return res.status(code).send(data);
+}
 
 
-export {flagError, clientError, serverError, success}
+
+export {flagError, clientError, serverError, success, successWithData}

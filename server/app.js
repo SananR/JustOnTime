@@ -15,14 +15,14 @@ dotenv.config();
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
 // configure session
 var sessionStore = new MongoDBStore(session)({
     uri: process.env.JUSTONTIME_DB_URI_LOCAL, //process.env.JUSTONTIME_DB_URI (use this on production)
-    collection: process.env.JUSTONTIME_DB
+    collection: process.env.SESSION_COLLECTION
   });
 // Catch errors
 sessionStore.on('error', function(error) {

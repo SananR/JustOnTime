@@ -1,21 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
-import { loginUser } from '../../features/auth/authSlice'
-
+import {loginUser, reset} from '../../features/auth/authSlice'
 import LoginForm from '../../components/forms/login/LoginForm'
 
 function Login() {
 
-    const [errorMessageUser, setErrorMessageUser] = useState("");
-    const [errorMessagePass, setErrorMessagePass] = useState("");
-
-     const errors = {
-        username: "Username Required",
-        usernotfound: "Username not found",
-        password: "Password Required",
-        passnotfound: "Invalid Password"
-    };
+    const [formError, setFormError] = useState(false);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -30,13 +21,14 @@ function Login() {
     const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
 
     useEffect(() => {
+        //login failed
         if (isError) {
-            //handle error
+            setFormError(() => ("Invalid credentials. Please try again."))
         }
-        if (isSuccess /*|| user*/) {
+        if (isSuccess /* TODO: uncomment */ /*|| user */) {
             navigate('/')
         }
-    }, [user, isError, isSuccess, message, navigate, dispatch]);
+    }, [user, isError, isSuccess, message, isLoading]);
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -46,34 +38,22 @@ function Login() {
     }
 
     const onSubmit = (e) => {
+        /*
+        TODO: Remove
+         */
+        dispatch(reset());
         e.preventDefault();
 
-        var email = document.getElementById("email").value;
-        var password = document.getElementById("password").value;
-
-        if(email === "" || password === ""){
-            if (email === ""  && password === ""){
-                setErrorMessageUser(errors.username)
-                setErrorMessagePass(errors.password)
-            } else if (email === ""){
-                setErrorMessagePass("")
-                setErrorMessageUser(errors.username)
-            } else if (email === "") {
-                setErrorMessageUser("")
-                setErrorMessagePass(errors.password)
-            }
-        } else {
-            const userData = {
-                email,
-                password
-            }
-            dispatch(loginUser(userData))
+        const userData = {
+            email,
+            password
         }
+        dispatch(loginUser(userData))
     }
 
     return (
         <div className="Login">
-            <LoginForm />
+            <LoginForm loading={isLoading} onSubmit={onSubmit} onChange={onChange} error={formError}/>
         </div>
     );
 }

@@ -1,17 +1,21 @@
 import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
-import {registerUser, reset} from '../../features/auth/authSlice'
+import {registerUser} from '../../features/auth/authSlice'
+import {InputValidator} from "../../util/validation/InputValidator";
 
 import SignUpForm from "../../components/forms/signup/SignUpForm";
 
 function Signup() {
 
-    const [errorName, setErrorName] = useState("");
-    const [errorLastname, setErrorLastname] = useState("");
-    const [errorEmail, setErrorEmail] = useState("");
-    const [errorPassword, setErrorPassword] = useState("");
-    const [errorConfirm, setErrorConfirm] = useState("");
+    const [formError, setFormError] = useState({
+        firstNameError: false,
+        lastNameError: false,
+        emailError: false,
+        passwordError: false,
+        password2Error: false,
+        formError: false
+    })
 
     const [formData, setFormData] = useState({
         firstName: '',
@@ -30,14 +34,15 @@ function Signup() {
 
     useEffect(() => {
         if (isError) {
-            //handle error
+            setFormError((prevState) => ({
+                ...prevState,
+                "formError": message
+            }))
         }
-        if (isSuccess /*|| user*/) {
-            navigate('/verification-required')
+        else if (isSuccess /* TODO: uncomment */ /*|| user */) {
+            navigate('/')
         }
-
-
-    }, [user, isError, isSuccess, message, navigate, dispatch]);
+    }, [user, isError, isSuccess, message, isLoading]);
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -49,40 +54,36 @@ function Signup() {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        var firstName = document.getElementById("first_name").value; 
-        var lastName = document.getElementById("last_name").value;
-        var email = document.getElementById("email").value;  
-        var password = document.getElementById("password").value;
-        var password2 = document.getElementById("password2").value; 
+        let firstNameValid = new InputValidator(firstName).minLength(2).maxLength(50).isValid;
+        let lastNameValid = new InputValidator(lastName).minLength(2).maxLength(50).isValid;
+        let emailValid = new InputValidator(email).minLength(5).maxLength(50).isValid;
+        let passwordValid = new InputValidator(password).minLength(6).maxLength(50).matches(/\d/).isValid;
+        let password2Valid = new InputValidator(password2).equals(password).isValid;
 
-        const values = [firstName, lastName, email, password, password2]; 
-        const names = ["Name", "Lastname", "Email", "Password", "Confirm"]; 
-        const funcs = [setErrorName, setErrorLastname, setErrorEmail, setErrorPassword, setErrorConfirm]
-        var empty = 0
-        for (var i in values){
-            if(values[i] === ""){
-                funcs[i](names[i] + " Required")
-                empty++;
-            } else {
-                funcs[i]("")
-            }
-        }
-        if(empty == 0 ){
+        setFormError((prevState) => ({
+            ...prevState,
+            "firstNameError": firstNameValid ? false : "Enter a valid first name",
+            "lastNameError": lastNameValid ? false : "Enter a valid last name",
+            "emailError": emailValid ? false : "Enter a valid email address",
+            "passwordError": passwordValid ? false : "Enter a valid password",
+            "password2Error": password2Valid ? false : "Passwords must match"
+        }))
+        let formValid = firstNameValid && lastNameValid && emailValid && passwordValid && password2Valid;
+
+        if (formValid) {
             const userData = {
-                firstName,
-                lastName,
-                email,
-                password
+                "firstName": firstName,
+                "lastName": lastName,
+                "email": email,
+                "password": password,
             }
-
-            dispatch(registerUser(userData))
+            dispatch(registerUser(userData));
         }
-
     }
 
     return (
         <div className="Signup">
-            <SignUpForm />
+            <SignUpForm loading={isLoading} onSubmit={onSubmit} onChange={onChange} error={formError}/>
         </div>
     );
 }
