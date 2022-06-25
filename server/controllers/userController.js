@@ -85,6 +85,20 @@ const resendCode = async (req, res, next) => {
   })
 }
 
+
+// request body {"update": {{userInfo.field: newValue},{organizer.field: newValue}} , id: id}
+//cannot update email or password with this
+const updateInformation = async (req, res, next) => {
+    const id = req.body.id
+    const update = req.body.update; 
+    User.findByIdAndUpdate(id, update, {new: true},  async (err, user) => {
+      console.log(user); 
+      if (!user) return clientError(res, "Unable to update the field at this time. Please try again later. ");
+      else return success(res, user, false);
+    }); 
+   
+  }
+
 const registerOrganizer = async (req, res, next) => {
   const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -111,5 +125,5 @@ const registerOrganizer = async (req, res, next) => {
   }
 }
 
-export { registerUser, loginUser, verifyEmail, resendCode, registerOrganizer }
+export { registerUser, loginUser, verifyEmail, resendCode, registerOrganizer, updateInformation }
 
