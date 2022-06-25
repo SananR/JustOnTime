@@ -1,0 +1,22 @@
+.testing {
+    transition: ease-in-out 0.1s;
+}
+.testing:hover {
+    transform: scale(1.05);
+}
+.cover-shadow {
+    box-shadow: inset 0px 0px 50px 10px white;
+    overflow: clip;
+    z-index: 1;
+}
+.testing2 {
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+.top-slider-container {
+    height: 500px;
+}
