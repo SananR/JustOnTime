@@ -11,3 +11,7 @@ a:focus {
 {
     font-family: "Varela Round" !important;
 }
+p {
+    margin-top: inherit !important;
+    margin-bottom: inherit !important;
+}

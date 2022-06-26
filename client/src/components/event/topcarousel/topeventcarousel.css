@@ -1,0 +1,63 @@
+.cover-shadow:hover ~ .arrow {
+    transform: scale(0.8) translateX(210px);
+}
+.cover-shadow:hover ~ .arrow-text {
+     opacity: 1;
+ }
+.arrow-text {
+    font-size: 1.75em;
+    font-weight: bold;
+    color: aqua;
+    letter-spacing: -1px;
+    z-index: 3;
+    opacity: 0;
+    transition: 0.35s ease-in-out;
+}
+.arrow {
+    z-index: 3;
+    pointer-events: none;
+    transition: 0.3s ease-in-out;
+    margin-top: -3.25em;
+}
+.top-event-image {
+    background-position: center;
+    background-size: cover;
+}
+.top-event-title {
+    font-size: 4.5em;
+    letter-spacing: -5px;
+    text-shadow: 2px 2px 20px black;
+    pointer-events: none;
+    z-index: 2;
+    color: white;
+    margin-top: 10% !important;
+}
+.top-event-meta {
+    font-size: 2em;
+    letter-spacing: -3px;
+    text-shadow: 2px 2px 10px black;
+    pointer-events: none;
+    z-index: 2;
+    color: #bbbbbb;
+}
+.cover-shadow {
+    z-index: 2;
+    transition: linear 0.1s;
+    background: black;
+    opacity: 0;
+}
+.cover-shadow:hover {
+    opacity: 0.25;
+}
+.testing2 {
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+.top-slider-container {
+    height: 500px;
+    cursor: pointer;
+}

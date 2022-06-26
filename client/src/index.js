@@ -15,6 +15,7 @@ import {Provider} from 'react-redux'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import './stylesheet.css'
+import AdminDashboard from './pages/admin/dashboard'
 
 export default function App() {
   return (
@@ -22,11 +23,14 @@ export default function App() {
     <Router>
         <Header />
         <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<CustomerHome />} />
             <Route path="personal-info" element={<CustomerInfo />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="dashboard" element={<CustomerHome />} />
+            <Route path="admin">
+              <Route path="dashboard" element={<AdminDashboard />} />
+            </Route>
             <Route path="customer">
               <Route path="verification-required" element={<CustomerVerificationRequired />} />
               <Route path="verifyemail">              

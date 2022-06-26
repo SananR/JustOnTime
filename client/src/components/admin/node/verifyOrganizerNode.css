@@ -1,0 +1,40 @@
+#verify-organizer-node-container {
+    background-color: lightgray;
+    animation: fadein 3s;
+    animation-fill-mode: both;
+}
+
+/* .hide-scroll-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+.hide-scroll-bar{
+    -ms-overflow-style: none;
+    scrollbar-width: none
+} */
+
+.hide-scroll-bar{
+    word-wrap: break-word;      /* IE 5.5-7 */
+    white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+    white-space: pre-wrap;
+}
+
+.my-modal {
+    width: 90vw;    /* Occupy the 90% of the screen width */
+    max-width: 90vw;
+} 
+
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}

@@ -79,7 +79,7 @@ function SignUpForm(props) {
                 </form>
             </div>
             <div id="right-container" className="bg-image col d-flex flex-column container justify-content-center align-items-center">
-                <h1 id="boundless-text" className="text-center"><strong>BOUNDLESS EXPERIENCE</strong></h1>
+                <h1 id="boundless-text" className="text-center"><strong>BOUNDLESS OPPORTUNITY</strong></h1>
                 <h2 id="clicks-text" className="text-center"><strong>Just a few clicks away...<HiCursorClick id="cursor-icon" className="mb-4 ms-2" color="white" size={50}/></strong></h2>
             </div>
         </div>
