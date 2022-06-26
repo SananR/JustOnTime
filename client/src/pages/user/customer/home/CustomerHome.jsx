@@ -1,5 +1,5 @@
 import React from 'react'
-import {useSelector} from 'react-redux'
+
 import cardBackground from "../../../../card-bg.jpg"
 import cardBackground2 from "../../../../card-bg2.jpg"
 import cardBackground3 from "../../../../card-bg3.jpg"
@@ -134,7 +134,6 @@ function CustomerHome() {
         }
     ];
 
-    const {user} = useSelector((state) => state.auth)
     return (
         <div className="container-fluid w-100 h-100">
             <TopEventCarousel

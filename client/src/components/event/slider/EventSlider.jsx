@@ -9,8 +9,13 @@ import "./eventslider.css"
 function EventSlider(props) {
 
     const responsive = {
+        bigdesktop: {
+            breakpoint: { max: 3000, min: 1800 },
+            items: 5,
+            slidesToSlide: 5,
+        },
         desktop: {
-            breakpoint: { max: 3000, min: 1300 },
+            breakpoint: { max: 1800, min: 1300 },
             items: 4,
             slidesToSlide: 4,
             partialVisibilityGutter: 10

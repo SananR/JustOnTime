@@ -1,23 +1,25 @@
 import React from "react";
 import Carousel from "react-multi-carousel"
 
-import backgroundImage from "../../../card-bg2.jpg"
-import backgroundImage2 from "../../../card-bg3.jpg"
-import backgroundImage3 from "../../../card-bg.jpg"
-
 import "./topeventcarousel.css"
 import "react-multi-carousel/lib/styles.css";
+
+import {HiArrowCircleRight} from "react-icons/hi";
 
 
 function EventSlide(props) {
     return (
         <div className="container-fluid position-relative d-flex testing w-100 h-100 bg-image">
-            <div className="position-absolute w-100 h-100 cover-shadow"></div>
-            <div className="w-100 h-100 position-absolute d-flex flex-column align-items-end justify-content-center">
-                <h1 className="w-100 ps-4 pt-5 top-event-title">{props.title}</h1>
-                <h1 className="w-100 ps-4 top-event-meta">{props.date} • {props.time} • {props.location}</h1>
+            <div className="w-100 h-100 position-absolute d-flex flex-column align-items-start justify-content-center">
+                <div className="position-absolute w-100 h-100 cover-shadow"></div>
+                <div className="d-flex justify-content-start align-items-end w-100 ">
+                    <h1 className="ps-4 pt-5 top-event-title">{props.title}</h1>
+                </div>
+                <h1 className="ps-4 top-event-meta">{props.date} • {props.time} • {props.location}</h1>
+                <h1 className="arrow-text ps-4 mt-1">SEE DETAILS</h1>
+                <HiArrowCircleRight className="arrow ms-4 mb-1" color={"aqua"} size={50}/>
             </div>
-            <img className="top-event-image testing2 w-100 h-100 img-fluid" src={props.image}/>
+            <img className="top-event-image testing2 w-100 h-100 img-fluid" alt="event" src={props.image}/>
         </div>
     )
 }

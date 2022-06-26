@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import { useEffect } from "react";
-import {Modal, Button} from 'react-bootstrap';
+import {Modal} from 'react-bootstrap';
 import './verifyOrganizerNode.css'
 
 function VerifyOrganizerNode(props){
