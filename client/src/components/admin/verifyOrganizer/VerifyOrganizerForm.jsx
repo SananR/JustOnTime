@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { loadOrganizers, verifyOrganizer } from "../../../features/verifyOrganizers/verifyOrganizerService";
-import VerifyOrganizerNode from '../node/verifyOrganizerNode'
+import VerifyOrganizerNode from '../node/VerifyOrganizerNode'
 import './verifyOrganizerForm.css'
 
 
