@@ -35,7 +35,7 @@ export default function App() {
                 </Route>
               </Route>
             </Route>
-            <Route path="main" element={<OrganizerMain/>} />
+            <Route path="organizer/main" element={<OrganizerMain/>} />
         </Routes>
     </Router>
   </>
