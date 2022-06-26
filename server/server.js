@@ -1,6 +1,7 @@
 import app from './app.js';
 import mongoose from 'mongoose';
 import { User } from './models/userModel.js';
+import { Event } from './models/eventModel.js';
 
 const port = process.env.PORT || 3000;
 const uri = process.env.JUSTONTIME_DB_URI_LOCAL; //process.env.JUSTONTIME_DB_URI (use this on production)

@@ -1,6 +1,16 @@
 import mongoose from 'mongoose'
 import { addressSchema } from '../address.schema.js'
 
+const EventStatus = {
+    REJECTED: "REJECTED",
+    UNDER_REVIEW: "UNDER_REVIEW",
+    NEEDS_RESUBMISSION: "NEEDS_RESUBMISSION",
+    ONGOING: "ONGOING",
+    COMPLETED: "COMPLETED",
+    CANCELED: "CANCELED"
+}
+
+Object.freeze(EventStatus)
 
 const eventInfoSchema = mongoose.Schema({
     name: {
@@ -24,9 +34,9 @@ const eventInfoSchema = mongoose.Schema({
     status: {
         type: String,
         required: false,
-        enum : ['Completed','Ongoing', 'UnderReview','Cancelled'],
-        default: 'UnderReview'
+        enum : ["REJECTED", "UNDER_REVIEW", "NEEDS_RESUBMISSION", "ONGOING", "COMPLETED", "CANCELED"],
+        default: 'UNDER_REVIEW'
     }
 });
 
-export { eventInfoSchema }
+export { eventInfoSchema, EventStatus }

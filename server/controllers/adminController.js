@@ -1,5 +1,7 @@
 import { User  } from "../models/userModel.js"
+import { Event } from "../models/eventModel.js"
 import { OrganizerStatus } from "../models/schemas/organizerInfo.schema.js";
+import { EventStatus } from "../models/schemas/event/eventInfo.schema.js"
 import { clientError, successWithData } from "../util/http/httpResponse.js";
 
 const getUnverifiedOrganizers = async (req, res, next) => {
@@ -28,4 +30,14 @@ const updateOrganizerStatus = async (req, res, next) => {
     })
 }
 
-export { getUnverifiedOrganizers, updateOrganizerStatus }
+const getUnverifiedEvents = async (req, res, next) => {
+    Event.find({'eventInfo.status': EventStatus.UNDER_REVIEW},
+        async (err, events) => {
+            if (err){
+                return clientError(res,  err.message)            
+            }
+            return successWithData(res, {events: events})
+        })
+}
+
+export { getUnverifiedOrganizers, updateOrganizerStatus, getUnverifiedEvents }
