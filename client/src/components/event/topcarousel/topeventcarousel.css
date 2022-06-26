@@ -1,13 +1,30 @@
-.testing {
-    transition: ease-in-out 0.1s;
+.top-event-image {
+    background-position: center;
+    background-size: cover;
 }
-.testing:hover {
-    transform: scale(1.05);
+.top-event-title {
+    font-size: 4.5em;
+    letter-spacing: -5px;
+    text-shadow: 2px 2px 20px black;
+    z-index: 2;
+    color: white;
+    margin-top: 10% !important;
+}
+.top-event-meta {
+    font-size: 2em;
+    letter-spacing: -3px;
+    text-shadow: 2px 2px 10px black;
+    z-index: 2;
+    color: #bbbbbb;
 }
 .cover-shadow {
-    box-shadow: inset 0px 0px 50px 10px white;
-    overflow: clip;
     z-index: 1;
+    transition: linear 0.1s;
+    background: black;
+    opacity: 0;
+}
+.cover-shadow:hover {
+    opacity: 0.25;
 }
 .testing2 {
     user-drag: none;
