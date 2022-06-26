@@ -2,6 +2,8 @@ import mongoose from 'mongoose'
 import { eventInfoSchema } from './schemas/event/eventInfo.schema.js'
 import { bidInfoSchema } from './schemas/event/bidInfo.schema.js';
 
+
+
 const eventSchema = mongoose.Schema({
     eventInfo: {
         type: eventInfoSchema,
@@ -24,7 +26,6 @@ const eventSchema = mongoose.Schema({
         type: String, // referes to the eventImage's id
         required: true
     }
-
 });
 
 const Event = mongoose.model("Event", eventSchema);
