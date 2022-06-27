@@ -1,6 +1,7 @@
 #user-button {
     width: 5.5rem;
     height: 3rem;
+    z-index: 3;
 }
 
 #user-button:hover {

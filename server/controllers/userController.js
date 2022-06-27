@@ -22,7 +22,7 @@ const registerUser = async (req, res, next) => {
           req.logIn(user, function(err) {
             if (err) return next(err);
             //Create verification token
-              return successWithData()
+            return successWithData(res, user, false)
             return createSaveToken(res, user, user);
           });
     })(req, res, next);
