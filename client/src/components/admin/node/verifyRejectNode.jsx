@@ -18,7 +18,7 @@ function VerifyRejectNode(props){
                 <button id="reject-reject-node-button" className="col m-2 btn btn-outline-danger" onClick={props.onClickReject}>Reject</button>
             </div>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} centered onHide={handleClose}>
                 <Modal.Header closeButton>
                 <Modal.Title>Organizer Detail</Modal.Title>
                 </Modal.Header>

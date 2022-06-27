@@ -19,10 +19,6 @@
     white-space: pre-wrap;
 }
 
-.my-modal {
-    width: 90vw;    /* Occupy the 90% of the screen width */
-    max-width: 90vw;
-} 
 
 
 @keyframes fadein {

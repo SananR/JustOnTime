@@ -28,6 +28,7 @@ function VerifyEventForm(props){
             setUnverifiedEvents(unverifiedEvents.filter(event => {
                 return event._id !== data.event._id
             }))
+            props.onDeleteNode("Event verified successfully")
         } catch (e) {
             console.log(e)
         }
@@ -39,6 +40,7 @@ function VerifyEventForm(props){
             setUnverifiedEvents(unverifiedEvents.filter(event => {
                 return event._id !== data.event._id
             }))
+            props.onDeleteNode("Event rejected successfully")
         } catch (e) {
             console.log(e)
         }
