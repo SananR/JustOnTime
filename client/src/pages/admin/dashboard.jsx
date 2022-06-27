@@ -24,9 +24,7 @@ function AdminDashboard() {
     return (
         <div className="AdminDashboard">
             <Modal show={show} centered onHide={handleClose}>
-                <Modal.Header closeButton style={{padding:"3rem 2rem 3rem 2rem"}}>
-                <Modal.Title>{popupText}</Modal.Title>
-                </Modal.Header>
+                <Modal.Body className="p-5 h3 text-center">{popupText}</Modal.Body>
             </Modal>
 
             <div id="content">
