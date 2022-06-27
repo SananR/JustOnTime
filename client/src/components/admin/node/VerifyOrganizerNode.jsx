@@ -16,7 +16,8 @@ function VerifyOrganizerNode(props){
             <div class="row p-3" onClick={handleShow}>            
                 <p id="verify-organizer-node-name" class="col m-2 text-center my-auto overflow-auto hide-scroll-bar">{name}</p>
                 <p id="verify-organizer-node-email" class="col m-2 text-center my-auto overflow-auto hide-scroll-bar">{props.organizer.userInfo.email}</p>
-                <button id="verify-organizer-node-button" class="col m-2 btn btn-outline-success" onClick={props.onClick}>Verify</button>
+                <button id="verify-organizer-node-button" class="col m-2 btn btn-outline-success" onClick={props.onClickVerify}>Verify</button>
+                <button id="reject-organizer-node-button" class="col m-2 btn btn-outline-danger" onClick={props.onClickReject}>Reject</button>
             </div>
 
             <Modal show={show} onHide={handleClose}>

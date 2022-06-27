@@ -14,7 +14,7 @@ const registerUser = async (req, res, next) => {
     await passport.authenticate("registerUser", {},
     (err, user, info) => {
         if (err) {
-            const duplicate = flagError(res, err.message, "duplicate",  400,"There is already an account with the specified email.")
+            const duplicate = flagError(res, err.message, "duplicate", 400, "There is already an account with the specified email.")
             if (duplicate) return duplicate;
             else return clientError(res, err.message);
         }
@@ -22,8 +22,8 @@ const registerUser = async (req, res, next) => {
           req.logIn(user, function(err) {
             if (err) return next(err);
             //Create verification token
-              return successWithData()
-            return createSaveToken(res, user, user);
+              return successWithData(res, user, true)
+            // return createSaveToken(res, user, user);
           });
     })(req, res, next);
 }

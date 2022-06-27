@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { loadOrganizers, verifyOrganizer } from "../../../features/verifyOrganizers/verifyOrganizerService";
+import { loadOrganizers, verifyOrganizer, rejectOrganizer } from "../../../features/verifyOrganizers/verifyOrganizerService";
 import VerifyOrganizerNode from '../node/VerifyOrganizerNode'
 import './verifyOrganizerForm.css'
 
@@ -8,20 +8,33 @@ function VerifyOrganizerForm(props){
     
     const [unverifiedOrganizers, setUnverifiedOrganizers] = useState([]);
     
-    useEffect(async () => {
-        try {
+    useEffect(() => {
+        const getAllOrganizers = async () => {
             const organizers = await loadOrganizers()
             setUnverifiedOrganizers(organizers.users);
-        } catch (error) {
+        }
+
+        getAllOrganizers().catch((error) => {
             const message = (error.response && error.response.data && error.response.data.message) 
                 || error.message || error.toString();
             console.log(message)
-        }
+        })
     }, [])
     
-    const onClick = async (email) => {
+    const onClickVerify = async (email) => {
         try {
             const data = await verifyOrganizer(email)
+            setUnverifiedOrganizers(unverifiedOrganizers.filter(organizer => {
+                return organizer._id !== data.user._id
+            }))
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const onClickReject = async (email) => {
+        try {
+            const data = await rejectOrganizer(email)
             setUnverifiedOrganizers(unverifiedOrganizers.filter(organizer => {
                 return organizer._id !== data.user._id
             }))
@@ -33,7 +46,11 @@ function VerifyOrganizerForm(props){
     const organizerList = () => {
         if (!unverifiedOrganizers){ return }
         const renderedList = unverifiedOrganizers.map(organizer => {
-            return <VerifyOrganizerNode organizer={organizer} onClick={() => {onClick(organizer.userInfo.email)}}/>
+            return <VerifyOrganizerNode 
+                key={organizer._id}
+                organizer={organizer} 
+                onClickVerify={() => {onClickVerify(organizer.userInfo.email)}} 
+                onClickReject={() => {onClickReject(organizer.userInfo.email)}}/>
         })
         return renderedList
     }
