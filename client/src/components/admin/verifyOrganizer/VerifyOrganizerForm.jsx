@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { loadOrganizers, verifyOrganizer, rejectOrganizer } from "../../../features/verifyOrganizers/verifyOrganizerService";
-import VerifyOrganizerNode from '../node/VerifyOrganizerNode'
+import VerifyRejectNode from '../node/verifyRejectNode.jsx'
 import './verifyOrganizerForm.css'
 
 
@@ -46,9 +46,11 @@ function VerifyOrganizerForm(props){
     const organizerList = () => {
         if (!unverifiedOrganizers){ return }
         const renderedList = unverifiedOrganizers.map(organizer => {
-            return <VerifyOrganizerNode 
+            return <VerifyRejectNode 
                 key={organizer._id}
-                organizer={organizer} 
+                object={organizer}
+                firstField={organizer.userInfo.firstName + " " + organizer.userInfo.lastName}
+                secondField={organizer.userInfo.email} 
                 onClickVerify={() => {onClickVerify(organizer.userInfo.email)}} 
                 onClickReject={() => {onClickReject(organizer.userInfo.email)}}/>
         })
