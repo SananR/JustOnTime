@@ -6,7 +6,7 @@ export default class OrganizerMain extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {events: []};
+        this.state = { events: [] };
     }
 
     componentDidMount() {
@@ -60,5 +60,5 @@ export default class OrganizerMain extends React.Component {
                 </div>
             </div>
         );
-        }
+    }
 }
