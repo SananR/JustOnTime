@@ -27,7 +27,12 @@ export default class OrganizerMain extends React.Component {
                     {
                         this.state.events
                         .map(event =>
-                            <button class="event">{event.name}</button>
+                            <button class="event">
+                                {event.name}<br/>
+                                {event.time}<br/>
+                                {event.address}<br/>
+                                {event.description}
+                            </button>
                         )
                     }
                     {/* <button class="event">
