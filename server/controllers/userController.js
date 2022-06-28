@@ -14,7 +14,7 @@ const registerUser = async (req, res, next) => {
     await passport.authenticate("registerUser", {},
     (err, user, info) => {
         if (err) {
-            const duplicate = flagError(res, err.message, "duplicate",  400,"There is already an account with the specified email.")
+            const duplicate = flagError(res, err.message, "duplicate", 400, "There is already an account with the specified email.")
             if (duplicate) return duplicate;
             else return clientError(res, err.message);
         }

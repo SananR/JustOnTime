@@ -14,7 +14,7 @@ await mongoose.connect(uri)
 .then(async client => {
     // await EventOrganizer.db.dropDatabase();
     // await mongoose.connection.db.dropDatabase();
-     //await EventOrganizer.deleteOne({email: "youomachi@gmail.com"});
+    //await EventOrganizer.deleteOne({email: "youomachi@gmail.com"});
     //  User.remove({}, () => {console.log("deleted user")})
     // await VerificationToken.deleteMany();
     console.log('connected to mongoDB '+uri);
