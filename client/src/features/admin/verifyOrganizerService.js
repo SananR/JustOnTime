@@ -27,4 +27,17 @@ const verifyOrganizer = async (email) => {
     return response.data;
 }
 
-export {loadOrganizers, verifyOrganizer}
+
+//Verify Organizer
+const rejectOrganizer = async (email) => {
+    const body = {
+        email: email,
+        verificationStatus: OrganizerStatus.REJECTED
+    }
+    const response = await axios.post(API_URL + 'admin/updateOrganizerStatus', body);
+    console.log(response.data)
+    return response.data;
+}
+
+
+export {loadOrganizers, verifyOrganizer, rejectOrganizer}
