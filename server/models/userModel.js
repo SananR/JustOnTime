@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema({
     userType: {
         type: String,
         required: true,
-        enum : ['Organizer','Customer'],
+        enum : ['Organizer','Customer', 'Admin'],
         default: 'Customer'
     },
     isVerified: {
