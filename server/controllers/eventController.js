@@ -5,6 +5,10 @@ import { validationResult } from 'express-validator';
 import {User} from '../models/userModel.js'
 
 const addEvent = async (req, res, next) => {
+    
+    if(!req.file){
+        return clientError(res, "No image is added");
+    }
     const { file } = req;
     const { path } = file;
     let user;
@@ -62,6 +66,7 @@ const getEvents = async (req, res, next) => {
                     count: output.length,
                     events: output.map(out => {
                         return {
+                            id: output._id,
                             name: out.eventInfo.name,
                             description: out.eventInfo.description,
                             address:{
@@ -91,6 +96,7 @@ const getOrganizerEvents =  async (req, res, next) => {
                     count: output.length,
                     events: output.map(out => {
                         return {
+                            id: output._id,
                             name: out.eventInfo.name,
                             description: out.eventInfo.description,
                             address:{
@@ -110,4 +116,70 @@ const getOrganizerEvents =  async (req, res, next) => {
         return clientError(res, "No events found");
     }
 }
-export {addEvent, getEvents, getOrganizerEvents}
+
+const updateEvents = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        if (req.file){
+            eventImageService.deleteImage(req.file.path);
+        }
+        return clientError(res, errors.array());
+    }
+    Event.findOne({ _id: req.query.eventId}, (err, event) => {
+        if (!event) {return clientError(res, "No such event exists ");}
+        else if (event.eventInfo.staus == "Ongoing" || event.eventInfo.staus == "Completed"){
+          return clientError(res, "event cannot be updated");
+        }
+        let deletepath = event.eventImage_path
+        console.log(deletepath)
+        if (req.file){
+            const update = {
+                eventInfo: {
+                    name: req.body.name,
+                    description: req.body.description,
+                    time: req.body.time,
+                    address:{
+                        street: req.body.street,
+                        city: req.body.city,
+                        country: req.body.country,
+                        postalCode: req.body.postalCode
+                    }
+                },
+                tags: req.body.tags,
+                eventImage_path: req.file.path
+            }
+            Event.updateOne(update, (err, user) => { 
+                if (err) {return serverError(res, "event couldn't be updated");}
+                try{
+                    eventImageService.deleteImage(deletepath);
+                }catch{
+                    eventImageService.deleteImage(req.file.path);
+                    return serverError(res, "event couldn't be successfully updated");
+                }
+                return success(res, "event successfully updated", false);
+              }); 
+        }
+        else{
+            const update = {
+                eventInfo: {
+                    name: req.body.name,
+                    description: req.body.description,
+                    time: req.body.time,
+                    address:{
+                        street: req.body.street,
+                        city: req.body.city,
+                        country: req.body.country,
+                        postalCode: req.body.postalCode
+                    }
+                },
+                tags: req.body.tags
+            }
+            Event.updateOne(update, (err, user) => { 
+                if (err) {return serverError(res, "event couldn't be updated");}
+                return success(res, "event successfully updated", false);
+            }); 
+        }
+        
+      });
+}
+export {addEvent, getEvents, getOrganizerEvents, updateEvents }
