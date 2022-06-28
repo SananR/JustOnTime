@@ -10,7 +10,7 @@ export default class OrganizerMain extends React.Component {
     }
 
     componentDidMount() {
-        axios.get("")
+        axios.get("") //update with the actual link to the organizer's event information
         .then(res => {
             this.setState({events: res.data});
         })
