@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { loadEvents, verifyEvent, rejectEvent } from "../../../features/admin/verifyEventService";
-import VerifyRejectNode from '../node/VerifyRejectNode.jsx'
+import VerifyRejectNode from '../node/verifyRejectNode.jsx'
 import './verifyEventForm.css'
 
 
