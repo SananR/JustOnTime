@@ -2,9 +2,10 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchEvents, selectEvents } from '../../../features/event/eventSlice.js'
 import logo from './logo.png'
+import { useNavigate } from 'react-router-dom'
 
 function OrganizerMainEventsList() {
-
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     dispatch(fetchEvents())
     const eventIds = useSelector(selectEvents)
@@ -14,7 +15,7 @@ function OrganizerMainEventsList() {
     if (loadingStatus === 'loading') {
         return (
             <div className="list">
-                <button className="event">
+                <button className="event" onClick={() => navigate("/")}>
                     <img src={logo} alt='JustOnTime' width="150" height="100"/><br/>
                     Event 1<br/>
                     January 1, 2022<br/>
@@ -42,7 +43,7 @@ function OrganizerMainEventsList() {
 
     const eventItems = eventIds.map((eventId) => {
         return (
-            <button className="event">
+            <button className="event" onClick={() => navigate("/organizer/events/" + {eventId})}>
                 {eventId.eventImage_path}<br/>
                 {eventId.name}<br/>
                 {eventId.time}<br/>
@@ -55,7 +56,7 @@ function OrganizerMainEventsList() {
 
     return (
             <div className="list">
-                <eventItems />
+                {eventItems}
             </div>
     );
 }
