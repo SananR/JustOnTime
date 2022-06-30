@@ -1,72 +1,191 @@
-import React from 'react'
-import { EditText } from 'react-edit-text';
-import 'react-edit-text/dist/index.css';
+import React, { useState, useEffect } from 'react'
+import {useSelector, useDispatch} from 'react-redux';
+import {updateUser} from '../../../../features/auth/authSlice.js'
+import {StyledEdiText} from './customerInfoStyle.js'
+import {FaEnvelope, FaUserAlt, FaPhoneAlt, FaInfo} from "react-icons/fa";
+import './customerInfo.css'
 
 
 function CustomerInfo() {
-    //get user from local storage because assume the user is logged in and authenticated at this point  
-    //change this line if its not local starage or the data changes
-    const user = JSON.parse(localStorage.getItem('user'));
+    const dispatch = useDispatch(); 
+    const {isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
+    var user = useSelector((state) => state.auth.user)
+    const [valid, setValid] = useState();
+    const [vMessage, setValidationMessage] = useState("");
+  
+    //saves the data enteredon screen if the requets was validated by the validator 
+    function onSave (v){
+        console.log(v);
+        setValidationMessage(''); 
+    }
 
-    //get user info common to all users 
+    //updates the erros if any occor with the store
+    useEffect(() => {
+        //login failed
+        if (isError) {
+           console.log("error");
+           setValid(false); 
+
+        }
+        if (isSuccess /* TODO: uncomment */ /*|| user */) {
+            console.log('success');
+            setValid(true); 
+        }
+        if(isLoading){
+            console.log("loading");
+        }
+    }, [user, isError, isSuccess, message, isLoading]);
+
+
+    //valisdates if the input was changed in tehe backend or not and does input validation
+    function validate(val, field){
+        console.log(val)
+        if(val.length < 3 || val.length > 50 ){
+           setValidationMessage("New value must be between 3-50 characters"); 
+            return false; 
+        } 
+        var id; 
+        if(field === "firstname"){
+            id = {update: { "userInfo.firstName" : val }, id : user._id }
+        } else if (field === "lastname"){
+            id = {update: { "userInfo.lastName" : val }, id : user._id }
+
+        } else {
+            if(val.length < 5){
+                setValidationMessage("Emails must have atleat 5 characters")
+                return false; 
+            }
+            id = {update: { "userInfo.email" : val }, id : user._id }
+        }
+        dispatch(updateUser(id)); 
+        if(!isLoading){
+            if(valid){
+                setValidationMessage(''); 
+                return valid;
+            }
+            setValidationMessage("This field could not be updated. Please try again."); 
+            return valid; 
+        }
+    }
+
+    //stores the user info common to all users 
     const basicInfo = (
-        <div>
-        <h1>Personal Info </h1>
-        <h5 for= 'firstName'> First Name:</h5>
-        <EditText
-          className='firstName'
-          defaultValue={user.userInfo.firstName}
-          editButtonProps={{ style: { marginLeft: '5px' }} }
-          showEditButton
-        />
 
-        <h5 for= 'lastName'> Last Name:</h5>
-         <EditText
-          className='lastName'
-          defaultValue={user.userInfo.lastName}
-          editButtonProps={{ style: { marginLeft: '5px' }} }
-          showEditButton
-        />
-
-        <h5 for= 'email'> E-mail:</h5>
-        <EditText
-          className='email'
-          defaultValue={user.userInfo.email}
-          editButtonProps={{ style: { marginLeft: '5px' }} }
-          showEditButton
-        />
-        </div>
+            <div > 
+                <h1 id ="personal-info-title">Personal Information</h1>
+                <div id= 'double-div'>
+                    <div id='item'> 
+                        <h5 id= 'info-label'> First Name:</h5>
+                            <div id='single-div'>
+                                <FaUserAlt className= "icon1" color="red"/>
+                                <StyledEdiText
+                                    value = {user.userInfo.firstName}
+                                    onSave={(v) => onSave(v)}
+                                    validation={(val) => validate(val, "firstname")}
+                                    validationMessage ={vMessage}
+                                    hideIcons={true}
+                                /> 
+                            </div>
+                    </div>
+                    <div id='item'> 
+                        <h5 id= 'info-label'> Last Name:</h5>
+                        <div id='single-div'>
+                            <FaUserAlt className= "icon1" color="red"/>
+                            <StyledEdiText
+                                value = {user.userInfo.lastName}
+                                onSave={(v) => onSave(v)}
+                                validation={(val) => validate(val, "lastname")}
+                                validationMessage ={vMessage}
+                                hideIcons={true}
+                            /> 
+                        </div>
+                    </div>
+                </div>
+            
+                <div id="double-div"> 
+                    <div id='item'>
+                            <h5 id= 'info-label'> E-mail:</h5> 
+                            <div id='single-div'>
+                                <FaEnvelope className= "icon1" color="red"/>
+                                <StyledEdiText
+                                        value = {user.userInfo.email}
+                                        onSave={(v) => onSave(v)}
+                                        validation={(val) => validate(val, "email")}
+                                        validationMessage ={vMessage}
+                                        hideIcons={true}
+                                /> 
+                            </div>
+                    </div>
+                </div>
+            </div>
 
     )
 
+    //creates the title for the accounts page
+    const title = (
+        <div>
+            <h1 id= "title-personal"> Account Settings</h1>
+            <p id="subtitle-personal"> Change your account details</p>
+        </div>
+    )
 
-    const displaytype = () => {
-        //check of the user is a regular user or organizer and dsiplay the information accordingly
+    // sidebar is meant to hold links that will lead to new pages relating to account details 
+    //as we need them
+    const sidebar = (
+        <div id="sidebar-cont">
+                <a href='/personal-info' > <span id='sidebar-nav'> Personal Information</span></a>
+         </div>
+    )
+
+    //returns whether the relevan tinformation if the user is an organizer
+    const organizer = () => {
         if(user.userType === "Customer"){
-            return basicInfo
+            return (<div></div>)
         } else {
             return (
-                <div>
-                {basicInfo}
-                <h5 for= 'phone#'> Phone Number:</h5>
-                <EditText
-                  className='phone#'
-                  defaultValue={user.organizer.phoneNumber}
-                  editButtonProps={{ style: { marginLeft: '5px' }} }
-                  showEditButton
-                />
-        
-                <h5 for= 'status'> Last Name:</h5>
-                <div>{user.organizer.phoneNumber}</div>
-        
-                {/*  <strong><label className="mr-2">Full Name <small>(read-only)</small>: </label></strong>
-                    <EditText id="fullName" name="fullName" defaultValue="Full Name" inline readonly/> */}
-                </div>
+                <div id="double-div"> 
+                            <div id='item'>
+                                <h5 id= 'info-label'> Phone Number:</h5> 
+                                <div id='single-div'>
+                                    <FaPhoneAlt className= "icon1" color="red"/>
+                                    <StyledEdiText
+                                            value ="number"
+                                            onSave={(v) => onSave(v)}
+                                            validation={(val) => validate(val, "phone")}
+                                            validationMessage ={vMessage}
+                                            hideIcons={true}
+                                    /> 
+                                </div>
+                            </div>
+                            <div id='item'>
+                                <h5 id= 'info-label'> Status:</h5>
+                                <div id= 'single-div'>
+                                    <FaInfo  className= "icon1" color="red"/>
+                                   <div id='unchangeable-div'>status </div>
+                                </div>
+                            </div>
+                        </div>
             )
         }
     }
 
+    const displaytype = () => {
+            return (
+            <div>
+                {title}
+                <div id='personal-info-cont' className="gx-0 mt-4 mb-5 container">
+                   {sidebar}
+                    <div id='info-cont'>
+                        {basicInfo}
+                        {organizer()}
+                    </div>
+                </div>
+                
+            </div>
+            )
+        }
 
+//displays the correct information dependind on whether the user is customer or organizer 
     return (
         displaytype()
     )
