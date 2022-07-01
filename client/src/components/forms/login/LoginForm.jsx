@@ -1,7 +1,7 @@
 import React from 'react'
 
 import './loginform.css'
-import logo from "../../header/logo.png";
+import logo from "../../../logo_cropped.png";
 
 import {FaUserAlt, FaLock} from 'react-icons/fa'
 import InputField from "../input/InputField";

@@ -8,6 +8,7 @@ import CustomerVerifyEmail from './pages/user/verification/verifyEmail/verifyEma
 import CustomerVerificationRequired from './pages/user/verification/verificationRequired/verificationRequired.jsx'
 import CustomerInfo from './pages/user/customer/customerInfo/customerInfo.jsx'
 import CustomerHome from "./pages/user/customer/home/CustomerHome";
+import OrganizerMain from './pages/organizer/main/main.jsx'
 import Header from './components/header/Header'
 import { store } from './store.js'
 import {Provider} from 'react-redux'
@@ -37,6 +38,9 @@ export default function App() {
                   <Route path=":token" element={<CustomerVerifyEmail />} />
                 </Route>
               </Route>
+            </Route>
+            <Route path="organizer">
+              <Route path="main" element={<OrganizerMain/>} />
             </Route>
         </Routes>
     </Router>
