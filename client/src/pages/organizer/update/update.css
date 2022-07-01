@@ -1,0 +1,45 @@
+.top {
+    margin-left: 11%;
+}
+
+#title {
+    margin-top: 3%;
+    margin-bottom: 2%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.list {
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom: 2%;
+}
+
+.event {
+    font-size: medium;
+    width: 100%;
+    margin-top: 0.4%;
+    padding: 1%;
+    fill: lightgray;
+    border: lightgray;
+    border-radius: 4px;
+    text-align: left;
+}
+
+#logo {
+    margin: 2%;
+}
+
+#form {
+    margin-left: 10%;
+    margin-bottom: 2%;
+}
+
+.label {
+    margin-right: 1%;
+}
+
+#submit {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}

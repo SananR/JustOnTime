@@ -9,6 +9,7 @@ import CustomerVerificationRequired from './pages/user/verification/verification
 import CustomerInfo from './pages/user/customer/customerInfo/customerInfo.jsx'
 import CustomerHome from "./pages/user/customer/home/CustomerHome";
 import OrganizerMain from './pages/organizer/main/main.jsx'
+import OrganizerUpdate from './pages/organizer/update/update.jsx'
 import Header from './components/header/Header'
 import { store } from './store.js'
 import {Provider} from 'react-redux'
@@ -41,6 +42,7 @@ export default function App() {
             </Route>
             <Route path="organizer">
               <Route path="main" element={<OrganizerMain/>} />
+              <Route path="update" element={<OrganizerUpdate/>} />
             </Route>
         </Routes>
     </Router>
