@@ -23,8 +23,7 @@ const loginUser = async (userData) => {
 const updateUser = async (id) => {
     const response = await axios.post(API_URL + 'user/personal-info', id)
     console.log(response.data.message)
-    if (response.data.message !== "Unable to update the field at this time. Please try again later. " ||
-    response.data.message !==  "user is not authorized") {
+    if (response.data.status !== 400) {
         localStorage.setItem('user', JSON.stringify(response.data.message))
     }
     return response.data.message; 

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import {useSelector, useDispatch} from 'react-redux';
 import {updateUser} from '../../../../features/auth/authSlice.js'
+import SettingSidebar from "../../../../components/setting-sidebar/settingSidebar.jsx"
 import {StyledEdiText} from './customerInfoStyle.js'
-import {FaEnvelope, FaUserAlt, FaPhoneAlt, FaInfo} from "react-icons/fa";
+import {FaEnvelope, FaUserAlt, FaPhoneAlt, FaInfo, FaEdit} from "react-icons/fa";
+import { HiX, HiCheck} from "react-icons/hi"
+
 import './customerInfo.css'
 
 
@@ -50,6 +53,8 @@ function CustomerInfo() {
         } else if (field === "lastname"){
             id = {update: { "userInfo.lastName" : val }, id : user._id }
 
+        } else if (field === "phone") {
+            id = {update: { "organizer.phoneNumber" : val }, id : user._id }
         } else {
             if(val.length < 5){
                 setValidationMessage("Emails must have atleat 5 characters")
@@ -84,6 +89,9 @@ function CustomerInfo() {
                                     validation={(val) => validate(val, "firstname")}
                                     validationMessage ={vMessage}
                                     hideIcons={true}
+                                    editButtonContent={<FaEdit color="red"/>}
+                                    saveButtonContent={<HiCheck color="green"/>}
+                                    cancelButtonContent={<HiX color="red"/>}
                                 /> 
                             </div>
                     </div>
@@ -97,6 +105,9 @@ function CustomerInfo() {
                                 validation={(val) => validate(val, "lastname")}
                                 validationMessage ={vMessage}
                                 hideIcons={true}
+                                editButtonContent={<FaEdit color="red"/>}
+                                saveButtonContent={<HiCheck color="green"/>}
+                                cancelButtonContent={<HiX color="red"/>}
                             /> 
                         </div>
                     </div>
@@ -113,6 +124,9 @@ function CustomerInfo() {
                                         validation={(val) => validate(val, "email")}
                                         validationMessage ={vMessage}
                                         hideIcons={true}
+                                        editButtonContent={<FaEdit color="red"/>}
+                                        saveButtonContent={<HiCheck color="green"/>}
+                                        cancelButtonContent={<HiX color="red"/>}
                                 /> 
                             </div>
                     </div>
@@ -131,11 +145,12 @@ function CustomerInfo() {
 
     // sidebar is meant to hold links that will lead to new pages relating to account details 
     //as we need them
-    const sidebar = (
+  /*   const sidebar = (
         <div id="sidebar-cont">
                 <a href='/personal-info' > <span id='sidebar-nav'> Personal Information</span></a>
          </div>
-    )
+    ) */
+
 
     //returns whether the relevan tinformation if the user is an organizer
     const organizer = () => {
@@ -154,6 +169,9 @@ function CustomerInfo() {
                                             validation={(val) => validate(val, "phone")}
                                             validationMessage ={vMessage}
                                             hideIcons={true}
+                                            editButtonContent={<FaEdit color="red"/>}
+                                            saveButtonContent={<HiCheck color="green"/>}
+                                            cancelButtonContent={<HiX color="red"/>}
                                     /> 
                                 </div>
                             </div>
@@ -174,7 +192,7 @@ function CustomerInfo() {
             <div>
                 {title}
                 <div id='personal-info-cont' className="gx-0 mt-4 mb-5 container">
-                   {sidebar}
+                   <SettingSidebar/>
                     <div id='info-cont'>
                         {basicInfo}
                         {organizer()}

@@ -20,32 +20,6 @@
     flex-grow: 2;
 }
 
-#sidebar-cont{
-    display:flex; 
-    flex-direction: column;
-    padding: 10px;
-    flex-basis: 300px; 
-    flex-grow: 1;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    background-image: url('../../../../bg.jpg');
-    background-size: 700%;
-}
-
-#sidebar-nav{
-    color: white;
-    border: 0px; 
-    border-radius: 5px;
-    padding: 10px;
-    display: block;
-
-}
-
-#sidebar-nav:hover{
-    background-color: rgba(0, 0, 0, 0.3);
-}
-
-
 #personal-info-title{
     padding-top: 20px;
     margin-left: 20px; 
@@ -106,10 +80,6 @@ div[editext="view-container"] {
 
 button[editext="edit-button"]{
     margin-left: 20px;
-    padding: 20px;
-    background-image: url('./button-images/editbutton.png');
-    background-repeat: no-repeat;
-    background-position: center;
     background-color: white;
     border: 0px solid black; 
 
@@ -118,9 +88,6 @@ button[editext="edit-button"]{
 button[editext="save-button"]{
     height: 30px;
     padding: 5px; 
-    background-image: url('./button-images/submitbutton.png');
-    background-repeat: no-repeat;
-    background-position: center;
     background-color: white;
     border: 0px;
 }
@@ -128,9 +95,6 @@ button[editext="save-button"]{
 button[editext="cancel-button"]{
     height: 30px;
     padding: 5px; 
-    background-image: url('./button-images/cancelbutton.png');
-    background-repeat: no-repeat;
-    background-position: center;
     background-color: white;
     border: 0px;
 }
