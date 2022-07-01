@@ -1,0 +1,25 @@
+
+#sidebar-cont{
+    display:flex; 
+    flex-direction: column;
+    padding: 10px;
+    flex-basis: 300px; 
+    flex-grow: 1;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background-image: url('../../bg.jpg');
+    background-size: 700%;
+}
+
+#sidebar-nav{
+    color: white;
+    border: 0px; 
+    border-radius: 5px;
+    padding: 10px;
+    display: block;
+
+}
+
+#sidebar-nav:hover{
+    background-color: rgba(0, 0, 0, 0.3);
+}
