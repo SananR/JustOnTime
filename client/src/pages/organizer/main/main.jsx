@@ -26,7 +26,7 @@ function OrganizerMain() {
                 {/* {
                     state.events.map(event =>
                         <button className="event" onClick={() => navigate("/organizer/events/" + event.id)}>
-                            {event.eventImage_path}<br/>
+                            <img src={event.eventImage_path} height="200" width="50"></img><br/>
                             {event.name}<br/>
                             {event.time}<br/>
                             {event.address.street}<br/>

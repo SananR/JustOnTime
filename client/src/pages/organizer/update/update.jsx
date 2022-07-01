@@ -57,14 +57,16 @@ function OrganizerUpdate() {
                 {/* uncomment lines below once organizer id is connected to URI */}
                 {/* {
                     state.map(event =>
+						<div>
 						<button className="event" onClick={() => navigate("/organizer/events/" + event.id)}>
-							{event.eventImage_path}<br/>
+							<img src={event.eventImage_path} height="200" width="50"></img><br/>
 							{event.name}<br/>
 							{event.time}<br/>
 							{event.address.street}<br/>
 							{event.address.city}<br/>
 							{event.address.country}
 						</button>
+						</div>
                     )
                 } */}
 
@@ -108,7 +110,7 @@ function OrganizerUpdate() {
 					</tr>
 					<tr>
 						<td><label for="path" class="label">Image Path:</label></td>
-						<td><input type="text" id="path"></input></td>
+						<td><input type="file" id="path" name="Image" accept="image/*"></input></td>
 					</tr>
 				</table>
 				<div class="text-center">
