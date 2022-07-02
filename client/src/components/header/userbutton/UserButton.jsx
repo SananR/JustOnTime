@@ -3,6 +3,7 @@ import React from 'react'
 import {GiHamburgerMenu} from 'react-icons/gi'
 import {FaUserCircle} from 'react-icons/fa'
 import Dropdown from 'react-bootstrap/Dropdown'
+import {useSelector} from 'react-redux';
 
 import './userbutton.css'
 
@@ -22,17 +23,30 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     </a>
   ));
 
+
+
 function UserButton() {
+  const user = useSelector((state) => state.auth.user)
+  if(user){
     return (
-        <Dropdown id="user-button" className="ms-auto me-4 rounded-pill border border-dark shadow grow">
-            <Dropdown.Toggle as={CustomToggle} variant="outline-dark"/>
-            <Dropdown.Menu className='me-1 mt-2 rounded-lg'>
-                <Dropdown.Item href="/login">Login</Dropdown.Item>
-                <Dropdown.Item href="/signup">Register</Dropdown.Item>
-                <Dropdown.Item href="/personal-info">My Account</Dropdown.Item>
-            </Dropdown.Menu>
-        </Dropdown>
-    )
+      <Dropdown id="user-button" className="ms-auto me-4 rounded-pill border border-dark shadow grow">
+          <Dropdown.Toggle as={CustomToggle} variant="outline-dark"/>
+          <Dropdown.Menu className='me-1 mt-2 rounded-lg'>
+              <Dropdown.Item href="/login">Login</Dropdown.Item>
+              <Dropdown.Item href="/signup">Register</Dropdown.Item>
+              <Dropdown.Item href="/personal-info">My Account</Dropdown.Item>
+          </Dropdown.Menu>
+      </Dropdown>
+  )} else {
+    return (
+      <Dropdown id="user-button" className="ms-auto me-4 rounded-pill border border-dark shadow grow">
+      <Dropdown.Toggle as={CustomToggle} variant="outline-dark"/>
+      <Dropdown.Menu className='me-1 mt-2 rounded-lg'>
+          <Dropdown.Item href="/login">Login</Dropdown.Item>
+          <Dropdown.Item href="/signup">Register</Dropdown.Item>
+      </Dropdown.Menu>
+      </Dropdown>
+    )}
 }
 
 export default UserButton;
