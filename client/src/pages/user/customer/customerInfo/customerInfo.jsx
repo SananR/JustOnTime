@@ -12,7 +12,7 @@ import './customerInfo.css'
 function CustomerInfo() {
     const dispatch = useDispatch(); 
     const {isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
-    var user = useSelector((state) => state.auth.user)
+    const user = useSelector((state) => state.auth.user)
     const [valid, setValid] = useState();
     const [vMessage, setValidationMessage] = useState("");
   
@@ -57,7 +57,7 @@ function CustomerInfo() {
             id = {update: { "organizer.phoneNumber" : val }, id : user._id }
         } else {
             if(val.length < 5){
-                setValidationMessage("Emails must have atleat 5 characters")
+                setValidationMessage("Emails must have at least 5 characters")
                 return false; 
             }
             id = {update: { "userInfo.email" : val }, id : user._id }

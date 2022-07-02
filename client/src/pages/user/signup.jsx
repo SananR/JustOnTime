@@ -39,7 +39,7 @@ function Signup() {
                 "formError": message
             }))
         }
-        else if (isSuccess /* TODO: uncomment */ /*|| user */) {
+        else if (isSuccess || user) {
             navigate('/')
         }
     }, [user, isError, isSuccess, message, isLoading, navigate]);
