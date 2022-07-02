@@ -30,6 +30,20 @@
     margin: 2%;
 }
 
+#error {
+    padding-top: 5%;
+    text-align: center;
+}
+
+#loader {
+    position: absolute;
+    margin: auto;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 #form {
     margin-left: 10%;
     margin-bottom: 2%;

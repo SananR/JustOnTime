@@ -5,50 +5,79 @@ import './main.css'
 import logo from '../../../logo_cropped.png'
 
 function OrganizerMain() {
-    const [state, setState] = useState({})
+    const [eventState, setEventState] = useState({})
+    const [error, setError] = useState()
+    const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
 
-    useEffect(() => {
-        const fetchEvents = async () => {
-            setState(await axios.get('/api/event/organizerEvents'));
-        }
-        fetchEvents();
-    }, [])
-
-    return (
-        <div>
+    const Heading = () => {
+        return (
             <div className="top">
                 <h1 id="title"> My Events </h1>
                 <button id="createEvent" onClick={() => navigate("/organizer/new")}>New Event</button>
             </div>
+        )
+    }
+
+    useEffect(() => {
+        const fetchData = (async () => {
+            try {
+                // gets all events for now, add a request body with the organizer's id for only the single organizer's events
+                const res = await axios.get('/api/event/organizerEvents').then(res => res.data);
+                setEventState(res);
+            } catch (e) {
+                setError(e);
+            } finally {
+                setLoading(false);
+            }
+        })
+        fetchData();
+    }, [])
+
+    if (error) {
+        return (
+            <div>
+                <Heading/>
+                <p id="error">An error occurred while trying to load the events</p>
+            </div>
+    )} else if (loading) { 
+        return (
+            <div>
+                <Heading/>
+                <div className="row justify-content-center">
+                    <div id="loader" className="spinner-border text-primary" role="status"></div>
+                </div>
+            </div>
+        ) 
+    } else {
+        return (
+        <div>
+            <Heading/>
             <div className="list">
-                {/* uncomment lines below once organizer id is connected to URI */}
-                {/* {
-                    state.events.map(event =>
-                        <button className="event" onClick={() => navigate("/organizer/events/" + event.id)}>
-                            <img src={event.eventImage_path} height="200" width="50"></img><br/>
+                {
+                    eventState.events.map(event =>
+                        <button className="event" onClick={() => navigate("/organizer/events/" + event.name)}>
+                            <img src={event.eventImagePath} alt={event.name}></img><br/>
                             {event.name}<br/>
-                            {event.time}<br/>
-                            {event.address.street}<br/>
-                            {event.address.city}<br/>
-                            {event.address.country}
+                            {event.hasOwnProperty('address') && event.address.hasOwnProperty('street') && event.address.street}<br/>
+                            {event.hasOwnProperty('address') && event.address.hasOwnProperty('city') && event.address.city}<br/>
+                            {event.hasOwnProperty('address') && event.address.hasOwnProperty('country') && event.address.country}
                         </button>
                     )
-                } */}
+                }
 
-                {/* remove once organizer id is connected to URI */}
-                <button className="event" onClick={() => navigate("/organizer/events/1")}>
+                {/* Remove when events are obtained from the database */}
+                <button className="event" onClick={() => navigate("/organizer/events/Default%Event")}>
                     <img id="logo" src={logo} alt='JustOnTime' width="200" height="50"/><br/>
-                    Event 1<br/>
-                    January 1, 2022<br/>
-                    6:00 p.m.<br/>
+                    Default Event<br/>
                     123 Main Street<br/>
                     Toronto<br/>
                     Canada
                 </button>
             </div>
         </div>
-    )
+        )
+    }
 }
 
 export default OrganizerMain

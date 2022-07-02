@@ -42,7 +42,7 @@ export default function App() {
             </Route>
             <Route path="organizer">
               <Route path="main" element={<OrganizerMain/>} />
-              <Route path="update" element={<OrganizerUpdate/>} />
+              <Route path="events/:name" element={<OrganizerUpdate/>} />
             </Route>
         </Routes>
     </Router>
