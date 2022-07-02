@@ -51,13 +51,13 @@ function EventSlider(props) {
         return props.events.map(event => {
             return <EventCard
                 key={event.id.toString()}
+                id={event.id}
                 title={event.title}
                 date={event.date}
                 time={event.time}
                 location={event.location}
                 currentBid={event.currentBid}
                 previousBid={event.previousBid}
-                image={event.image}
                 starred={event.starred}
                 timeRemaining={event.timeRemaining}
                 className="col-sm-4"

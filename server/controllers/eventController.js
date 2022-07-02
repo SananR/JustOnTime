@@ -67,7 +67,7 @@ const getEvents = async (req, res, next) => {
                     count: output.length,
                     events: output.map(out => {
                         return {
-                            id: output._id,
+                            id: out._id,
                             name: out.eventInfo.name,
                             description: out.eventInfo.description,
                             time: out.eventInfo.time,

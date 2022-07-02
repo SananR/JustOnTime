@@ -3,14 +3,12 @@ import axios from 'axios'
 const API_URL = '/api/'
 
 //Get public events
-const loadEvents = async () => {
+export const loadEvents = async () => {
     const response = await axios.get(API_URL + 'event');
-    let id = 0;
     if (response.data) {
-        return response.events.map((event) => {
-            id++;
+        const data =  response.data.events.map((event) => {
             return {
-                id: id,
+                id: event.id,
                 title: event.name,
                 date: event.date,
                 time: event.time,
@@ -20,5 +18,19 @@ const loadEvents = async () => {
                 timeRemaining: "00:00:00"
             }
         });
+        return data;
     }
+}
+
+export const getEventImage = async(id) => {
+    try {
+        const response = await axios.get(API_URL + `event/getImage/?id=${id}`, {
+            responseType: "blob"
+        });
+        return response.data;
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+
 }
