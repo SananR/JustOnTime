@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { loadOrganizers, verifyOrganizer, rejectOrganizer } from "../../../features/admin/verifyOrganizerService";
+import { loadOrganizers, verifyOrganizer, rejectOrganizer } from "../../../services/admin/verifyOrganizerService";
 import VerifyRejectNode from '../node/verifyRejectNode.jsx'
 import './verifyOrganizerForm.css'
 

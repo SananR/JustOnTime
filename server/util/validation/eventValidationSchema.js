@@ -10,7 +10,7 @@ const validateEventCreationSchema = checkSchema({
     },
     description: {
         trim: true,
-        errorMessage: 'Description must be atleast 20 characters',
+        errorMessage: 'Description must be at least 20 characters',
         isLength: {
             options: { min: 20 }
         }
@@ -19,6 +19,12 @@ const validateEventCreationSchema = checkSchema({
         isEmpty: {
             negated: true,
             errorMessage: "Time cannot be empty",
+        }
+    },
+    date: {
+        isEmpty: {
+            negated: true,
+            errorMessage: "Date cannot be empty",
         }
     },
     street: {
