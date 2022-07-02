@@ -1,41 +1,19 @@
-import e from 'express';
-import { clientError } from '../http/httpResponse.js';
+import { authError } from '../http/httpResponse.js'
 
-const checkAuthentication = (list) => {
+const ERROR_MESSAGE = "Request requires user authentication information.";
+
+const checkAuthentication = (allowedUsers) => {
     return (req, res, next) => {
-        if(req.isAuthenticated()){
-            if(list.length === 0){
-                if(req.query.id === ""){
+        if (req.isAuthenticated()) {
+            if (allowedUsers.length === 0)
                     return next();
-                }
-                else{
-                    if(req.user._id.toString() === req.query.id){
-                        return next();
-                    }
-                    return clientError(res, "user is not authorized")
-                }
-            }
-            else{
-                if(list.indexOf(req.user.userType) != -1){
-                    if(req.query.id === ""){
-                        return next();
-                    }
-                    else{
-                        if(req.user._id.toString() === req.query.id){
-                            return next();
-                        }
-                        return clientError(res, "user is not authorized")
-                    }
-                }
-                else{
-                    return clientError(res, "user is not authorized")
-                }
-                
+            else {
+                if (allowedUsers.includes(req.user.userType))
+                    return next();
+                else return authError(res, ERROR_MESSAGE);
             }
         }
-        else{
-            return clientError(res, "user is not authenticated")
-        }
+        else return authError(res, ERROR_MESSAGE);
     };
 };
-export {checkAuthentication}
+export { checkAuthentication }

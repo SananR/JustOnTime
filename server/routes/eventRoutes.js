@@ -7,8 +7,8 @@ import { validateEventCreationSchema } from '../util/validation/eventValidationS
 
 const eventRouter = express.Router();
 
-eventRouter.route("/").post( checkAuthentication(['Organizer']),eventImageService.uploadImage, validateEventCreationSchema, addEvent);
-eventRouter.route("/").get( checkAuthentication([]),getEvents);
+eventRouter.route("/").post( checkAuthentication(['Organizer']), eventImageService.uploadImage, validateEventCreationSchema, addEvent);
+eventRouter.route("/").get(getEvents);
 eventRouter.route("/organizerEvents").get( checkAuthentication([]),getOrganizerEvents);
 eventRouter.route("/updateEvent").post(checkAuthentication(['Organizer']), eventImageService.uploadImage, validateEventCreationSchema, updateEvents);
 

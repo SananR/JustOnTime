@@ -17,8 +17,9 @@ function EventCard(props) {
                 </div>
             </div>
             <BidTimeTag timeRemaining={props.timeRemaining}/>
-            {!props.starred && <AiOutlineStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"white"}/>}
-            {props.starred && <AiFillStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"gold"}/>}
+            {/* TODO: Add star functionality*/}
+            {/*{!props.starred && <AiOutlineStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"white"}/>}
+            {props.starred && <AiFillStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"gold"}/>}*/}
         </div>
     );
 }

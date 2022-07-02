@@ -42,7 +42,7 @@ function Signup() {
         else if (isSuccess /* TODO: uncomment */ /*|| user */) {
             navigate('/')
         }
-    }, [user, isError, isSuccess, message, isLoading]);
+    }, [user, isError, isSuccess, message, isLoading, navigate]);
 
     const onChange = (e) => {
         setFormData((prevState) => ({

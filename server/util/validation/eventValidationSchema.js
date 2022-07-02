@@ -10,7 +10,7 @@ const validateEventCreationSchema = checkSchema({
     },
     description: {
         trim: true,
-        errorMessage: 'Description must be atleast 20 characters',
+        errorMessage: 'Description must be at least 20 characters',
         isLength: {
             options: { min: 20 }
         }

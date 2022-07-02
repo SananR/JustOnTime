@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import "./verifyEmail.css";
 import { useParams } from 'react-router-dom';
 import { verifyEmail } from '../../../../features/emailVerification/customer/verifyEmail';
@@ -8,7 +8,7 @@ function CustomerVerifyEmail() {
 
     const { email, token } = useParams();
 
-    React.useEffect(() => {
+    useEffect(() => {
         verifyEmail(email, token).then(response => {
             console.log(response)
             setMessage({message: response.data})
@@ -22,7 +22,7 @@ function CustomerVerifyEmail() {
                 setMessage({message: "Something went wrong, please try again!"})
             }        
         })
-    }, [])
+    }, [email, token])
 
     return (
         <div id="container">
