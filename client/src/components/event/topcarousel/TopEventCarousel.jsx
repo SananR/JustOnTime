@@ -19,7 +19,7 @@ function EventSlide(props) {
                 <h1 className="arrow-text ps-4 mt-1">SEE DETAILS</h1>
                 <HiArrowCircleRight className="arrow ms-4 mb-1" color={"aqua"} size={50}/>
             </div>
-            <img className="top-event-image testing2 w-100 h-100 img-fluid" alt="event" src={props.image}/>
+            <img className="top-event-image w-100 h-100 img-fluid" alt="event" src={props.image}/>
         </div>
     )
 }
