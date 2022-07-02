@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import {useSelector, useDispatch} from 'react-redux';
-import {updateUser} from '../../../../features/auth/authSlice.js'
+import {updateUser} from '../../../../services/auth/authSlice.js'
 import SettingSidebar from "../../../../components/setting-sidebar/settingSidebar.jsx"
 import {StyledEdiText} from './customerInfoStyle.js'
-import {FaEnvelope, FaUserAlt, FaPhoneAlt, FaInfo, FaEdit} from "react-icons/fa";
+import {FaEnvelope, FaUserAlt, FaPhoneAlt, FaInfo, FaEdit, FaUnderline} from "react-icons/fa";
 import { HiX, HiCheck} from "react-icons/hi"
 
 import './customerInfo.css'
@@ -40,7 +40,7 @@ function CustomerInfo() {
     }, [user, isError, isSuccess, message, isLoading]);
 
 
-    //valisdates if the input was changed in tehe backend or not and does input validation
+    //valisdates if the input was changed in the backend or not and does input validation
     function validate(val, field){
         console.log(val)
         if(val.length < 3 || val.length > 50 ){
@@ -84,7 +84,7 @@ function CustomerInfo() {
                             <div id='single-div'>
                                 <FaUserAlt className= "icon1" color="red"/>
                                 <StyledEdiText
-                                    value = {user.userInfo.firstName}
+                                    value = {user ? user.userInfo.firstName : false}
                                     onSave={(v) => onSave(v)}
                                     validation={(val) => validate(val, "firstname")}
                                     validationMessage ={vMessage}
@@ -100,7 +100,7 @@ function CustomerInfo() {
                         <div id='single-div'>
                             <FaUserAlt className= "icon1" color="red"/>
                             <StyledEdiText
-                                value = {user.userInfo.lastName}
+                                value = {user ? user.userInfo.lastName : false}
                                 onSave={(v) => onSave(v)}
                                 validation={(val) => validate(val, "lastname")}
                                 validationMessage ={vMessage}
@@ -119,7 +119,7 @@ function CustomerInfo() {
                             <div id='single-div'>
                                 <FaEnvelope className= "icon1" color="red"/>
                                 <StyledEdiText
-                                        value = {user.userInfo.email}
+                                        value = {user ? user.userInfo.email : false}
                                         onSave={(v) => onSave(v)}
                                         validation={(val) => validate(val, "email")}
                                         validationMessage ={vMessage}
@@ -152,7 +152,7 @@ function CustomerInfo() {
     ) */
 
 
-    //returns whether the relevan tinformation if the user is an organizer
+    //returns whether the relevant information if the user is an organizer
     const organizer = () => {
         if(user.userType === "Customer"){
             return (<div></div>)
@@ -164,7 +164,7 @@ function CustomerInfo() {
                                 <div id='single-div'>
                                     <FaPhoneAlt className= "icon1" color="red"/>
                                     <StyledEdiText
-                                            value ="number"
+                                            value ={user ? user.organizer.phoneNumber : false}
                                             onSave={(v) => onSave(v)}
                                             validation={(val) => validate(val, "phone")}
                                             validationMessage ={vMessage}
@@ -179,7 +179,7 @@ function CustomerInfo() {
                                 <h5 id= 'info-label'> Status:</h5>
                                 <div id= 'single-div'>
                                     <FaInfo  className= "icon1" color="red"/>
-                                   <div id='unchangeable-div'>status </div>
+                                   <div id='unchangeable-div'>{user ? user.organizer.status : false} </div>
                                 </div>
                             </div>
                         </div>
@@ -204,9 +204,17 @@ function CustomerInfo() {
         }
 
 //displays the correct information dependind on whether the user is customer or organizer 
-    return (
-        displaytype()
-    )
+    if(user === null){
+        return (
+            <div  className="d-flex justify-content-center align-items-center h2 mt-5">
+                <p> Please  <a className="text-danger" href="/login"> login</a> or <a className="text-danger" href="/signup"> register.</a> </p>
+            </div>
+        )
+    } else {
+        return (
+            displaytype()
+        )
+    }
 }
 
 export default CustomerInfo;

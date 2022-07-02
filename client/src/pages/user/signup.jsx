@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
-import {registerUser} from '../../features/auth/authSlice'
+import {registerUser} from '../../services/auth/authSlice'
 import {InputValidator} from "../../util/validation/InputValidator";
 
 import SignUpForm from "../../components/forms/signup/SignUpForm";
@@ -42,7 +42,7 @@ function Signup() {
         else if (isSuccess /* TODO: uncomment */ /*|| user */) {
             navigate('/')
         }
-    }, [user, isError, isSuccess, message, isLoading]);
+    }, [user, isError, isSuccess, message, isLoading, navigate]);
 
     const onChange = (e) => {
         setFormData((prevState) => ({

@@ -1,13 +1,25 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import {AiOutlineStar, AiFillStar} from "react-icons/ai"
 
 import "./eventcard.css"
+import { getEventImage } from "../../../services/event/eventService";
 
 function EventCard(props) {
+
+    const [image, setImage] = useState("");
+
+    useEffect( () => {
+        const fetchImage = async() => {
+            const img = await getEventImage(props.id);
+            setImage(() => (img));
+        }
+        fetchImage().catch(console.error);
+    }, []);
+
     return (
         <div className="event-card position-relative d-flex g-0 flex-column justify-content-center align-items-center mt-5 mb-5 shadow-sm container-fluid">
-            <div className="event-image-container w-100 bg-image " style={{ backgroundImage: `url(${props.image})` }}></div>
+            <div className="event-image-container w-100 bg-image " style={{ backgroundImage: `url(${URL.createObjectURL(new Blob([image], {type:"image/jpeg"}))})` }}></div>
             <div className="event-content-container w-100 gap-0 g-0 d-flex flex-column justify-content-center align-items-start">
                 <h1 className="event-card-title w-100 mt-3 ps-3 ">{props.title}</h1>
                 <h2 className="event-card-meta w-100 ps-3 text-muted">{props.date} • {props.time} • {props.location}</h2>
@@ -17,8 +29,9 @@ function EventCard(props) {
                 </div>
             </div>
             <BidTimeTag timeRemaining={props.timeRemaining}/>
-            {!props.starred && <AiOutlineStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"white"}/>}
-            {props.starred && <AiFillStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"gold"}/>}
+            {/* TODO: Add star functionality*/}
+            {/*{!props.starred && <AiOutlineStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"white"}/>}
+            {props.starred && <AiFillStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"gold"}/>}*/}
         </div>
     );
 }

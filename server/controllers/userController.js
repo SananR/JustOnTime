@@ -4,7 +4,6 @@ import { VerificationToken } from '../models/verificationTokenModel.js';
 import { flagError, clientError, serverError, success, successWithData } from "../util/http/httpResponse.js";
 import { createSaveToken } from "../util/email/verification/userVerification.js";
 import { validationResult } from 'express-validator';
-import { organizerInfoSchema } from '../models/schemas/organizerInfo.schema.js';
 
 const registerUser = async (req, res, next) => {
     const errors = validationResult(req);
