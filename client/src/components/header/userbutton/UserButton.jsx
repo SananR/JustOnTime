@@ -29,6 +29,7 @@ function UserButton() {
             <Dropdown.Menu className='me-1 mt-2 rounded-lg'>
                 <Dropdown.Item href="/login">Login</Dropdown.Item>
                 <Dropdown.Item href="/signup">Register</Dropdown.Item>
+                <Dropdown.Item href="/personal-info">My Account</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     )
