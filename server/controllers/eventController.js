@@ -11,7 +11,8 @@ const getEventImage = async (req, res, next) => {
     try {
         const event = await Event.findById(req.query.id);
         if (!event) return clientError(res, "No image found for provided event ID.");
-        return res.status(200).sendFile(path.resolve(event.eventImagePath));
+        const resolved = path.resolve(event.eventImagePath);
+        return res.status(200).sendFile(resolved, {root: ""});
     } catch (err) {
         console.error(err);
         return serverError(res, "An unexpected error occurred.");
@@ -34,6 +35,7 @@ const addEvent = async (req, res, next) => {
                     name: req.body.name,
                     description: req.body.description,
                     time: req.body.time,
+                    date: req.body.date,
                     address:{
                         street: req.body.street,
                         city: req.body.city,

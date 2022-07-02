@@ -21,6 +21,12 @@ const validateEventCreationSchema = checkSchema({
             errorMessage: "Time cannot be empty",
         }
     },
+    date: {
+        isEmpty: {
+            negated: true,
+            errorMessage: "Date cannot be empty",
+        }
+    },
     street: {
         trim: true,
         errorMessage: 'Street must be between 3 and 50 characters long',
