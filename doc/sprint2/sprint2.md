@@ -44,7 +44,7 @@ The sprint goal is to revamp the existing UI and have a better theme, as well as
 # Spikes
 
 - Learning redux and redux toolkit to store and manage the state in the application
-- image uploading/rendering for the main page
+- Image uploading/rendering for the main page
 
 # Team Capacity
 
