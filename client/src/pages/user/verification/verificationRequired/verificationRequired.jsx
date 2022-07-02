@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { resendCode } from '../../../../features/emailVerification/customer/resendCode.js';
+import { resendCode } from '../../../../services/emailVerification/customer/resendCode.js';
 
 import "./verificationRequired.css";
 

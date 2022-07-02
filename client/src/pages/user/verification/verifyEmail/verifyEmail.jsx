@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import "./verifyEmail.css";
 import { useParams } from 'react-router-dom';
-import { verifyEmail } from '../../../../features/emailVerification/customer/verifyEmail';
+import { verifyEmail } from '../../../../services/emailVerification/customer/verifyEmail';
 
 function CustomerVerifyEmail() {
     const [message, setMessage] = useState({message: ""});

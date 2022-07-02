@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { loadEvents, verifyEvent, rejectEvent } from "../../../features/admin/verifyEventService";
+import { loadEvents, verifyEvent, rejectEvent } from "../../../services/admin/verifyEventService";
 import VerifyRejectNode from '../node/verifyRejectNode.jsx'
 import './verifyEventForm.css'
 

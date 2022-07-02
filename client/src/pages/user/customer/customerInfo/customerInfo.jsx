@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {useSelector, useDispatch} from 'react-redux';
-import {updateUser} from '../../../../features/auth/authSlice.js'
+import {updateUser} from '../../../../services/auth/authSlice.js'
 import SettingSidebar from "../../../../components/setting-sidebar/settingSidebar.jsx"
 import {StyledEdiText} from './customerInfoStyle.js'
 import {FaEnvelope, FaUserAlt, FaPhoneAlt, FaInfo, FaEdit} from "react-icons/fa";

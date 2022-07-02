@@ -1,7 +1,22 @@
-import { clientError, serverError, success } from "../util/http/httpResponse.js";
+import {clientError, serverError, success, successWithData} from "../util/http/httpResponse.js";
 import {Event} from '../models/eventModel.js'
-import { eventImageService } from "../util/multer.js";
+import { eventImageService } from "../util/ImageService.js";
 import { validationResult } from 'express-validator';
+import mongoose from "mongoose";
+import path from "path";
+
+const getEventImage = async (req, res, next) => {
+    if (!req.query.id) return clientError(res, "Must provide an event ID.");
+    else if (!mongoose.isValidObjectId(req.query.id)) return clientError(res, "Invalid event ID provided.");
+    try {
+        const event = await Event.findById(req.query.id);
+        if (!event) return clientError(res, "No image found for provided event ID.");
+        return res.status(200).sendFile(path.resolve(event.eventImagePath));
+    } catch (err) {
+        console.error(err);
+        return serverError(res, "An unexpected error occurred.");
+    }
+}
 
 const addEvent = async (req, res, next) => {
     const errors = validationResult(req);
@@ -55,18 +70,15 @@ const getEvents = async (req, res, next) => {
                             id: output._id,
                             name: out.eventInfo.name,
                             description: out.eventInfo.description,
-                            address:{
-                                street: out.eventInfo.address.street,
-                                city: out.eventInfo.address.city,
-                                country: out.eventInfo.address.country,
-                                postalCode: out.eventInfo.address.postalCode
-                            },
+                            time: out.eventInfo.time,
+                            date: out.eventInfo.date,
+                            location: out.eventInfo.address.street,
                             eventImagePath: out.eventImagePath,
                             bidHistory: out.bidHistory
                         };
                     })
                 };
-            return res.status(200).json(response);
+                return successWithData(res, response, false);
             });
     } catch(err){
         return clientError(res, "No events found");
@@ -168,4 +180,4 @@ const updateEvents = async (req, res, next) => {
         
       });
 }
-export {addEvent, getEvents, getOrganizerEvents, updateEvents }
+export {addEvent, getEvents, getOrganizerEvents, updateEvents, getEventImage }

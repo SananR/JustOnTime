@@ -25,6 +25,10 @@ const eventInfoSchema = mongoose.Schema({
         trim: true,
         unique: true
     },
+    date: {
+        type: String,
+        required: true
+    },
     time: {
         type: String,
         required: true

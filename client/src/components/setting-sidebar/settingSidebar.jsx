@@ -1,7 +1,7 @@
 import React from 'react';
 import './SettingSidebar.css'
 
-//update the bar as we add more features then it will be uniform for all settings pages 
+//update the bar as we add more services then it will be uniform for all settings pages
 
 function SettingSidebar() {
     return (

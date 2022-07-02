@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
-import {loginUser, reset} from '../../features/auth/authSlice'
+import {loginUser, reset} from '../../services/auth/authSlice'
 import LoginForm from '../../components/forms/login/LoginForm'
 
 function Login() {
@@ -38,10 +38,6 @@ function Login() {
     }
 
     const onSubmit = (e) => {
-        /*
-        TODO: Remove
-         */
-        dispatch(reset());
         e.preventDefault();
 
         const userData = {
