@@ -36,7 +36,7 @@ function OrganizerUpdate() {
 	const handleUpdate = (e) => {
 		e.preventDefault();
 		let tempData = [...e.currentTarget.elements]
-			.filter((field) => field.type !== "submit" && field.value !== undefined)
+			.filter((field) => field.type !== "submit" && field.type !=="file" && field.value !== undefined)
 			.map((field) => {
 				return {
 					[field.id]: field.value
@@ -79,7 +79,6 @@ function OrganizerUpdate() {
 		const updateEvent = async () => {
 			console.log(data)
 			await axios.post("/api/event/updateEvent", form, config)
-			console.log(data)
 		}
 		updateEvent();
 
@@ -121,7 +120,7 @@ function OrganizerUpdate() {
 				{/* Remove when events are obtained from the database */}
 				{
 					eventState.length === 0 &&
-						<button className="event" onClick={() => navigate("/organizer/events/Default%Event")}>
+						<button className="event">
 							<img id="logo" src={logo} alt='JustOnTime' width="200" height="50"/><br/>
 							Default Event<br/>
 							123 Main Street<br/>

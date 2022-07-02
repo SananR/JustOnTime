@@ -105,7 +105,7 @@ const getOrganizerEvents =  async (req, res, next) => {
                                 country: out.eventInfo.address.country,
                                 postalCode: out.eventInfo.address.postalCode
                             },
-                            eventImagePath: out.eventImage_path,
+                            eventImagePath: out.eventImagePath,
                             bidHistory: out.bidHistory
                         };
                     })
