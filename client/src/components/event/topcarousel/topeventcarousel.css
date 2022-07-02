@@ -22,6 +22,12 @@
 .top-event-image {
     background-position: center;
     background-size: cover;
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 .top-event-title {
     font-size: 4.5em;
@@ -41,21 +47,13 @@
     color: #bbbbbb;
 }
 .cover-shadow {
-    z-index: 2;
+    z-index: 1;
     transition: linear 0.1s;
     background: black;
     opacity: 0;
 }
 .cover-shadow:hover {
     opacity: 0.25;
-}
-.testing2 {
-    user-drag: none;
-    -webkit-user-drag: none;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
 }
 .top-slider-container {
     height: 500px;
