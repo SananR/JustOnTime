@@ -1,13 +1,25 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Carousel from "react-multi-carousel"
 
 import "./topeventcarousel.css"
 import "react-multi-carousel/lib/styles.css";
 
 import {HiArrowCircleRight} from "react-icons/hi";
+import {getEventImage} from "../../../services/event/eventService";
 
 
 function EventSlide(props) {
+
+    const [image, setImage] = useState("");
+
+    useEffect( () => {
+        const fetchImage = async() => {
+            const img = await getEventImage(props.id);
+            setImage(() => (img));
+        }
+        fetchImage().catch(console.error);
+    }, []);
+
     return (
         <div className="container-fluid position-relative d-flex testing w-100 h-100 bg-image">
             <div className="w-100 h-100 position-absolute d-flex flex-column align-items-start justify-content-center">
@@ -19,7 +31,7 @@ function EventSlide(props) {
                 <h1 className="arrow-text ps-4 mt-1">SEE DETAILS</h1>
                 <HiArrowCircleRight className="arrow ms-4 mb-1" color={"aqua"} size={50}/>
             </div>
-            <img className="top-event-image testing2 w-100 h-100 img-fluid" alt="event" src={props.image}/>
+            <img className="top-event-image testing2 w-100 h-100 img-fluid" alt="event" src={URL.createObjectURL(new Blob([image], {type:"image/jpeg"}))}/>
         </div>
     )
 }
@@ -52,11 +64,12 @@ function TopEventCarousel(props) {
     function createEventSlides(events) {
         return events.map(event => {
             return <EventSlide
+                key={event.id.toString()}
+                id={event.id}
                 title={event.title}
                 date={event.date}
                 time={event.time}
                 location={event.location}
-                image={event.image}
             />
         })
     }

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom";
-import {loginUser, reset} from '../../features/auth/authSlice'
+import {loginUser, reset} from '../../services/auth/authSlice'
 import LoginForm from '../../components/forms/login/LoginForm'
 
 function Login() {
@@ -21,14 +21,13 @@ function Login() {
     const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
 
     useEffect(() => {
-        //login failed
         if (isError) {
             setFormError(() => ("Invalid credentials. Please try again."))
         }
-        if (isSuccess /* TODO: uncomment */ /*|| user */) {
+        if (isSuccess) {
             navigate('/')
         }
-    }, [user, isError, isSuccess, message, isLoading]);
+    }, [user, isError, isSuccess, message, isLoading, navigate]);
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -38,9 +37,6 @@ function Login() {
     }
 
     const onSubmit = (e) => {
-        /*
-        TODO: Remove
-         */
         dispatch(reset());
         e.preventDefault();
 

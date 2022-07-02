@@ -7,6 +7,10 @@ function flagError(res, data, flag, code, message) {
     } else return false;
 }
 
+function authError(res, message) {
+    res.status(401).send({message: message});
+}
+
 function clientError(res, message) {
     res.status(400).send({message: message});
 }
@@ -27,4 +31,4 @@ function successWithData(res, data, create) {
 
 
 
-export {flagError, clientError, serverError, success, successWithData}
+export {flagError, clientError, serverError, success, successWithData, authError}

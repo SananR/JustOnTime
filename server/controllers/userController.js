@@ -4,7 +4,6 @@ import { VerificationToken } from '../models/verificationTokenModel.js';
 import { flagError, clientError, serverError, success, successWithData } from "../util/http/httpResponse.js";
 import { createSaveToken } from "../util/email/verification/userVerification.js";
 import { validationResult } from 'express-validator';
-import { organizerInfoSchema } from '../models/schemas/organizerInfo.schema.js';
 
 const registerUser = async (req, res, next) => {
     const errors = validationResult(req);
@@ -41,6 +40,15 @@ const loginUser = async (req, res, next) => {
         return successWithData(res, user, false);
     });
   })(req, res, next);
+}
+
+const logoutUser = async (req, res, next) => {
+    try {
+        req.logout();
+        return success(res, "", false);
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 const verifyEmail = async (req, res, next) => {
@@ -126,5 +134,5 @@ const registerOrganizer = async (req, res, next) => {
   }
 }
 
-export { registerUser, loginUser, verifyEmail, resendCode, registerOrganizer, updateInformation }
+export { registerUser, loginUser, logoutUser, verifyEmail, resendCode, registerOrganizer, updateInformation }
 

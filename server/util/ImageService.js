@@ -1,16 +1,16 @@
-import { flagError, clientError, serverError, success } from "./http/httpResponse.js";
+import { clientError, serverError } from "./http/httpResponse.js";
 import multer from 'multer';
 import path from 'path'
 import { unlink } from 'node:fs';
 
-class imageService {
+class ImageService {
+
   constructor(fileType){
     this.fileType = fileType
   }
   storage = multer.diskStorage({
     destination: function(req, file, cb) {
-      let location = req.body.location
-      const dir = `../uploads/${location}`
+      const dir = `../uploads/event`
       cb(null, dir);
     },
     filename: function(req, file, cb) {
@@ -24,7 +24,7 @@ class imageService {
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     const mimetype = filetypes.test(file.mimetype);
     if (mimetype && extname) return cb(null, true);
-    cb('invalid file');
+    cb('Invalid file provided.', false);
   };
 
   upload = multer({
@@ -36,27 +36,28 @@ class imageService {
   });
 
   uploadImage = (req, res, next) => {
-    const uploaded = this.upload.single('Image');
+    const uploaded = this.upload.single('image');
     uploaded(req, res, function (err) {
         if (err instanceof multer.MulterError) {
-        return clientError(res, "File too large");
+          return clientError(res, err.message);
         } else if (err) {
-          if (err === 'invalid file') return clientError(res, "Invalid image type");
-          return serverError(res, "some upload error");
+          return serverError(res, err.message);
+        } else if (!req.file) {
+          return clientError(res, 'Invalid file provided.');
         }
         next();
     });
   };
 
-  deleteImage = (id) => {
-    if (!id || id === 'undefined') return clientError(res, "No image id");
-    unlink(id, (err) => {
-      if (err) return serverError(res, "Image deletion error");
+  deleteImage = (path) => {
+    if (!path) return clientError(res, "No image path provided");
+    unlink(path, (err) => {
+      if (err) return serverError(res, "An error occurred while deleting the event image file.");
     });
   };
 
 }
 
-const eventImageService = new imageService(/jpeg|jpg|png/);
+const eventImageService = new ImageService(/jpeg|jpg|png/);
 
-export {eventImageService}
+export { eventImageService }
