@@ -42,6 +42,15 @@ const loginUser = async (req, res, next) => {
   })(req, res, next);
 }
 
+const logoutUser = async (req, res, next) => {
+    try {
+        req.logout();
+        return success(res, "", false);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 const verifyEmail = async (req, res, next) => {
   const foundToken = await VerificationToken.find();
   VerificationToken.findOne({token: req.params.token}, (err, token) => {
@@ -125,5 +134,5 @@ const registerOrganizer = async (req, res, next) => {
   }
 }
 
-export { registerUser, loginUser, verifyEmail, resendCode, registerOrganizer, updateInformation }
+export { registerUser, loginUser, logoutUser, verifyEmail, resendCode, registerOrganizer, updateInformation }
 

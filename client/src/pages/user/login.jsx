@@ -21,11 +21,10 @@ function Login() {
     const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
 
     useEffect(() => {
-        //login failed
         if (isError) {
             setFormError(() => ("Invalid credentials. Please try again."))
         }
-        if (isSuccess /* TODO: uncomment */ /*|| user */) {
+        if (isSuccess) {
             navigate('/')
         }
     }, [user, isError, isSuccess, message, isLoading, navigate]);
@@ -38,6 +37,7 @@ function Login() {
     }
 
     const onSubmit = (e) => {
+        dispatch(reset());
         e.preventDefault();
 
         const userData = {
