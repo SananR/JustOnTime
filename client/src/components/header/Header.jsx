@@ -1,9 +1,9 @@
 import React from 'react'
 
 import Navbar from 'react-bootstrap/Navbar'
-import UserButton from '../userbutton/UserButton'
+import UserButton from './userbutton/UserButton'
 
-import logo from './logo.png'
+import logo from '../../logo_cropped.png'
 
 import './header.css'
 

@@ -1,0 +1,17 @@
+#user-button {
+    width: 5.5rem;
+    height: 3rem;
+    z-index: 3;
+}
+
+#user-button:hover {
+    color: #fff;
+    background-color: #ffffff;
+}
+.grow { 
+    transition: all .15s ease-in-out; 
+}
+    
+.grow:hover { 
+    transform: scale(1.1); 
+}

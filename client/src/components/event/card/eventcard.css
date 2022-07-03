@@ -1,0 +1,67 @@
+.event-card {
+    background: #ffffff;
+    color: #465362;
+    border-radius: 10px;
+    height: 375px;
+    width: 325px !important;
+    transition: all 0.2s ease-in-out;
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+.event-card:hover {
+    transform: scale(1.01);
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.25) !important;
+    cursor: pointer;
+}
+.event-card-star {
+    transition: all 0.1s linear;
+}
+.event-card-star:hover {
+    transform: scale(1.1);
+}
+.event-image-container {
+    height: 70%;
+    background-position: center;
+    background-size: cover;
+    border-top-right-radius: inherit;
+    border-top-left-radius: inherit;
+    opacity: 1;
+}
+.event-content-container {
+    height: 30%;
+    border-radius: inherit;
+}
+.event-card-title {
+    font-size: 1.75em;
+    color: black;
+}
+.event-card-meta {
+    font-size: 1em;
+    letter-spacing: 0.5px;
+}
+.event-card-bid {
+    font-size: 1.75em;
+    color: #ff6767;
+    letter-spacing: -1px;
+}
+.event-card-prevbid {
+    font-size: 1.25em;
+    color: #ff9696;
+    letter-spacing: -1px;
+}
+.bid-time-container {
+    bottom: 0.5em;
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.1);
+    height: 30px;
+    width: 120px !important;
+    border-radius: 5px;
+    background: linear-gradient(to bottom right, rgb(255, 255, 255), rgba(231, 231, 231, 0.25));
+}
+.bid-time-text {
+    color: black;
+    font-size: 1.1em;
+}

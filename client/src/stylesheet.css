@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
+a {
+    color: inherit !important; /* blue colors for links too */
+    text-decoration: inherit !important; /* no underline */
+    cursor: pointer;
+}
+a:focus {
+    outline: 0 !important;
+}
+*
+{
+    font-family: "Varela Round" !important;
+}
+p {
+    margin-top: inherit !important;
+    margin-bottom: inherit !important;
+}

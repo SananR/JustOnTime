@@ -1,41 +1,48 @@
 import mongoose from 'mongoose'
 import { addressSchema } from '../address.schema.js'
 
-
-const eventStatusValidator = (status) => {
-    if (status == "Completed" ||
-        status == "Ongoing" || 
-        status == "UnderReview" ||
-        status == "Cancelled"){
-            return true
-        }
-    return false
+const EventStatus = {
+    REJECTED: "REJECTED",
+    UNDER_REVIEW: "UNDER_REVIEW",
+    NEEDS_RESUBMISSION: "NEEDS_RESUBMISSION",
+    ONGOING: "ONGOING",
+    COMPLETED: "COMPLETED",
+    CANCELED: "CANCELED"
 }
+
+Object.freeze(EventStatus)
 
 const eventInfoSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        unique: true
     },
     description: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        unique: true
+    },
+    date: {
+        type: String,
+        required: true
     },
     time: {
-        type: Date,
+        type: String,
         required: true
     },
     address: {
         type: addressSchema,
-        required: true
+        required: false
     },
-    Status: {
+    status: {
         type: String,
-        required: true,
-        validator: [eventStatusValidator, "EventStatus is not valid"]
+        required: false,
+        enum : ["REJECTED", "UNDER_REVIEW", "NEEDS_RESUBMISSION", "ONGOING", "COMPLETED", "CANCELED"],
+        default: 'UNDER_REVIEW'
     }
 });
 
-export { eventInfoSchema }
+export { eventInfoSchema, EventStatus }
