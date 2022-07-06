@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "noEmit": true,
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "types": ["cypress", "node"]
+  },
+  "exclude": ["cypress/e2e/**/*.spec.js"],
+  "files": ["empty.ts"]
+}
