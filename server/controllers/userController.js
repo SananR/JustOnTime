@@ -2,8 +2,9 @@ import passport from 'passport';
 import { User } from '../models/userModel.js';
 import { VerificationToken } from '../models/verificationTokenModel.js';
 import { flagError, clientError, serverError, success, successWithData } from "../util/http/httpResponse.js";
-import { createSaveToken } from "../util/email/verification/userVerification.js";
+import { createSaveToken, createResetToken } from "../util/email/verification/userVerification.js";
 import { validationResult } from 'express-validator';
+import * as bcrypt from 'bcrypt';
 
 const registerUser = async (req, res, next) => {
     const errors = validationResult(req);
@@ -134,5 +135,40 @@ const registerOrganizer = async (req, res, next) => {
   }
 }
 
-export { registerUser, loginUser, logoutUser, verifyEmail, resendCode, registerOrganizer, updateInformation }
+//body example {"email": user@email.com}
+const sendResetLink = async (req, res, next) => {
+  User.findOne({ "userInfo.email" : req.body.email }, async (err, user) => {
+    if (!user) return clientError(res, "We were unable to find an account with that email.");
+    else {
+      let token = await VerificationToken.findOne({ _userId: user._id });
+      if (token) await VerificationToken.deleteOne(); 
+      return createResetToken(res, user, 'A password reset link has been sent to your inbox.');
+    }
+  })
+}
+
+//body example {"token": token}
+const checkTokenExpiration = async (req, res, next) => {
+  const passwordResetToken = await VerificationToken.findOne({token: req.body.token});
+  console.log(passwordResetToken);
+  if (!passwordResetToken) return clientError(res, "Token does not exist. Please try again.");
+  else return success(res, "Token exists", false);
+
+}
+
+//example body: {id: id, password: password}
+const passwordChanger = async (req, res, next) => {
+  const hashed = await bcrypt.hash(req.body.password, 10); 
+  if(!hashed) return clientError(res, "password could not be hashed.");
+  else {
+    const id = req.body.id
+    const update = { "userInfo.password" : hashed }
+    await VerificationToken.deleteOne({"_userId": req.body.id});
+    User.findByIdAndUpdate(id, update, {new: true},  async (err, user) => {
+    console.log(user); 
+    if (!user) return clientError(res, "Unable to update the field at this time. Please try again later. ");
+    else return successWithData(res, user, false);
+  }); }
+}
+export { registerUser, loginUser, logoutUser, verifyEmail, resendCode, registerOrganizer, updateInformation, sendResetLink, checkTokenExpiration, passwordChanger}
 

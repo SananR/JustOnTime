@@ -4,14 +4,12 @@ import { clientError, serverError, successWithData } from "../../http/httpRespon
 import nodemailer from "nodemailer";
 
 const host = 'http://localhost:3005'
-
 function transporter() {
     return nodemailer.createTransport({
-        host: "smtp.mail.yahoo.com",
+        host: "smtp.mailtrap.io",
         port: 465,
-        service: "yahoo",
         secure: false,
-        auth: {user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_APP_PASS},
+        auth: {user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_PASS},
         logger: true
     });
 }
@@ -44,4 +42,33 @@ function createSaveToken(res, user, data) {
     });
 }
 
-export { createSaveToken }
+
+function resetOptions(email, token) {
+    return {
+        from: process.env.EMAIL_ADDRESS,
+        to: email,
+        subject: 'Reset Password Link',
+        text: 'You requested to reset your password.' +'\n\n' + 'Please, click the link below to reset your password.'
+        +'\n\n'  + host +'\/resetpassword\/' + token.token + '\/' + token._userId +  '\n\nThank You!\n'
+    }
+}
+function createResetToken(res, user, data) {
+    //generate token to verify email address
+    let trans = transporter();
+    const token = VerificationToken({_userId: user._id, token: crypto.randomBytes(16).toString('hex')});
+    token.save().then(async () => {
+        // Send email (use credentials of SendGrid)
+        await trans.sendMail(resetOptions(user.userInfo.email, token), function (err) {
+            if (err) {
+                console.error(err);
+                return serverError(res, err.message);
+            }
+            return successWithData(res, data, false);
+        });
+    }).catch(err => {
+        console.error(err);
+        return clientError(res, err.message);
+    });
+}
+
+export { createSaveToken, createResetToken }
