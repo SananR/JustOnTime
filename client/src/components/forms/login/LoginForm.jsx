@@ -45,6 +45,7 @@ function LoginForm(props) {
                     />
                     <button type="submit" id="submit-button" className="mt-3 shadow-lg rounded-pill btn btn-block w-100 btn-danger">SIGN IN</button>
                     <p className="text-center w-100 mt-3">Don't have an account yet ? <a id="signup-link" className="text-danger" href="/signup">Sign Up Now</a></p>
+                    <p className="text-center w-100 mt-3">Forgot your password ? <a id="signup-link" className="text-danger" href="/forgottenpassword">Reset it</a></p>
                     <hr data-content="and" className="mt-4 hr-text"/>
                     <GoogleButton
                         className="mt-4 w-100"
