@@ -142,7 +142,7 @@ const sendResetLink = async (req, res, next) => {
     else {
       let token = await VerificationToken.findOne({ _userId: user._id });
       if (token) await VerificationToken.deleteOne(); 
-      return createResetToken(res, user, 'A password reset link has been sent to your inbox.');
+      return createResetToken(res, user, 'A password reset link has been sent to your inbox.', "password");
     }
   })
 }

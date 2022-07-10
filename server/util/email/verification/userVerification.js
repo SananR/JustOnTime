@@ -43,22 +43,22 @@ function createSaveToken(res, user, data) {
 }
 
 
-function resetOptions(email, token) {
+function resetOptions(email, token, field) {
     return {
         from: process.env.EMAIL_ADDRESS,
         to: email,
         subject: 'Reset Password Link',
-        text: 'You requested to reset your password.' +'\n\n' + 'Please, click the link below to reset your password.'
+        text: 'You requested to reset your ' + field +'\n\n' + 'Please, click the link below to reset your password.'
         +'\n\n'  + host +'\/resetpassword\/' + token.token + '\/' + token._userId +  '\n\nThank You!\n'
     }
 }
-function createResetToken(res, user, data) {
+function createResetToken(res, user, data, field) {
     //generate token to verify email address
     let trans = transporter();
     const token = VerificationToken({_userId: user._id, token: crypto.randomBytes(16).toString('hex')});
     token.save().then(async () => {
         // Send email (use credentials of SendGrid)
-        await trans.sendMail(resetOptions(user.userInfo.email, token), function (err) {
+        await trans.sendMail(resetOptions(user.userInfo.email, token, field), function (err) {
             if (err) {
                 console.error(err);
                 return serverError(res, err.message);
