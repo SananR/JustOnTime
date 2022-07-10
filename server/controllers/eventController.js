@@ -89,7 +89,7 @@ const getEvents = async (req, res, next) => {
 
 const getOrganizerEvents =  async (req, res, next) => {
     try{
-        Event.find({ 'organizer_id': req.query.id })
+        Event.find({ organizerId: req.query.id })
             .exec()
             .then(output => {
                 const response = {
@@ -148,7 +148,7 @@ const updateEvents = async (req, res, next) => {
                 tags: req.body.tags,
                 eventImagePath: req.file.path
             }
-            Event.updateOne(update, (err, user) => { 
+            Event.updateOne({_id:event._id},update, (err, user) => { 
                 if (err) {return serverError(res, "event couldn't be updated");}
                 try{
                     eventImageService.deleteImage(deletepath);
@@ -174,7 +174,7 @@ const updateEvents = async (req, res, next) => {
                 },
                 tags: req.body.tags
             }
-            Event.updateOne(update, (err, user) => { 
+            Event.updateOne({_id:event._id},update, (err, user) => { 
                 if (err) {return serverError(res, "event couldn't be updated");}
                 return success(res, "event successfully updated", false);
             }); 
@@ -182,4 +182,30 @@ const updateEvents = async (req, res, next) => {
         
       });
 }
-export {addEvent, getEvents, getOrganizerEvents, updateEvents, getEventImage }
+
+const updateBids = async (req, res, next) => {
+    Event.findOne({ _id: req.query.eventId}, (err, event) => {
+        if (!event) {return clientError(res, "No such event exists ");}
+        else if (event.eventInfo.status != "Ongoing" ){
+          return clientError(res, "bid cannot be placed");
+        }
+        if(event.bidHistory.length > 0 && event.bidHistory[event.bidHistory.length - 1].bidPrice >= req.body.bid){
+            return clientError(res, "bid cannot be placed as bid price should be larger than current bid");
+        }
+        /*if(event.bidHistory.length > 0 && event.bidHistory[event.bidHistory.length - 1].uid.toString === req.user._id.toString){
+            return clientError(res, "bid cannot be placed as user is already highest bidder");
+        }*/
+        
+        const update = {
+            uid: req.user._id,
+            bidPrice:req.body.bid
+        }
+        Event.updateOne({_id:event._id},{ $push: { bidHistory: update } }, (err, user) => { 
+            if (err) {
+                console.log(err)
+                return serverError(res, "bid couldn't be updated");}
+            return success(res, "event successfully updated", false);
+        });
+    });
+}
+export {addEvent, getEvents, getOrganizerEvents, updateEvents, getEventImage, updateBids }

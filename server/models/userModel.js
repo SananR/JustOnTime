@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import { userInfoSchema } from "./schemas/userInfo.schema.js";
+import { bidInfoSchema } from './schemas/event/bidInfo.schema.js';
 import { organizerInfoSchema } from "./schemas/organizerInfo.schema.js";
 
 const userSchema = mongoose.Schema({
@@ -17,6 +18,12 @@ const userSchema = mongoose.Schema({
     isVerified: {
         type: Boolean,
         default: false
+    },
+    bidHistory: {
+        type: [bidInfoSchema],
+        required: false,
+        trim: true,
+        default:[]
     }
 }, {
     timestamps: true,
