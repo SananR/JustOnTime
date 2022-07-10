@@ -4,7 +4,6 @@ import axios from 'axios'
 import { store } from '../../../store.js'
 import { getEventImage } from "../../../services/event/eventService";
 import './update.css'
-import logo from '../../../logo_cropped.png'
 
 function OrganizerUpdate() {
     const [eventState, setEventState] = useState({})
@@ -24,7 +23,7 @@ function OrganizerUpdate() {
     useEffect(() => {
         const fetchData = (async () => {
             try {
-                const res = await axios.get('/api/event/organizerEvents', {params: {"id": store.getState().auth.user._id}}).then(function(res) {
+                await axios.get('/api/event/organizerEvents', {params: {"id": store.getState().auth.user._id}}).then(function(res) {
 					const event = (res.data.events.filter(event => event.name === eventId))[0];
 					event["blob"] = getEventImage(event.id);
 					setEventState(event);
@@ -37,7 +36,7 @@ function OrganizerUpdate() {
             }
         })
         fetchData();
-    }, [])
+    }, [eventId])
 
 	const handleUpdate = (e) => {
 		e.preventDefault();
@@ -63,14 +62,8 @@ function OrganizerUpdate() {
 			}
 		}
 
-		if (e.target[6].files[0] === undefined)
-		var a = 0
-			// data["image"] = new File([eventState["blob"]], "file1.jpeg");
-			// delete data["image"]
-		else
+		if (e.target[6].files[0] !== undefined)
 			data["image"] = e.target[6].files[0];
-			
-		console.log(data["image"])
 
 		// default values
 		data["time"] = "0:00"
@@ -79,8 +72,6 @@ function OrganizerUpdate() {
 		data["tags"] = []
 		data["bidHistory"] = []
 		delete data["path"]
-		
-		console.log(data)
 
 		const config = {
 			headers: { "content-type": "multipart/form-data" }
@@ -92,11 +83,8 @@ function OrganizerUpdate() {
 			form.append(key, data[key]);
 
 		const updateEvent = async () => {
-			for (var pair of form.entries())
-				console.log(pair[0]+ ', ' + pair[1]);
 			try {
 				await axios.post(`/api/event/updateEvent/?eventId=${eventState.id}`, form, config)
-				// await axios.post(`/api/event/updateEvent/?eventId=${eventState.id}`, eventState, config)
 			} catch(e) {
 				console.log(e)
 			}
@@ -128,25 +116,13 @@ function OrganizerUpdate() {
             <div className="list">
                 {
 					<button className="event">
-						<img src={URL.createObjectURL(new Blob([eventState.blob], {type:"image/jpeg"}))}></img><br/>
+						<img id="image" src={URL.createObjectURL(new Blob([eventState.blob], {type:"image/jpeg"}))} alt={eventState.name}></img><br/>
 						{eventState.name}<br/>
 						{eventState.hasOwnProperty('address') && eventState.address.hasOwnProperty('street') && eventState.address.street}<br/>
 						{eventState.hasOwnProperty('address') && eventState.address.hasOwnProperty('city') && eventState.address.city}<br/>
 						{eventState.hasOwnProperty('address') && eventState.address.hasOwnProperty('country') && eventState.address.country}
 					</button>
                 }
-
-				{/* Remove when events are obtained from the database */}
-				{
-					eventState.length === 0 &&
-						<button className="event">
-							<img id="logo" src={logo} alt='JustOnTime' width="200" height="50"/><br/>
-							Default Event<br/>
-							123 Main Street<br/>
-							Toronto<br/>
-							Canada
-						</button>
-				}
             </div>
 			
 			<form id="form" action="" onSubmit={handleUpdate} method="post" encType="multipart/form-data">
@@ -160,11 +136,6 @@ function OrganizerUpdate() {
 						<td><label htmlFor="description" className="label">Description:</label></td>
 						<td><input type="text" id="description"></input></td>
 					</tr>
-					{/* Add this again when getOrganizerEvents returns the time as a field */}
-					{/* <tr>
-						<td><label htmlFor="time" className="label">Time:</label></td>
-						<td><input type="text" id="time"></input></td>
-					</tr> */}
 					<tr>
 						<td><label htmlFor="street" className="label">Street:</label></td>
 						<td><input type="text" id="street"></input></td>

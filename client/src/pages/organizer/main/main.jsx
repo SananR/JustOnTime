@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import {useSelector} from 'react-redux';
 import axios from 'axios'
-import { store } from '../../../store.js'
 import { getEventImage } from "../../../services/event/eventService";
 import './main.css'
-import logo from '../../../logo_cropped.png'
 
 function OrganizerMain() {
     const [eventState, setEventState] = useState({})
     const [error, setError] = useState()
     const [loading, setLoading] = useState(true)
+    const userId = useSelector(state => state.auth.user._id)
     const navigate = useNavigate()
 
     const Heading = () => {
@@ -24,12 +24,11 @@ function OrganizerMain() {
     useEffect(() => {
         const fetchData = (async () => {
             try {
-                const res = await axios.get('/api/event/organizerEvents', {params: {"id": store.getState().auth.user._id}}).then(function(res) {
+                await axios.get('/api/event/organizerEvents', {params: {"id": userId}}).then(function(res) {
                     res = res.data;
                     for (let index = 0; index < res.events.length; index++)
                         res.events[index]["blob"] = getEventImage(res.events[index].id)
                     setEventState(res);
-                    console.log(res);
                 }
                 );
             } catch (e) {
@@ -39,7 +38,7 @@ function OrganizerMain() {
             }
         })
         fetchData();
-    }, [])
+    }, [userId])
 
     if (error) {
         return (
@@ -65,7 +64,7 @@ function OrganizerMain() {
                 {
                     eventState.events.map(event =>
                         <button className="event" onClick={() => navigate("/organizer/events/" + event.name)}>
-                            <img src={URL.createObjectURL(new Blob([event.blob], {type:"image/jpeg"}))} alt={event.name}></img><br/>
+                            <img id="image" src={URL.createObjectURL(new Blob([event.blob], {type:"image/jpeg"}))} alt={event.name}></img><br/>
                             {event.name}<br/>
                             {event.hasOwnProperty('address') && event.address.hasOwnProperty('street') && event.address.street}<br/>
                             {event.hasOwnProperty('address') && event.address.hasOwnProperty('city') && event.address.city}<br/>
@@ -73,15 +72,6 @@ function OrganizerMain() {
                         </button>
                     )
                 }
-
-                {/* Remove when events are obtained from the database */}
-                <button className="event" onClick={() => navigate("/organizer/events/Default%Event")}>
-                    <img id="logo" src={logo} alt='JustOnTime' width="200" height="50"/><br/>
-                    Default Event<br/>
-                    123 Main Street<br/>
-                    Toronto<br/>
-                    Canada
-                </button>
             </div>
         </div>
         )
