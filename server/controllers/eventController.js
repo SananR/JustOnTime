@@ -89,14 +89,14 @@ const getEvents = async (req, res, next) => {
 
 const getOrganizerEvents =  async (req, res, next) => {
     try{
-        Event.find({ 'organizer_id': req.query.id })
+        Event.find({ 'organizerId': req.query.id })
             .exec()
             .then(output => {
                 const response = {
                     count: output.length,
                     events: output.map(out => {
                         return {
-                            id: output._id,
+                            id: out._id, // output
                             name: out.eventInfo.name,
                             description: out.eventInfo.description,
                             address:{
@@ -126,11 +126,13 @@ const updateEvents = async (req, res, next) => {
         return clientError(res, errors.array());
     }
     Event.findOne({ _id: req.query.eventId}, (err, event) => {
+    // Event.findOne({ _id: req.body.eventId}, (err, event) => {
         if (!event) {return clientError(res, "No such event exists ");}
         else if (event.eventInfo.status == "Ongoing" || event.eventInfo.status == "Completed"){
           return clientError(res, "event cannot be updated");
         }
-        let deletepath = event.eventImage_path
+        // let deletepath = event.eventImage_path
+        let deletepath = event.eventImagePath
         console.log(deletepath)
         if (req.file){
             const update = {

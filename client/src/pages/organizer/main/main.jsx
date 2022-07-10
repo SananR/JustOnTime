@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { store } from '../../../store.js'
+import { getEventImage } from "../../../services/event/eventService";
 import './main.css'
 import logo from '../../../logo_cropped.png'
 
@@ -22,9 +24,14 @@ function OrganizerMain() {
     useEffect(() => {
         const fetchData = (async () => {
             try {
-                // gets all events for now, add a request body with the organizer's id for only the single organizer's events
-                const res = await axios.get('/api/event/organizerEvents').then(res => res.data);
-                setEventState(res);
+                const res = await axios.get('/api/event/organizerEvents', {params: {"id": store.getState().auth.user._id}}).then(function(res) {
+                    res = res.data;
+                    for (let index = 0; index < res.events.length; index++)
+                        res.events[index]["blob"] = getEventImage(res.events[index].id)
+                    setEventState(res);
+                    console.log(res);
+                }
+                );
             } catch (e) {
                 setError(e);
             } finally {
@@ -40,7 +47,8 @@ function OrganizerMain() {
                 <Heading/>
                 <p id="error">An error occurred while trying to load the events</p>
             </div>
-    )} else if (loading) { 
+    )
+    } else if (loading) { 
         return (
             <div>
                 <Heading/>
@@ -57,7 +65,7 @@ function OrganizerMain() {
                 {
                     eventState.events.map(event =>
                         <button className="event" onClick={() => navigate("/organizer/events/" + event.name)}>
-                            <img src={event.eventImagePath} alt={event.name}></img><br/>
+                            <img src={URL.createObjectURL(new Blob([event.blob], {type:"image/jpeg"}))} alt={event.name}></img><br/>
                             {event.name}<br/>
                             {event.hasOwnProperty('address') && event.address.hasOwnProperty('street') && event.address.street}<br/>
                             {event.hasOwnProperty('address') && event.address.hasOwnProperty('city') && event.address.city}<br/>

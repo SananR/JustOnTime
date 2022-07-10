@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { store } from '../../../store.js'
+import { getEventImage } from "../../../services/event/eventService";
 import './update.css'
 import logo from '../../../logo_cropped.png'
 
@@ -22,8 +24,12 @@ function OrganizerUpdate() {
     useEffect(() => {
         const fetchData = (async () => {
             try {
-                const res = await axios.get('/api/event/organizerEvents').then(res => res.data.events.filter(event => event.name === eventId));
-				setEventState(res);
+                const res = await axios.get('/api/event/organizerEvents', {params: {"id": store.getState().auth.user._id}}).then(function(res) {
+					const event = (res.data.events.filter(event => event.name === eventId))[0];
+					event["blob"] = getEventImage(event.id);
+					setEventState(event);
+				}
+				);
             } catch (e) {
                 setError(e);
             } finally {
@@ -35,8 +41,9 @@ function OrganizerUpdate() {
 
 	const handleUpdate = (e) => {
 		e.preventDefault();
+
 		let tempData = [...e.currentTarget.elements]
-			.filter((field) => field.type !== "submit" && field.type !=="file" && field.value !== undefined)
+			.filter((field) => field.type !== "submit")
 			.map((field) => {
 				return {
 					[field.id]: field.value
@@ -44,41 +51,55 @@ function OrganizerUpdate() {
 			});
 
 		var data = {}
-		for (const field of tempData) {
+		for (const field of tempData)
 			data = Object.assign(data, field)
-		}
 
 		for(const [key, value] of Object.entries(data)) {
 			if (value === "") {
-				if (["street", "city", "country", "postalCode"].includes(key)) {
-					data[key] = (eventState[0]["address"][key])
-				}
-				else {
-					data[key] = (eventState[0][key])
-				}
+				if (["street", "city", "country", "postalCode"].includes(key))
+					data[key] = (eventState["address"][key])
+				else
+					data[key] = (eventState[key])
 			}
 		}
-		data["id"] = data["name"]
 
-		if (!e.currentTarget.hasOwnProperty("files") || e.currentTarget.files[0] === "") {
-			data["path"] = eventState[0]["eventImagePath"]
-		} else {
-			data["path"] = e.currentTarget.files[0]
-		}
+		if (e.target[6].files[0] === undefined)
+		var a = 0
+			// data["image"] = new File([eventState["blob"]], "file1.jpeg");
+			// delete data["image"]
+		else
+			data["image"] = e.target[6].files[0];
+			
+		console.log(data["image"])
+
+		// default values
+		data["time"] = "0:00"
+		data["date"] = "jan 1 2022"
+		data["location"] = "eventImages"
+		data["tags"] = []
+		data["bidHistory"] = []
+		delete data["path"]
 		
+		console.log(data)
+
 		const config = {
 			headers: { "content-type": "multipart/form-data" }
 		}
 
 		var form = new FormData();
 
-		for (var key in data) {
+		for (var key in data)
 			form.append(key, data[key]);
-		}
 
 		const updateEvent = async () => {
-			console.log(data)
-			await axios.post("/api/event/updateEvent", form, config)
+			for (var pair of form.entries())
+				console.log(pair[0]+ ', ' + pair[1]);
+			try {
+				await axios.post(`/api/event/updateEvent/?eventId=${eventState.id}`, form, config)
+				// await axios.post(`/api/event/updateEvent/?eventId=${eventState.id}`, eventState, config)
+			} catch(e) {
+				console.log(e)
+			}
 		}
 		updateEvent();
 
@@ -106,15 +127,13 @@ function OrganizerUpdate() {
             <Heading/>
             <div className="list">
                 {
-                    eventState.map(event =>
-                        <button className="event">
-                           	<img src={event.eventImagePath} alt={event.name}></img><br/>
-                            {event.name}<br/>
-                            {event.hasOwnProperty('address') && event.address.hasOwnProperty('street') && event.address.street}<br/>
-                            {event.hasOwnProperty('address') && event.address.hasOwnProperty('city') && event.address.city}<br/>
-                            {event.hasOwnProperty('address') && event.address.hasOwnProperty('country') && event.address.country}
-                        </button>
-                    )
+					<button className="event">
+						<img src={URL.createObjectURL(new Blob([eventState.blob], {type:"image/jpeg"}))}></img><br/>
+						{eventState.name}<br/>
+						{eventState.hasOwnProperty('address') && eventState.address.hasOwnProperty('street') && eventState.address.street}<br/>
+						{eventState.hasOwnProperty('address') && eventState.address.hasOwnProperty('city') && eventState.address.city}<br/>
+						{eventState.hasOwnProperty('address') && eventState.address.hasOwnProperty('country') && eventState.address.country}
+					</button>
                 }
 
 				{/* Remove when events are obtained from the database */}
