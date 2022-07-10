@@ -42,8 +42,6 @@ class ImageService {
           return clientError(res, err.message);
         } else if (err) {
           return serverError(res, err.message);
-        } else if (!req.file) {
-          return clientError(res, 'Invalid file provided.');
         }
         next();
     });
