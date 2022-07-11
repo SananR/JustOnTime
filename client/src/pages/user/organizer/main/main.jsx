@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import './main.css'
-import logo from '../../../logo_cropped.png'
+import logo from '../../../../logo_cropped.png'
 
 function OrganizerMain() {
     const [state, setState] = useState({})
