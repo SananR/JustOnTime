@@ -4,6 +4,9 @@ import reportWebVitals from './reportWebVitals'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Login from './pages/user/login.jsx'
 import Signup from "./pages/user/signup.jsx";
+import ForgottenPassword from "./pages/resetPassword/forgottenPassword"
+import ResetPassword from "./pages/resetPassword/resetPassword"
+import ResetSuccessful from "./pages/resetPassword/resetSuccessful"
 import CustomerVerifyEmail from './pages/user/verification/verifyEmail/verifyEmail.jsx'
 import CustomerVerificationRequired from './pages/user/verification/verificationRequired/verificationRequired.jsx'
 import CustomerInfo from './pages/user/customer/customerInfo/customerInfo.jsx'
@@ -28,6 +31,13 @@ export default function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="dashboard" element={<CustomerHome />} />
+            <Route path="forgottenpassword" element={<ForgottenPassword />} />
+            <Route path="reset-successful" element={<ResetSuccessful />} />
+            <Route path="resetpassword" >              
+                  <Route path=":token" >
+                    <Route path=":id" element={<ResetPassword />} />
+                  </Route>
+            </Route>
             <Route path="admin">
               <Route path="dashboard" element={<AdminDashboard />} />
             </Route>
