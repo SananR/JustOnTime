@@ -1,5 +1,9 @@
 import React, {useState} from 'react'
-import {OrganizerRegisterBusiness, OrganizerRegisterEmailConfirmation, OrganizerRegisterEvents} from "../../../../components/forms/organizer/signup/OrganizerSignupForms";
+import {
+    OrganizerRegisterApproval,
+    OrganizerRegisterBusiness,
+    OrganizerRegisterEmailConfirmation
+} from "../../../../components/forms/organizer/signup/OrganizerSignupForms";
 
 import "./organizerSignup.css"
 
@@ -25,10 +29,7 @@ function OrganizerRegisterProgress(props) {
                 <ProgressBarItem text="2. Business Information" filled={props.stage >= 2 ? true : false}/>
             </div>
             <div className="col flex-column justify-content-center align-items-center">
-                <ProgressBarItem text="3. Event Information" filled={props.stage >= 3 ? true : false}/>
-            </div>
-            <div className="col flex-column justify-content-center align-items-center">
-                <ProgressBarItem text="4. Awaiting Approval" filled={props.stage >= 4 ? true : false}/>
+                <ProgressBarItem text="3. Awaiting Approval" filled={props.stage >= 3 ? true : false}/>
             </div>
         </div>
     )
@@ -36,7 +37,7 @@ function OrganizerRegisterProgress(props) {
 
 function OrganizerSignup(props) {
 
-    const [formStep, setFormStep] = useState(3);
+    const [formStep, setFormStep] = useState(2);
 
     function getCurrentPage() {
         switch (formStep) {
@@ -47,7 +48,7 @@ function OrganizerSignup(props) {
                 return (<OrganizerRegisterBusiness/>)
                 break;
             case 3:
-                return (<OrganizerRegisterEvents/>)
+                return (<OrganizerRegisterApproval/>)
                 break;
             default: break;
         }
@@ -63,8 +64,10 @@ function OrganizerSignup(props) {
             >
                 {getCurrentPage()}
                 <div className="container-fluid row mt-5 mb-5 gx-0 gap-5 justify-content-center align-items-center">
-                    {formStep >= 3 && <button type="" id="back-button" className="mt-3 shadow-lg rounded-pill btn btn-block w-25 btn-secondary">BACK</button>}
-                    {formStep >= 2 && <button type="submit" id="submit-button" className="mt-3 shadow-lg rounded-pill btn btn-block w-25 btn-danger">CONTINUE</button>}
+{/*
+                    {formStep == 3 && <button type="" id="back-button" className="mt-3 shadow-lg rounded-pill btn btn-block w-25 btn-secondary">BACK</button>}
+*/}
+                    {formStep == 2 && <button type="submit" id="submit-button" className="mt-3 shadow-lg rounded-pill btn btn-block w-25 btn-danger">CONTINUE</button>}
                 </div>
             </div>
         </>
