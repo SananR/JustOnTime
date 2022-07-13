@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {FaUserAlt, FaLock} from 'react-icons/fa'
 import { useParams, useNavigate } from "react-router-dom";
+import {useDispatch} from 'react-redux';
 import InputField from "../../components/forms/input/InputField";
 import Spinner from "../../components/spinner/Spinner";
 import logo from "../../logo_cropped.png";
+import {logoutUser, reset } from "../../services/auth/authSlice"
 import axios from 'axios'
 
 function ResetPassword() {
@@ -13,8 +15,14 @@ function ResetPassword() {
     const [password2, setPassword2] = useState(false);
     const [exists, setExists] = useState(true);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const {token, id} = useParams(); 
+
+    const logout = () => {
+        dispatch(logoutUser());
+        dispatch(reset());
+    }
 
     const checkToken = async () => {
         const valid = await axios.post(API_URL + 'user/checkToken',  {"token": token});
@@ -37,8 +45,13 @@ function ResetPassword() {
             try {
                 setFormError("");
                 const response = await axios.post(API_URL + 'user/hash', {"id": id, "password": password});
-                console.log(response)
-                navigate('/reset-successful')
+                logout()
+            } catch (error) {
+                setFormError(error.response.data.message);
+            } 
+            try {
+                const response = await axios.post(API_URL + 'user/send-email', {"id": id, "message": "Password successfully changed!", subject: "JUST ON TIME: Password changed" });
+                navigate('/reset-successful/password')
             } catch (error) {
                 setFormError(error.response.data.message);
             } 
@@ -58,7 +71,7 @@ function ResetPassword() {
                         alt='JustOnTime'
                     />
                 </div>
-                <h1 id="welcome-text" className="text-center mb-5"><strong> Password Reset </strong></h1>
+                <h1 id="welcome-text" className="text-center mb-4"><strong> Password Reset </strong></h1>
                 <form onSubmit={onSubmit} className="w-100 d-flex justify-content-center ">
                 <div className="form-group col-7">
                     <InputField
@@ -80,9 +93,10 @@ function ResetPassword() {
                         errorMargin="90%"
                         onChange ={e => setPassword2(e.target.value)}
                     />
-                    <button type="submit" id="submit-button" className="mt-3 shadow-lg rounded-pill btn btn-block w-100 btn-danger">Reset</button>
+                    <button type="submit" id="submit-button" className="mt-3 shadow-lg rounded-pill btn btn-block w-100 btn-danger">Submit</button>
                 </div>
             </form>
+            <p id="sub-text" className="text-break text-muted text-center">Note: If you are logged in clicking submit will log you out and you will need to log back in with the new credentials to access your account again.</p>
         </div>
     );
 
