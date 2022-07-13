@@ -50,7 +50,7 @@ function ImageSlider(props) {
     }
 
     return (
-        <Carousel className="container rounded"
+        <Carousel className="carousel-container rounded"
             swipeable={true}
             draggable={true}
             responsive={responsive}
@@ -58,7 +58,7 @@ function ImageSlider(props) {
             showDots={true} 
             ssr={true}
             infinite={true}
-            partialVisible={false}
+            partialVisible={true}
         >
             {createImagePanels()}
             <p className="event-image h-100" style={{backgroundColor:"grey"}}>Image1</p>

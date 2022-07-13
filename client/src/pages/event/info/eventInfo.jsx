@@ -31,21 +31,31 @@ function EventInfo() {
     }, [eventId])
 
     return (
-        <div className="container-fluid w-100 h-100 ">
+        <div className="container-fluid w-100 h-100">
             {event === false && <h1 className="text-center mt-5">The event is not found</h1>}
             {event !== false && event !== true &&
                 <div className="m-5">
-                    <h1 className='m-1 font-weight-bold'>{event.title}</h1>
-                    <div className='d-flex flex-row mb-5 font-weight-bold'>
-                        <div className="p-2">{event.date}</div>
-                        <div className="p-2">{event.time}</div>
-                        <div className="p-2">{event.location.city + ", " + event.location.street}</div>
+                    <div className='display-1 m-1 text-uppercase fw-bolder'>{event.title}</div>
+                    <div className='d-flex flex-row mb-3'>
+                        <p className='m-1'>{event.date}</p>
+                        <p className='m-1'>{" · "}</p>                            
+                        <p className='m-1'>{event.time}</p>
+                        <p className='m-1'>{" · "}</p>
+                        <p className='m-1 fst-italic'>{event.location.city + ", " + event.location.street}</p>
                     </div>
-                    <ImageSlider images={[image]}></ImageSlider>
-                    <div className="d-flex flex-column">
-                        <div className="p-2">Fle x item2</div>  
+                    <ImageSlider images={[image]}></ImageSlider> 
+                    <div className="d-flex flex-row justify-content-around mt-5">
+                        <div className=''>
+                            <div className='d-flex flex-row justify-content-between'>
+                                <div className="h5" style={{color: "dodgerblue"}}>{event.tags.map(tag => {if (tag!=="") return "#" + tag + " " })}</div>
+                                <div className="d-inline h5">Time Remaining: <div className= "d-inline" style={{color: "red"}}>{event.timeRemaining}</div></div>   
+                            </div>
+                            <hr></hr>
+                            <div className='h3'>{event.description}{event.description}{event.description}</div> 
+                        </div>  
                         <div className="p-2">Flex item 3</div>  
-                    </div>          
+                    </div>
+
                 </div>
             }
         </div>
