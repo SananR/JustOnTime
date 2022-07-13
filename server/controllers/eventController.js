@@ -87,6 +87,19 @@ const getEvents = async (req, res, next) => {
     }
 }
 
+const getAnEvent = async (req, res, next) => {
+    if (!req.query.id) return clientError(res, "Must provide an event ID.");
+    else if (!mongoose.isValidObjectId(req.query.id)) return clientError(res, "Invalid event ID provided.");
+    try {
+        const event = await Event.findById(req.query.id);
+        if (!event) return clientError(res, "No event found for provided event ID.");
+        return successWithData(res, event, false);
+    } catch (err) {
+        console.error(err);
+        return serverError(res, "An unexpected error occurred.");
+    }
+}
+
 const getOrganizerEvents =  async (req, res, next) => {
     try{
         Event.find({ 'organizer_id': req.query.id })
@@ -182,4 +195,4 @@ const updateEvents = async (req, res, next) => {
         
       });
 }
-export {addEvent, getEvents, getOrganizerEvents, updateEvents, getEventImage }
+export {addEvent, getEvents, getAnEvent, getOrganizerEvents, updateEvents, getEventImage }
