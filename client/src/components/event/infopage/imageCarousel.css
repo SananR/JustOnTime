@@ -1,0 +1,10 @@
+.container {
+    border: hidden;
+    height: 500px;
+}
+
+.event-image {
+    object-fit: fill;
+    margin-left: 5%;
+    margin-right: 5%;
+}
