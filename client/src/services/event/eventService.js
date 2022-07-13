@@ -39,6 +39,7 @@ export const loadAnEvent = async (id) => {
             time: event.eventInfo.time,
             location: event.eventInfo.address,
             tags: event.tags,
+            bids: event.bidHistory,
             currentBid: 0,
             previousBid: 0,
             timeRemaining: "00:00:00"

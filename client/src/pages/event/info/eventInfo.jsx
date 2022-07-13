@@ -44,16 +44,29 @@ function EventInfo() {
                         <p className='m-1 fst-italic'>{event.location.city + ", " + event.location.street}</p>
                     </div>
                     <ImageSlider images={[image]}></ImageSlider> 
-                    <div className="d-flex flex-row justify-content-around mt-5">
-                        <div className=''>
-                            <div className='d-flex flex-row justify-content-between'>
-                                <div className="h5" style={{color: "dodgerblue"}}>{event.tags.map(tag => {if (tag!=="") return "#" + tag + " " })}</div>
-                                <div className="d-inline h5">Time Remaining: <div className= "d-inline" style={{color: "red"}}>{event.timeRemaining}</div></div>   
-                            </div>
-                            <hr></hr>
-                            <div className='h3'>{event.description}{event.description}{event.description}</div> 
-                        </div>  
-                        <div className="p-2">Flex item 3</div>  
+                    <div className="container justify-content-between mt-5">
+                        <div className='row'>
+                            <div className='col-md-6 mb-5'>
+                                <div className='d-flex flex-row justify-content-between'>
+                                    <div className="h5" style={{color: "dodgerblue"}}>{event.tags.map(tag => {if (tag!=="") return "#" + tag + " " })}</div>
+                                    <div className="d-inline h5">Time Remaining: <div className= "d-inline" style={{color: "red"}}>{event.timeRemaining}</div></div>   
+                                </div>
+                                <hr></hr>
+                                <div className='h5'>{event.description}</div> 
+                                <hr></hr>
+                            </div> 
+                            <div className='col-md-5 offset-md-1 container'>
+                                <div className='row align-items-center'>                                
+                                    <div className='col-sm-3 text-center'>Current bid:</div>
+                                    <div className='col-sm-4 h3 fw-bolder'>${event.currentBid}</div>
+                                    <div className='col-sm-5 h5 ' style={{color: "dodgerblue"}}>[{event.bids.length} bids]</div>                                    
+                                </div>
+                                <div className='row'>
+
+                                </div>
+                            </div>   
+                        </div>
+                        
                     </div>
 
                 </div>
