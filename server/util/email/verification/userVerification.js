@@ -6,8 +6,9 @@ import nodemailer from "nodemailer";
 const host = 'http://localhost:3005'
 function transporter() {
     return nodemailer.createTransport({
-        host: "smtp.mailtrap.io",
+        host: "smtp.mail.yahoo.com",
         port: 465,
+        service: "yahoo",
         secure: false,
         auth: {user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_PASS},
         logger: true
@@ -47,9 +48,9 @@ function resetOptions(email, token, field) {
     return {
         from: process.env.EMAIL_ADDRESS,
         to: email,
-        subject: 'Reset Password Link',
-        text: 'You requested to reset your ' + field +'\n\n' + 'Please, click the link below to reset your password.'
-        +'\n\n'  + host +'\/resetpassword\/' + token.token + '\/' + token._userId +  '\n\nThank You!\n'
+        subject: field +' Reset Link',
+        text: 'You requested to change your ' + field.toLowerCase() +'\n\n' + 'Please, click the link below to change your ' + field.toLowerCase()
+      + ":"  + '\n\n'  + host +'\/reset' + field.toLowerCase() + '\/' + token.token + '\/' + token._userId +  '\n\nThank You!\n'
     }
 }
 function createResetToken(res, user, data, field) {
@@ -71,4 +72,22 @@ function createResetToken(res, user, data, field) {
     });
 }
 
-export { createSaveToken, createResetToken }
+async function emailer(res, email, subject, message){
+    const options = {
+        from: process.env.EMAIL_ADDRESS,
+        to: email,
+        subject: subject,
+        text: message
+    }
+    let trans = transporter();
+    await trans.sendMail(options, function (err) {
+        if (err) {
+            console.error(err);
+            return serverError(res, err.message);
+        }
+        return successWithData(res, options, false);
+    });
+
+}
+
+export { createSaveToken, createResetToken, emailer}

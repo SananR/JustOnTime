@@ -117,17 +117,8 @@ function CustomerInfo() {
                     <div id='item'>
                             <h5 id= 'info-label'> E-mail:</h5> 
                             <div id='single-div'>
-                                <FaEnvelope className= "icon1" color="red"/>
-                                <StyledEdiText
-                                        value = {user ? user.userInfo.email : false}
-                                        onSave={(v) => onSave(v)}
-                                        validation={(val) => validate(val, "email")}
-                                        validationMessage ={vMessage}
-                                        hideIcons={true}
-                                        editButtonContent={<FaEdit color="red"/>}
-                                        saveButtonContent={<HiCheck color="green"/>}
-                                        cancelButtonContent={<HiX color="red"/>}
-                                /> 
+                                <FaEnvelope  className= "icon1" color="red"/>
+                                <div id='unchangeable-div'>{user ? user.userInfo.email : false} </div>
                             </div>
                     </div>
                 </div>
