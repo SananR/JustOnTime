@@ -19,6 +19,7 @@ import {Provider} from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.css'
 import './stylesheet.css'
 import AdminDashboard from './pages/admin/dashboard'
+import EventInfo from './pages/event/info/eventInfo'
 
 export default function App() {
   return (
@@ -37,6 +38,9 @@ export default function App() {
                   <Route path=":token" >
                     <Route path=":id" element={<ResetPassword />} />
                   </Route>
+            </Route>
+            <Route path="event">
+              <Route path=":eventId" element={<EventInfo/>} />
             </Route>
             <Route path="admin">
               <Route path="dashboard" element={<AdminDashboard />} />
