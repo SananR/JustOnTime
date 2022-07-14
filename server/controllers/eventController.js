@@ -1,5 +1,6 @@
 import {clientError, serverError, success, successWithData} from "../util/http/httpResponse.js";
 import {Event} from '../models/eventModel.js'
+import { User } from '../models/userModel.js'
 import { eventImageService } from "../util/ImageService.js";
 import { validationResult } from 'express-validator';
 import mongoose from "mongoose";
@@ -93,7 +94,11 @@ const getAnEvent = async (req, res, next) => {
     try {
         const event = await Event.findById(req.query.id);
         if (!event) return clientError(res, "No event found for provided event ID.");
-        return successWithData(res, event, false);
+        const organizer = await User.findById(event.organizerId);
+        const result = {...event._doc, organizerName: organizer.userInfo.firstName + " " + organizer.userInfo.lastName }
+        console.log(event)
+        console.log(result)
+        return successWithData(res, result, false);
     } catch (err) {
         console.error(err);
         return serverError(res, "An unexpected error occurred.");
