@@ -2,6 +2,9 @@ import Chance from "chance";
 
 const chance = new Chance();
 const email = chance.email();
+const firstName = chance.first();
+const lastName = chance.last();
+const password = chance.hash({length: 10})
 
 describe('Registration', () => {
   beforeEach(() => {
@@ -23,17 +26,17 @@ describe('Registration', () => {
       .should('eq','http://localhost:3005/signup')
       .get('input[name="firstName"]')
       .clear()
-      .type('Arya')
-      .should('have.value', 'Arya')
+      .type(firstName)
+      .should('have.value', firstName)
       .get('input[name="lastName"]')
-      .type('Sharma')
-      .should('have.value','Sharma')
+      .type(lastName)
+      .should('have.value',lastName)
       .get('input[name="email"]')
       .type(email)
       .should('have.value',email)
       .get('input[name="password"]')
-      .type('123456')
-      .should('have.value','123456')
+      .type(password)
+      .should('have.value',password)
       .get('#submit-button')
       .click()
       .url()
@@ -49,20 +52,20 @@ describe('Registration', () => {
   
   it('Fill Correct Form and Submit', () => {
     cy.get('input[name="firstName"]')
-      .type('Arya')
-      .should('have.value', 'Arya')
+      .type(firstName)
+      .should('have.value', firstName)
       .get('input[name="lastName"]')
-      .type('Sharma')
-      .should('have.value','Sharma')
+      .type(lastName)
+      .should('have.value',lastName)
       .get('input[name="email"]')
       .type(email)
       .should('have.value',email)
       .get('input[name="password"]')
-      .type('123456')
-      .should('have.value','123456')
+      .type(password)
+      .should('have.value',password)
       .get('input[name="password2"]')
-      .type('123456')
-      .should('have.value','123456')
+      .type(password)
+      .should('have.value',password)
       .get('#submit-button')
       .click()
       .url()
@@ -99,8 +102,8 @@ describe('Login', () => {
     .type(email)
     .should('have.value',email)
     .get('input[name="password"]')
-    .type('123456')
-    .should('have.value','123456')
+    .type(password)
+    .should('have.value',password)
     .get('#submit-button')
     .click()
     .url()
