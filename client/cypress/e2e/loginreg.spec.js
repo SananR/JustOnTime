@@ -1,6 +1,7 @@
 import Chance from "chance";
 
 const chance = new Chance();
+const email = chance.email();
 
 describe('Registration', () => {
   beforeEach(() => {
@@ -28,8 +29,8 @@ describe('Registration', () => {
       .type('Sharma')
       .should('have.value','Sharma')
       .get('input[name="email"]')
-      .type('aryasharma11234@gmail.com')
-      .should('have.value','aryasharma11234@gmail.com')
+      .type(email)
+      .should('have.value',email)
       .get('input[name="password"]')
       .type('123456')
       .should('have.value','123456')
@@ -38,8 +39,8 @@ describe('Registration', () => {
       .url()
       .should('eq','http://localhost:3005/signup')
       .get('input[name="password2"]')
-      .type('123456')
-      .should('have.value','123456')
+      .type('1234567')
+      .should('have.value','1234567')
       .get('#submit-button')
       .click()
       .url()
@@ -54,8 +55,8 @@ describe('Registration', () => {
       .type('Sharma')
       .should('have.value','Sharma')
       .get('input[name="email"]')
-      .type('aryasharma@gmail.com')
-      .should('have.value','aryasharma@gmail.com')
+      .type(email)
+      .should('have.value',email)
       .get('input[name="password"]')
       .type('123456')
       .should('have.value','123456')
@@ -82,8 +83,8 @@ describe('Login', () => {
 
   it('Check errors', () => {
     cy.get('input[name="email"]')
-      .type('aryasharma11234@gmail.com')
-      .should('have.value','aryasharma11234@gmail.com')
+      .type(email)
+      .should('have.value',email)
       .get('input[name="password"]')
       .type('1234567')
       .should('have.value','1234567')
@@ -95,8 +96,8 @@ describe('Login', () => {
   
   it('Fill Correct Form and Submit', () => {
     cy.get('input[name="email"]')
-    .type('aryasharma11234@gmail.com')
-    .should('have.value','aryasharma11234@gmail.com')
+    .type(email)
+    .should('have.value',email)
     .get('input[name="password"]')
     .type('123456')
     .should('have.value','123456')
