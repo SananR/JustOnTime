@@ -54,7 +54,14 @@ function CustomerInfo() {
             id = {update: { "userInfo.lastName" : val }, id : user._id }
 
         } else if (field === "phone") {
-            id = {update: { "organizer.phoneNumber" : val }, id : user._id }
+            if(val.length != 10){
+                setValidationMessage("Phone numbers must have 10 digits")
+                return false; 
+            } else if (! /^\d+$/.test(val)){
+                setValidationMessage("Invalid phone number.")
+                return false; 
+            }
+            id = {update: { "organizer.info.phoneNumber" : val }, id : user._id }
         } else {
             if(val.length < 5){
                 setValidationMessage("Emails must have at least 5 characters")
@@ -164,7 +171,7 @@ function CustomerInfo() {
                                 <div id='single-div'>
                                     <FaPhoneAlt className= "icon1" color="red"/>
                                     <StyledEdiText
-                                            value ={user ? user.organizer.phoneNumber : false}
+                                            value ={user ? user.organizer.info.phoneNumber : false}
                                             onSave={(v) => onSave(v)}
                                             validation={(val) => validate(val, "phone")}
                                             validationMessage ={vMessage}
@@ -179,7 +186,7 @@ function CustomerInfo() {
                                 <h5 id= 'info-label'> Status:</h5>
                                 <div id= 'single-div'>
                                     <FaInfo  className= "icon1" color="red"/>
-                                   <div id='unchangeable-div'>{user ? user.organizer.status : false} </div>
+                                   <div id='unchangeable-div'>{user ? user.organizer.info.verificationStatus : false} </div>
                                 </div>
                             </div>
                         </div>
