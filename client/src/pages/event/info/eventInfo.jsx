@@ -3,11 +3,15 @@ import { useParams } from 'react-router-dom';
 import "./eventInfo.css"
 import { loadAnEvent, getEventImage } from '../../../services/event/eventService';
 import ImageSlider from '../../../components/event/infopage/imageCarousel';
+import MakeBidForm from '../../../components/forms/makebid/makebidform';
+import Spinner from '../../../components/spinner/Spinner';
 
 function EventInfo() {
 
     const [event, setEvent] = useState(true);
     const [image, setImage] = useState("");
+    const [bidAmount, setBidAmount] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     const { eventId } = useParams();
 
@@ -29,6 +33,16 @@ function EventInfo() {
             }        
         })
     }, [eventId])
+
+    const onChangeBid = (e) => {
+        setBidAmount(e.target.value)
+    }
+
+    const onPlaceBid = async (e) => {
+        e.preventDefault()
+        setIsLoading(true)
+        console.log(bidAmount)
+    }
 
     return (
         <div className="container-fluid w-100 h-100">
@@ -62,7 +76,7 @@ function EventInfo() {
                                     <div className='col-sm-5 h5 ' style={{color: "dodgerblue"}}>[{event.bids.length} bids]</div>                                    
                                 </div>
                                 <div className='row'>
-
+                                    <MakeBidForm minBid={event.currentBid+1} onSubmit={onPlaceBid} onChange={onChangeBid} loading={isLoading}></MakeBidForm>
                                 </div>
                             </div>   
                         </div>
