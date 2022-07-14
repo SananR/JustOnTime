@@ -7,7 +7,12 @@ import GoogleButton from 'react-google-button'
 
 function MakeBidForm(props) {
     return (
-        <div id="makeabid-container" className="mt-5 mb-5 py-5 shadow container">
+        <div id="makeabid-container" className="py-5 shadow container">
+            <div className='row align-items-center'>                                
+                <div className='col-sm-3 text-center'>Current bid:</div>
+                <div className='col-sm-4 h3 fw-bolder'>${props.currBid}</div>
+                <div className='col-sm-5 h5 ' style={{color: "dodgerblue"}}>[{props.bids.length} bids]</div>                                    
+            </div>
             <div className='row'>
                 <form onSubmit={props.onSubmit} className="w-100 d-flex flex-column justify-content-center align-items-center">
                     <div className="form-group col-md-8">

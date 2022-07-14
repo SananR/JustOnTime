@@ -60,7 +60,10 @@ function EventInfo() {
                     <ImageSlider images={[image]}></ImageSlider> 
                     <div className="justify-content-between mt-3">
                         <div id="thisrow?" className='row'>
-                            <div className='col-md-6 mb-5 pt-5'>
+                            <div id="sticky-form" className='col-md-5 px-0 py-5 sticky-top align-self-start' style={{background: "white"}}>
+                                <MakeBidForm minBid={event.currentBid+1} currBid={event.currentBid} bids={event.bids} onSubmit={onPlaceBid} onChange={onChangeBid} loading={isLoading}></MakeBidForm>
+                            </div> 
+                            <div className='col-md-6 offset-md-1 mb-5 pt-5'>
                                 <div className='d-flex flex-row justify-content-between'>
                                     <div className="h5" style={{color: "dodgerblue"}}>{event.tags.map(tag => {if (tag!=="") return "#" + tag + " " })}</div>
                                     <div className="d-inline h5">Time Remaining: <div className= "d-inline" style={{color: "red"}}>{event.timeRemaining}</div></div>   
@@ -86,16 +89,6 @@ function EventInfo() {
                                 <hr></hr>
                                 <div className='h5'>{event.description}</div> 
                                 <hr></hr>
-                            </div> 
-                            <div id="sticky-element" className='col-md-5 offset-md-1 pt-5 container sticky-top align-self-start'>
-                                <div className='row align-items-center'>                                
-                                    <div className='col-sm-3 text-center'>Current bid:</div>
-                                    <div className='col-sm-4 h3 fw-bolder'>${event.currentBid}</div>
-                                    <div className='col-sm-5 h5 ' style={{color: "dodgerblue"}}>[{event.bids.length} bids]</div>                                    
-                                </div>
-                                <div className='row'>
-                                    <MakeBidForm minBid={event.currentBid+1} onSubmit={onPlaceBid} onChange={onChangeBid} loading={isLoading}></MakeBidForm>
-                                </div>
                             </div> 
                         </div>
                         
