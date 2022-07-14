@@ -29,7 +29,7 @@ function MakeBidForm(props) {
                             className="text-center"
                         />
                         <div className='text-center m-2 text-secondary'>Enter ${props.minBid} or more</div>
-                        <button type="submit" className="mt-3 shadow rounded-pill btn btn-block w-100 btn-primary">Place bid</button>
+                        <button type="submit" id="submit-button" className="mt-3 shadow rounded-pill btn btn-block w-100 btn-danger">Place bid</button>
                     </div>
                 </form>
             </div>
