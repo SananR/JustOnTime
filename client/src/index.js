@@ -11,12 +11,7 @@ import CustomerVerifyEmail from './pages/user/verification/verifyEmail/verifyEma
 import CustomerVerificationRequired from './pages/user/verification/verificationRequired/verificationRequired.jsx'
 import CustomerInfo from './pages/user/customer/customerInfo/customerInfo.jsx'
 import CustomerHome from "./pages/user/customer/home/CustomerHome";
-<<<<<<< HEAD
-import OrganizerMain from './pages/organizer/main/main.jsx'
-import OrganizerUpdate from './pages/organizer/update/update.jsx'
-=======
 import OrganizerMain from './pages/user/organizer/main/main.jsx'
->>>>>>> dev
 import Header from './components/header/Header'
 import { store } from './store.js'
 import {Provider} from 'react-redux'
@@ -56,13 +51,8 @@ export default function App() {
               </Route>
             </Route>
             <Route path="organizer">
-<<<<<<< HEAD
-              <Route path="main" element={<OrganizerMain/>} />
-              <Route path="events/:name" element={<OrganizerUpdate/>} />
-=======
                 <Route path="signup" element={<OrganizerSignup/>} />
                 <Route path="main" element={<OrganizerMain/>} />
->>>>>>> dev
             </Route>
         </Routes>
     </Router>
