@@ -11,6 +11,36 @@ const OrganizerStatus = {
 Object.freeze(OrganizerStatus)
 
 const organizerInfoSchema = mongoose.Schema({
+    businessName: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    businessLicense: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    address: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    postal: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    city: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    province: {
+        type: String,
+        required: true,
+        trim: true
+    },
     phoneNumber: {
         type: String,
         required: true,
