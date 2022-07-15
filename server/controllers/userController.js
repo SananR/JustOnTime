@@ -2,7 +2,7 @@ import passport from 'passport';
 import { User } from '../models/userModel.js';
 import { VerificationToken } from '../models/verificationTokenModel.js';
 import { flagError, clientError, serverError, success, successWithData } from "../util/http/httpResponse.js";
-import { createSaveToken, createResetToken } from "../util/email/verification/userVerification.js";
+import { createSaveToken, createResetToken, emailer} from "../util/email/verification/userVerification.js";
 import { validationResult } from 'express-validator';
 import * as bcrypt from 'bcrypt';
 
@@ -97,7 +97,7 @@ const resendCode = async (req, res, next) => {
 
 
 // request body {"update": {{userInfo.field: newValue},{organizer.field: newValue}} , id: id}
-//cannot update email or password with this
+//cannot update password with this
 const updateInformation = async (req, res, next) => {
     const id = req.body.id
     const update = req.body.update; 
@@ -138,14 +138,14 @@ const registerOrganizer = async (req, res, next) => {
   }
 }
 
-//body example {"email": user@email.com}
+//body example {"email": user@email.com, "field": passsword}
 const sendResetLink = async (req, res, next) => {
   User.findOne({ "userInfo.email" : req.body.email }, async (err, user) => {
     if (!user) return clientError(res, "We were unable to find an account with that email.");
     else {
       let token = await VerificationToken.findOne({ _userId: user._id });
       if (token) await VerificationToken.deleteOne(); 
-      return createResetToken(res, user, 'A password reset link has been sent to your inbox.', "password");
+      return createResetToken(res, user, 'A reset link has been sent to your inbox.', req.body.field);
     }
   })
 }
@@ -173,5 +173,14 @@ const passwordChanger = async (req, res, next) => {
     else return successWithData(res, user, false);
   }); }
 }
-export { registerUser, loginUser, logoutUser, verifyEmail, resendCode, registerOrganizer, updateInformation, sendResetLink, checkTokenExpiration, passwordChanger}
+//example body : {message: email message, subject: subject of email, id: id}
+const sendEmail = async (req, res, next) => {
+  User.findOne({ "_id" : req.body.id }, async (err, user) => {
+    if(!user) return clientError(res, "Couldn't send confirmation email")
+    else {
+      return await emailer(res, user.userInfo.email, req.body.subject, req.body.message)
+    }
+  });
+}
+export { registerUser, loginUser, logoutUser, verifyEmail, resendCode, registerOrganizer, updateInformation, sendResetLink, checkTokenExpiration, passwordChanger, sendEmail}
 

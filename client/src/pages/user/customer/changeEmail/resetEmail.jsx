@@ -1,18 +1,17 @@
 import React, {useEffect, useState} from "react";
 import {FaUserAlt, FaLock} from 'react-icons/fa'
 import { useParams, useNavigate } from "react-router-dom";
+import InputField from "../../../../components/forms/input/InputField";
 import {useDispatch} from 'react-redux';
-import InputField from "../../components/forms/input/InputField";
-import Spinner from "../../components/spinner/Spinner";
-import logo from "../../logo_cropped.png";
-import {logoutUser, reset } from "../../services/auth/authSlice"
+import logo from "../../../../logo_cropped.png";
+import {logoutUser, reset } from "../../../../services/auth/authSlice"
 import axios from 'axios'
 
-function ResetPassword() {
+function ResetEmail() {
     const API_URL = '/api/';
     const [formError, setFormError] = useState(false);
-    const [password, setPassword] = useState(false);
-    const [password2, setPassword2] = useState(false);
+    const [email, setEmail] = useState(false);
+    const [email2, setEmail2] = useState(false);
     const [exists, setExists] = useState(true);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -34,24 +33,25 @@ function ResetPassword() {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        if (password === "" || password2 === "" ){
+        if (email === "" || email2 === "" ){
             setFormError("All fields are required")
-        } else if (password.length < 3 || password.length > 50 || 
-            password2.length < 3 || password2.length > 50 ){
-            setFormError("Passwords must be between 3-50 characters");
-        } else if ( !(password == password2)){
-            setFormError("Passwords must match");
+        } else if (email.length < 5 || email.length > 50 || 
+            email2.length < 5 || email2.length > 50 ){
+            setFormError("Emails must be between 5-50 characters");
+        } else if ( !(email == email2)){
+            setFormError("Emails must match");
         } else {
             try {
                 setFormError("");
-                const response = await axios.post(API_URL + 'user/hash', {"id": id, "password": password});
+                const response = await axios.post(API_URL + 'user/personal-info', {"id": id, "update": { "userInfo.email" : email }});
+                console.log(response)
                 logout()
             } catch (error) {
                 setFormError(error.response.data.message);
             } 
             try {
-                const response = await axios.post(API_URL + 'user/send-email', {"id": id, "message": "Password successfully changed!", subject: "JUST ON TIME: Password changed" });
-                navigate('/reset-successful/password')
+                const response = await axios.post(API_URL + 'user/send-email', {"id": id, "message": "Email successfully changed!", subject: "JUST ON TIME: Email changed" });
+                navigate('/reset-successful/email')
             } catch (error) {
                 setFormError(error.response.data.message);
             } 
@@ -71,32 +71,32 @@ function ResetPassword() {
                         alt='JustOnTime'
                     />
                 </div>
-                <h1 id="welcome-text" className="text-center mb-4"><strong> Password Reset </strong></h1>
+                <h1 id="welcome-text" className="text-center mb-4"><strong> Email Reset </strong></h1>
                 <form onSubmit={onSubmit} className="w-100 d-flex justify-content-center ">
                 <div className="form-group col-7">
                     <InputField
-                        name="password"
+                        name="email"
                         className="mb-3"
                         error={formError}
                         icon={<FaLock className="icon position-absolute" color="red" size={20}/>}
-                        type="password"
-                        placeholder="New Password"
+                        type="email"
+                        placeholder="New Email"
                         errorMargin="90%"
-                        onChange ={e => setPassword(e.target.value)}
+                        onChange ={e => setEmail(e.target.value)}
                     />
                     <InputField
-                        name="password2"
+                        name="email2"
                         error={formError}
                         icon={<FaLock className="icon position-absolute" color="red" size={20}/>}
-                        type="password"
-                        placeholder="Confirm Password"
+                        type="email"
+                        placeholder="Confirm Email"
                         errorMargin="90%"
-                        onChange ={e => setPassword2(e.target.value)}
+                        onChange ={e => setEmail2(e.target.value)}
                     />
                     <button type="submit" id="submit-button" className="mt-3 shadow-lg rounded-pill btn btn-block w-100 btn-danger">Submit</button>
                 </div>
             </form>
-            <p id="sub-text" className="text-break text-muted text-center">Note: If you are logged in clicking submit will log you out and you will need to log back in with the new credentials to access your account again.</p>
+            <p className="text-muted text-center">Note: If you are logged in clicking submit will log you out and you will need to log back in with the new credentials to access your account again.</p>
         </div>
     );
 
@@ -109,5 +109,5 @@ function ResetPassword() {
     );
 }
 
-export default ResetPassword;
+export default ResetEmail;
   

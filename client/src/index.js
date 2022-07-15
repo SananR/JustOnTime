@@ -4,9 +4,10 @@ import reportWebVitals from './reportWebVitals'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Login from './pages/user/login.jsx'
 import Signup from "./pages/user/signup.jsx";
-import ForgottenPassword from "./pages/resetPassword/forgottenPassword"
+import SendResetLink from "./pages/resetPassword/sendResetLink"
 import ResetPassword from "./pages/resetPassword/resetPassword"
 import ResetSuccessful from "./pages/resetPassword/resetSuccessful"
+import ResetEmail from "./pages/user/customer/changeEmail/resetEmail"
 import CustomerVerifyEmail from './pages/user/verification/verifyEmail/verifyEmail.jsx'
 import CustomerVerificationRequired from './pages/user/verification/verificationRequired/verificationRequired.jsx'
 import CustomerInfo from './pages/user/customer/customerInfo/customerInfo.jsx'
@@ -33,11 +34,20 @@ export default function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="dashboard" element={<CustomerHome />} />
-            <Route path="forgottenpassword" element={<ForgottenPassword />} />
-            <Route path="reset-successful" element={<ResetSuccessful />} />
+            <Route path="reset-link" >
+              <Route path=":changed" element={<SendResetLink />}/>    
+            </Route>
+            <Route path="reset-successful" >
+              <Route path=":changed" element={<ResetSuccessful />}/>    
+            </Route>
             <Route path="resetpassword" >              
+              <Route path=":token" >
+                <Route path=":id" element={<ResetPassword />} />
+              </Route>
+            </Route>
+            <Route path="resetemail" >              
                   <Route path=":token" >
-                    <Route path=":id" element={<ResetPassword />} />
+                    <Route path=":id" element={<ResetEmail />} />
                   </Route>
             </Route>
             <Route path="event">
