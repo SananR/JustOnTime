@@ -1,28 +1,15 @@
 # Sprint Goal
 
-The sprint goal is to add functionality to allow the event organizer to register and then create and manage their events. In addition, the customer will be able to view events on their main page once they have been created and then place a bid on them. Users will also be able to update additional personal information such as their password and email address.
+The sprint goal is to let the customer be able to view events on their main page once they have been created and then place a bid on them. In addition, users will also be able to update additional personal information such as their password and email address and added functionality to allow the event organizer to register and manage their events.
 
 # Stories For This Sprint
 
-### JUS-115
-As an event organizer, I want to be able to access a dashboard that lets me manipulate my events, so that I can manage my events more easily.
-
----
 
 ### JUS-116
 As a user, I want to be able to view an event, so that I can see all the relevant information regarding it.
 ### Breakdown:
    - Create backend api to retrieve en event's information
    - Create frontend page to show customer the events info
-
----
-
-### JUS-24
-As an event organizer, I want to be able to create a new event, so that the customers can see my event and its relevant information.
-### Breakdown:
-   - Implement frontend for creating event
-   - Implement a backend for creating events
-   - Connect event creation to backend
 
 ---
 
@@ -61,12 +48,26 @@ As a registered user, I want to be able to change my password without being logg
 ---
 
 ### JUS-3
-8. As a registered user, I want to be able to change my password or email address after I log in, so that my account can stay secure.
+As a registered user, I want to be able to change my password or email address after I log in, so that my account can stay secure.
 
 ---
 
 ### JUS-23
-9. As an event organizer, I want to add and update my information, so that my information remains accurate at all times.
+As an event organizer, I want to add and update my information, so that my information remains accurate at all times.
+
+---
+### JUS-115
+As an event organizer, I want to be able to access a dashboard that lets me manipulate my events, so that I can manage my events more easily.
+
+---
+
+
+### JUS-24
+As an event organizer, I want to be able to create a new event, so that the customers can see my event and its relevant information.
+### Breakdown:
+   - Implement frontend for creating event
+   - Implement a backend for creating events
+   - Connect event creation to backend
 
 ---
   
