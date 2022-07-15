@@ -4,6 +4,10 @@ import {useSelector} from 'react-redux';
 import axios from 'axios'
 import { getEventImage } from "../../../services/event/eventService";
 import './main.css'
+<<<<<<< HEAD:client/src/pages/organizer/main/main.jsx
+=======
+import logo from '../../../../logo_cropped.png'
+>>>>>>> dev:client/src/pages/user/organizer/main/main.jsx
 
 function OrganizerMain() {
     const [eventState, setEventState] = useState({})
