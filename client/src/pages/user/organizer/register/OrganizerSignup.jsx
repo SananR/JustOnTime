@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     OrganizerRegisterApproval,
     OrganizerRegisterBusiness,
@@ -6,6 +6,8 @@ import {
 } from "../../../../components/forms/organizer/signup/OrganizerSignupForms";
 
 import "./organizerSignup.css"
+import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 function OrganizerRegisterProgress(props) {
 
@@ -38,6 +40,26 @@ function OrganizerRegisterProgress(props) {
 function OrganizerSignup(props) {
 
     const [formStep, setFormStep] = useState(2);
+
+    const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
+
+    const [formData, setFormData] = useState({
+        businessName: '',
+        businessLicense: '',
+        phone: '',
+        street: '',
+        postal: '',
+        city: ''
+    })
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        //Not registered
+        if (!user) navigate('/signup');
+        //Registered
+
+    }, [])
 
     function getCurrentPage() {
         switch (formStep) {

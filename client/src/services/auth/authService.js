@@ -5,11 +5,21 @@ const API_URL = '/api/'
 //Register user
 const registerUser = async (userData) => {
     const response = await axios.post(API_URL + 'user/register', userData);
-    if (response.data) {
+    if (response.status == 200) {
         localStorage.setItem('user', JSON.stringify(response.data))
     }
     return response.data;
 }
+
+//Register organizer
+const registerOrganizer = async (userData) => {
+    const response = await axios.post(API_URL + "organizer/register", userData);
+    if (response.status == 200) {
+        localStorage.setItem('user', JSON.stringify(response.data))
+    }
+    return response.data;
+}
+
 
 //Login user
 const loginUser = async (userData) => {
@@ -39,7 +49,7 @@ const updateUser = async (id) => {
 }
 
 const authService = {
-    registerUser, loginUser, updateUser, logoutUser
+    registerUser, registerOrganizer, loginUser, updateUser, logoutUser
 }
 
 export default authService
