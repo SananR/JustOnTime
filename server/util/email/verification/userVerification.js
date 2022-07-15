@@ -6,9 +6,8 @@ import nodemailer from "nodemailer";
 const host = 'http://localhost:3005'
 function transporter() {
     return nodemailer.createTransport({
-        host: "smtp.mail.yahoo.com",
+        host: "smtp.mailtrap.com",
         port: 465,
-        service: "yahoo",
         secure: false,
         auth: {user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_PASS},
         logger: true
