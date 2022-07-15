@@ -6,6 +6,7 @@ import {TbCertificate} from "react-icons/tb";
 import {FaGlobeAmericas, FaPhone} from "react-icons/fa";
 import {BsShieldFillCheck} from "react-icons/bs"
 import {AiFillHome} from "react-icons/ai";
+import Spinner from "../../../spinner/Spinner";
 
 function OrganizerRegisterApproval(props) {
     return (
@@ -71,50 +72,55 @@ function OrganizerRegisterEmailConfirmation(props) {
 function OrganizerRegisterBusiness(props) {
     return (
         <motion.div
-            className="container-fluid d-flex"
+            className="container-fluid d-flex justify-content-center align-items-center"
             animate={{ opacity: [0, 1] }}
             transition={{ duration: 2 }}
         >
-            <form onSubmit={props.onSubmit} className="container-fluid row justify-content-center">
+            <Spinner color={"#ff6178"} loading={props.loading} size={75} />
+            <form id="businessForm" onSubmit={props.onSubmit} className="container-fluid row justify-content-center">
                 <div className="mb-2 form-group">
-                    <div className="row mt-5 mx-5 gx-0 gap-3 justify-content-center align-items-center">
+                    <div className="row mt-5 mx-5 gx-0 gap-3">
                         <InputField
                             name="businessName"
+                            error={props.error.businessNameError}
                             onChange={props.onChange}
                             className="col"
                             icon={<MdBusiness className="icon position-absolute" color="grey" size={20}/>}
                             type="text"
                             placeholder="Business Name"
-                            errorMargin="86%"
+                            errorMargin="94%"
                         />
                         <InputField
                             name="businessLicense"
+                            error={props.error.businessLicenseError}
                             onChange={props.onChange}
                             className="col"
                             icon={<TbCertificate className="icon position-absolute" color="grey" size={20}/>}
                             type="text"
                             placeholder="Business License #"
-                            errorMargin="86%"
+                            errorMargin="94%"
                         />
                     </div>
-                    <div className="row mt-5 mx-5 gx-0 gap-3 justify-content-center align-items-center">
+                    <div className="row mt-5 mx-5 gx-0 gap-3">
                         <InputField
                             name="phone"
+                            error={props.error.phoneError}
                             onChange={props.onChange}
                             className="col"
                             icon={<FaPhone className="icon position-absolute" color="grey" size={20}/>}
                             type="text"
                             placeholder="Phone Number"
-                            errorMargin="86%"
+                            errorMargin="91%"
                         />
                         <InputField
                             name="address"
+                            error={props.error.addressError}
                             onChange={props.onChange}
                             className="col"
                             icon={<AiFillHome className="icon position-absolute" color="grey" size={20}/>}
                             type="text"
                             placeholder="Address"
-                            errorMargin="86%"
+                            errorMargin="91%"
                         />
                         <InputField
                             name="suite"
@@ -123,36 +129,38 @@ function OrganizerRegisterBusiness(props) {
                             icon={<AiFillHome className="icon position-absolute" color="grey" size={20}/>}
                             type="text"
                             placeholder="Apt, suite, etc."
-                            errorMargin="86%"
                         />
                     </div>
-                    <div className="row mt-5 mx-5 gx-0 gap-3 justify-content-center align-items-center">
+                    <div className="row mt-5 mx-5 gx-0 gap-3">
                         <InputField
                             name="city"
+                            error={props.error.cityError}
                             onChange={props.onChange}
                             className="col"
                             icon={<FaGlobeAmericas className="icon position-absolute" color="grey" size={20}/>}
                             type="text"
                             placeholder="City"
-                            errorMargin="86%"
+                            errorMargin="91%"
                         />
                         <InputField
                             name="province"
+                            error={props.error.provinceError}
                             onChange={props.onChange}
                             className="col"
                             icon={<FaGlobeAmericas className="icon position-absolute" color="grey" size={20}/>}
                             type="text"
                             placeholder="Province"
-                            errorMargin="86%"
+                            errorMargin="91%"
                         />
                         <InputField
                             name="postal"
+                            error={props.error.postalError}
                             onChange={props.onChange}
                             className="col"
                             icon={<FaGlobeAmericas className="icon position-absolute" color="grey" size={20}/>}
                             type="text"
                             placeholder="Postal Code"
-                            errorMargin="86%"
+                            errorMargin="91%"
                         />
                     </div>
                 </div>

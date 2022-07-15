@@ -13,7 +13,7 @@ const registerUser = async (userData) => {
 
 //Register organizer
 const registerOrganizer = async (userData) => {
-    const response = await axios.post(API_URL + "organizer/register", userData);
+    const response = await axios.post(API_URL + "user/registerOrganizer", userData);
     if (response.status == 200) {
         localStorage.setItem('user', JSON.stringify(response.data))
     }
