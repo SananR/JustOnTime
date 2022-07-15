@@ -5,7 +5,7 @@ const API_URL = '/api/'
 //Register user
 const registerUser = async (userData) => {
     const response = await axios.post(API_URL + 'user/register', userData);
-    if (response.status == 200) {
+    if (response.status === 200) {
         localStorage.setItem('user', JSON.stringify(response.data))
     }
     return response.data;
@@ -14,7 +14,7 @@ const registerUser = async (userData) => {
 //Register organizer
 const registerOrganizer = async (userData) => {
     const response = await axios.post(API_URL + "user/registerOrganizer", userData);
-    if (response.status == 200) {
+    if (response.status === 200) {
         localStorage.setItem('user', JSON.stringify(response.data))
     }
     return response.data;
@@ -33,7 +33,7 @@ const loginUser = async (userData) => {
 //Logout user
 const logoutUser = async () => {
     const response = await axios.delete(API_URL + 'user/logout');
-    if (response.status != 200) {
+    if (response.status !== 200) {
         return response.data;
     }
     localStorage.removeItem('user');

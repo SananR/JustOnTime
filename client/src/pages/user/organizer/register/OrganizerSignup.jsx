@@ -41,7 +41,7 @@ function OrganizerRegisterProgress(props) {
 
 function OrganizerSignup(props) {
 
-    const [formStep, setFormStep] = useState(2);
+    const [formStep, setFormStep] = useState(1);
 
     const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
 
@@ -68,6 +68,12 @@ function OrganizerSignup(props) {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (isSuccess) {
+            setFormStep(3);
+        }
+    }, [user, isError, isSuccess, message, isLoading])
 
     useEffect(() => {
         //Not registered
