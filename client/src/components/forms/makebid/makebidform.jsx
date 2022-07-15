@@ -11,7 +11,7 @@ function MakeBidForm(props) {
             <div className='row align-items-center'>                                
                 <div className='col-sm-3 text-center'>Current bid:</div>
                 <div className='col-sm-4 h3 fw-bolder'>${props.currBid.bidPrice}</div>
-                <div className='col-sm-5 h5 ' style={{color: "dodgerblue"}}>[{props.bids.length} bids]</div>                                    
+                <div className='col-sm-5 h5 ' style={{color: "dodgerblue"}}><a href="#bidhistory">[{props.bids.length} bids]</a></div>                                    
             </div>
             <div className='row'>
                 <form onSubmit={props.onSubmit} className="w-100 d-flex flex-column justify-content-center align-items-center">

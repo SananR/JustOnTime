@@ -6,6 +6,7 @@ import { loadAnEvent, getEventImage } from '../../../services/event/eventService
 import ImageSlider from '../../../components/event/infopage/imageCarousel';
 import MakeBidForm from '../../../components/forms/makebid/makebidform';
 import Spinner from '../../../components/spinner/Spinner';
+import BidHistoryPanel from '../../../components/event/infopage/bidHistory';
 
 function EventInfo() {
 
@@ -62,19 +63,16 @@ function EventInfo() {
                         <div id="thisrow?" className='row'>
                             <div className='col-md-6 mb-5 pt-5'>
                                 <ImageSlider images={[image]}></ImageSlider> 
-                                <div className="h5 mt-5" style={{color: "dodgerblue"}}>{event.tags.map(tag => {if (tag!=="") return "#" + tag + " " })}</div>
+                                <div className="h5 my-5" style={{color: "dodgerblue"}}>{event.tags.map(tag => {if (tag!=="") return "#" + tag + " " })}</div>
                                 <hr></hr>
-                                <div className="d-inline h5"><BiTime></BiTime> Locked in: <div className= "d-inline" style={{color: "red"}}>{event.timeRemaining}</div></div>   
+                                <div className="h5 my-5"><BiTime></BiTime> Locked in: <span style={{color: "red"}}>{event.timeRemaining}</span></div>   
                                 <hr></hr>
-                                <div className='h5'>{event.description}</div> 
-                                <div className='h5'>{event.description}</div> 
-                                <div className='h5'>{event.description}</div> 
-                                <div className='h5'>{event.description}</div> 
-                                <div className='h5'>{event.description}</div> 
-                                <div className='h5'>{event.description}</div> 
-                                <div className='h5'>{event.description}</div> 
-                                <div className='h5'>{event.description}</div> 
-                                <div className='h5'>{event.description}</div> 
+                                <div className='text-secondary mt-5 mb-3'>Description</div>
+                                <div className='h5 mb-5'>{event.description}</div> 
+                                <hr></hr>
+                                <div id="bidhistory">
+                                    <BidHistoryPanel bids={event.bids}></BidHistoryPanel> 
+                                </div>
                                 <hr></hr>
                             </div> 
                             <div id="sticky-form" className='col-md-5 offset-md-1 px-0 py-5 sticky-top align-self-start' style={{background: "white"}}>
