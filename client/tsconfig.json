@@ -3,9 +3,32 @@
     "allowJs": false,
     "noEmit": true,
     "target": "es5",
-    "lib": ["es5", "dom"],
-    "types": ["cypress", "node"]
+    "lib": [
+      "es5",
+      "dom"
+    ],
+    "types": [
+      "cypress",
+      "node"
+    ],
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
   },
-  "exclude": ["cypress/e2e/**/*.spec.js"],
-  "files": ["empty.ts"]
+  "exclude": [
+    "cypress/e2e/**/*.spec.js"
+  ],
+  "files": [
+    "empty.ts"
+  ],
+  "include": [
+    "src"
+  ]
 }

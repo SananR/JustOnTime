@@ -114,23 +114,26 @@ const registerOrganizer = async (req, res, next) => {
     if (!errors.isEmpty()) {
         return clientError(res, errors.array());
   }
-  else{
+  else {
     const update = {
-      organizer: { info: { 
-        phoneNumber : req.body.phoneNumber, 
-        verificationStatus: "VERIFICATION_IN_PROGRESS" } 
+      organizer: {
+          info: {
+              phoneNumber : req.body.phoneNumber,
+              address: req.body.address,
+              businessName: req.body.businessName,
+              businessLicense: req.body.businessLicense,
+              postal: req.body.postal,
+              city: req.body.city,
+              province: req.body.province,
+              verificationStatus: "VERIFICATION_IN_PROGRESS"
+          },
       },
       "userType":"Organizer",
     }
-    User.findOne({ _id: req.query.id}, (err, user) => {
-      if (!user) {return clientError(res, "No such user exists ");}
-      else if (!user.isVerified){
-        return clientError(res, "User is not verified");
-      }
-      User.updateOne(update, (err, user) => { 
-        if (err) {return serverError(res, "User couldn't be updated");}
-        return success(res, "User successfully updated", false);
-      }); 
+    User.findByIdAndUpdate(req.body.id, update,{new: true}, (err, user) => {
+        if (!user) {return clientError(res, "No such user exists");}
+        if (err) {return clientError(res, "An unexpected error occurred");}
+        return successWithData(res, user, false);
     });
   }
 }

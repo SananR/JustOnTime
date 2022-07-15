@@ -1,5 +1,6 @@
 import {clientError, serverError, success, successWithData} from "../util/http/httpResponse.js";
 import {Event} from '../models/eventModel.js'
+import { User } from '../models/userModel.js'
 import { eventImageService } from "../util/ImageService.js";
 import { validationResult } from 'express-validator';
 import mongoose from "mongoose";
@@ -21,6 +22,9 @@ const getEventImage = async (req, res, next) => {
 
 const addEvent = async (req, res, next) => {
     const errors = validationResult(req);
+    if (!req.file) {
+        return clientError(res, 'Invalid file provided.');
+    }
     if (!errors.isEmpty()) {
         eventImageService.deleteImage(req.file.path);
         return clientError(res, errors.array());
@@ -93,7 +97,11 @@ const getAnEvent = async (req, res, next) => {
     try {
         const event = await Event.findById(req.query.id);
         if (!event) return clientError(res, "No event found for provided event ID.");
-        return successWithData(res, event, false);
+        const organizer = await User.findById(event.organizerId);
+        const result = {...event._doc, organizerName: organizer.userInfo.firstName + " " + organizer.userInfo.lastName }
+        console.log(event)
+        console.log(result)
+        return successWithData(res, result, false);
     } catch (err) {
         console.error(err);
         return serverError(res, "An unexpected error occurred.");
@@ -102,14 +110,14 @@ const getAnEvent = async (req, res, next) => {
 
 const getOrganizerEvents =  async (req, res, next) => {
     try{
-        Event.find({ 'organizer_id': req.query.id })
+        Event.find({ 'organizerId': req.query.id })
             .exec()
             .then(output => {
                 const response = {
                     count: output.length,
                     events: output.map(out => {
                         return {
-                            id: output._id,
+                            id: out._id, 
                             name: out.eventInfo.name,
                             description: out.eventInfo.description,
                             address:{
@@ -118,7 +126,7 @@ const getOrganizerEvents =  async (req, res, next) => {
                                 country: out.eventInfo.address.country,
                                 postalCode: out.eventInfo.address.postalCode
                             },
-                            eventImagePath: out.eventImage_path,
+                            eventImagePath: out.eventImagePath,
                             bidHistory: out.bidHistory
                         };
                     })
@@ -143,8 +151,7 @@ const updateEvents = async (req, res, next) => {
         else if (event.eventInfo.status == "Ongoing" || event.eventInfo.status == "Completed"){
           return clientError(res, "event cannot be updated");
         }
-        let deletepath = event.eventImage_path
-        console.log(deletepath)
+        let deletepath = event.eventImagePath
         if (req.file){
             const update = {
                 eventInfo: {
@@ -162,7 +169,10 @@ const updateEvents = async (req, res, next) => {
                 eventImagePath: req.file.path
             }
             Event.updateOne(update, (err, user) => { 
-                if (err) {return serverError(res, "event couldn't be updated");}
+                if (err) {
+                    eventImageService.deleteImage(req.file.path)
+                    return serverError(res, "event couldn't be updated");
+                }
                 try{
                     eventImageService.deleteImage(deletepath);
                 }catch{

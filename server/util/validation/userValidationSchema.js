@@ -51,9 +51,51 @@ const validateUserRegisterSchema = checkSchema({
 });
 
 const validateOrganizerRegisterSchema = checkSchema({
-    phoneNumber:{
+    id: {
+        isLength: {
+            options: { min: 10, max: 50 }
+        },
+        errorMessage: "Invalid user id",
+    },
+    businessName: {
+        isLength: {
+            options: { min: 5, max: 15 }
+        },
+        errorMessage: "Invalid business name",
+    },
+    businessLicense: {
+        isLength: {
+            options: { min: 9, max: 9 }
+        },
+        errorMessage: "Invalid business license",
+    },
+    phoneNumber: {
         isMobilePhone: true,
-        errorMessage: "Invalid phoneNumber",
+        errorMessage: "Invalid phone number",
+    },
+    address: {
+        isLength: {
+            options: { min: 8, max: 50 }
+        },
+        errorMessage: "Invalid address name",
+    },
+    postal: {
+        isLength: {
+            options: { min: 6, max: 6 }
+        },
+        errorMessage: "Invalid postal code",
+    },
+    city: {
+        isLength: {
+            options: { min: 2, max: 15 }
+        },
+        errorMessage: "Invalid city",
+    },
+    province: {
+        isLength: {
+            options: { min: 2, max: 15 }
+        },
+        errorMessage: "Invalid province",
     }
 });
 export { validateUserRegisterSchema, validateUserLoginSchema, validateOrganizerRegisterSchema }
