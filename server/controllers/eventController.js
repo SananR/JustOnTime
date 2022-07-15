@@ -99,8 +99,6 @@ const getAnEvent = async (req, res, next) => {
         if (!event) return clientError(res, "No event found for provided event ID.");
         const organizer = await User.findById(event.organizerId);
         const result = {...event._doc, organizerName: organizer.userInfo.firstName + " " + organizer.userInfo.lastName }
-        console.log(event)
-        console.log(result)
         return successWithData(res, result, false);
     } catch (err) {
         console.error(err);
