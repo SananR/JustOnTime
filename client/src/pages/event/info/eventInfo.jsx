@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom';
 import "./eventInfo.css"
+import { BiTime } from 'react-icons/bi'
 import { loadAnEvent, getEventImage } from '../../../services/event/eventService';
 import ImageSlider from '../../../components/event/infopage/imageCarousel';
 import MakeBidForm from '../../../components/forms/makebid/makebidform';
@@ -57,33 +58,22 @@ function EventInfo() {
                         <p className='m-1'>{" · "}</p>
                         <p className='m-1 fst-italic'>{event.location.city + ", " + event.location.street}</p>
                     </div>
-                    <ImageSlider images={[image]}></ImageSlider> 
                     <div className="justify-content-between mt-3">
                         <div id="thisrow?" className='row'>
                             <div className='col-md-6 mb-5 pt-5'>
-                                <div className='d-flex flex-row justify-content-between'>
-                                    <div className="h5" style={{color: "dodgerblue"}}>{event.tags.map(tag => {if (tag!=="") return "#" + tag + " " })}</div>
-                                    <div className="d-inline h5">Time Remaining: <div className= "d-inline" style={{color: "red"}}>{event.timeRemaining}</div></div>   
-                                </div>
+                                <ImageSlider images={[image]}></ImageSlider> 
+                                <div className="h5 mt-5" style={{color: "dodgerblue"}}>{event.tags.map(tag => {if (tag!=="") return "#" + tag + " " })}</div>
+                                <hr></hr>
+                                <div className="d-inline h5"><BiTime></BiTime> Locked in: <div className= "d-inline" style={{color: "red"}}>{event.timeRemaining}</div></div>   
                                 <hr></hr>
                                 <div className='h5'>{event.description}</div> 
-                                <hr></hr>
                                 <div className='h5'>{event.description}</div> 
-                                <hr></hr>
                                 <div className='h5'>{event.description}</div> 
-                                <hr></hr>
                                 <div className='h5'>{event.description}</div> 
-                                <hr></hr>
                                 <div className='h5'>{event.description}</div> 
-                                <hr></hr>
                                 <div className='h5'>{event.description}</div> 
-                                <hr></hr>
                                 <div className='h5'>{event.description}</div> 
-                                <hr></hr>
                                 <div className='h5'>{event.description}</div> 
-                                <hr></hr>
-                                <div className='h5'>{event.description}</div> 
-                                <hr></hr>
                                 <div className='h5'>{event.description}</div> 
                                 <hr></hr>
                             </div> 

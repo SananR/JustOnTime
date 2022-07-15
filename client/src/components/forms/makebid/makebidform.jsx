@@ -10,7 +10,7 @@ function MakeBidForm(props) {
         <div id="makeabid-container" className="py-5 shadow container">
             <div className='row align-items-center'>                                
                 <div className='col-sm-3 text-center'>Current bid:</div>
-                <div className='col-sm-4 h3 fw-bolder'>${props.currBid}</div>
+                <div className='col-sm-4 h3 fw-bolder'>${props.currBid.bidPrice}</div>
                 <div className='col-sm-5 h5 ' style={{color: "dodgerblue"}}>[{props.bids.length} bids]</div>                                    
             </div>
             <div className='row'>
@@ -28,7 +28,7 @@ function MakeBidForm(props) {
                             errorMargin="20%"
                             className="text-center"
                         />
-                        <div className='text-center m-2 text-secondary'>Enter ${props.minBid} or more</div>
+                        <div className='text-center m-2 text-secondary'>Enter ${props.currBid.bidPrice+1} or more</div>
                         <button type="submit" id="submit-button" className="mt-3 shadow rounded-pill btn btn-block w-100 btn-danger">Place bid</button>
                     </div>
                 </form>

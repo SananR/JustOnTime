@@ -31,6 +31,9 @@ export const loadAnEvent = async (id) => {
         if (event.eventInfo.status != EventStatus.ONGOING){
             return false
         }
+        const maxBet = event.bidHistory.reduce((prev, curr) => {
+            return (prev.bidPrice > curr.bidPrice) ? prev : curr
+        })
         return {
             id: event._id,
             title: event.eventInfo.name,
@@ -42,8 +45,7 @@ export const loadAnEvent = async (id) => {
             bids: event.bidHistory,
             organizerId: event.organizerId,
             organizerName: event.organizerName,
-            currentBid: 0,
-            previousBid: 0,
+            currentBid: maxBet,
             timeRemaining: "00:00:00"
         }
     }

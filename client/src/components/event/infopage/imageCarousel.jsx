@@ -7,39 +7,33 @@ function ImageSlider(props) {
     const responsive = {
         bigdesktop: {
             breakpoint: { max: 3000, min: 1800 },
-            items: 5,
+            items: 1,
             slidesToSlide: 5,
         },
         desktop: {
             breakpoint: { max: 1800, min: 1300 },
-            items: 4,
+            items: 1,
             slidesToSlide: 4,
-            partialVisibilityGutter: 10
         },
         laptop: {
             breakpoint: { max: 1300, min: 464 },
-            items: 3,
-            partialVisibilityGutter: 20
+            items: 1,
         },
         tablet: {
             breakpoint: { max: 1090, min: 900 },
-            items: 2,
-            partialVisibilityGutter: 100
+            items: 1,
         },
         tablet2: {
             breakpoint: { max: 900, min: 800 },
-            items: 2,
-            partialVisibilityGutter: 50
+            items: 1,
         },
         tablet3: {
             breakpoint: { max: 800, min: 710 },
-            items: 2,
-            partialVisibilityGutter: 10
+            items: 1,
         },
         mobile: {
             breakpoint: { max: 710, min: 0 },
             items: 1,
-            partialVisibilityGutter: 200
         }
     };
 
@@ -58,7 +52,7 @@ function ImageSlider(props) {
             showDots={true} 
             ssr={true}
             infinite={true}
-            partialVisible={true}
+            keyBoardControl={true}
         >
             {createImagePanels()}
             <p className="event-image h-100" style={{backgroundColor:"grey"}}>Image1</p>
