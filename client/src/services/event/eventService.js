@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { EventStatus } from '../admin/verifyEventService';
 
 const API_URL = '/api/'
 
@@ -19,6 +20,34 @@ export const loadEvents = async () => {
             }
         });
         return data;
+    }
+}
+
+//Possibly add organizer information(name)
+export const loadAnEvent = async (id) => {
+    const response = await axios.get(API_URL + `event/getAnEvent?id=${id}`);
+    if (response.data) {
+        const event = response.data
+        if (event.eventInfo.status != EventStatus.ONGOING){
+            return false
+        }
+        const maxBet = event.bidHistory.reduce((prev, curr) => {
+            return (prev.bidPrice > curr.bidPrice) ? prev : curr
+        })
+        return {
+            id: event._id,
+            title: event.eventInfo.name,
+            description: event.eventInfo.description,
+            date: event.eventInfo.date,
+            time: event.eventInfo.time,
+            location: event.eventInfo.address,
+            tags: event.tags,
+            bids: event.bidHistory,
+            organizerId: event.organizerId,
+            organizerName: event.organizerName,
+            currentBid: maxBet,
+            timeRemaining: "00:00:00"
+        }
     }
 }
 

@@ -8,7 +8,7 @@ const loadEvents = async () => {
     return response.data;
 }
 
-const EventStatus = {
+export const EventStatus = {
     REJECTED: "REJECTED",
     UNDER_REVIEW: "UNDER_REVIEW",
     NEEDS_RESUBMISSION: "NEEDS_RESUBMISSION",
