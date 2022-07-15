@@ -162,7 +162,10 @@ const updateEvents = async (req, res, next) => {
                 eventImagePath: req.file.path
             }
             Event.updateOne(update, (err, user) => { 
-                if (err) {return serverError(res, "event couldn't be updated");}
+                if (err) {
+                    eventImageService.deleteImage(req.file.path)
+                    return serverError(res, "event couldn't be updated");
+                }
                 try{
                     eventImageService.deleteImage(deletepath);
                 }catch{
