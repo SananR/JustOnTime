@@ -18,8 +18,8 @@ function CustomerInfo() {
     const dispatch = useDispatch(); 
     const {isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
     const user = useSelector((state) => state.auth.user)
-    const [valid, setValid] = useState();
-    const [vMessage, setValidationMessage] = useState("");
+    const [valid, setValid] = useState(true);
+    const [vMessage, setValidationMessage] = useState("")
 
 /* 
 

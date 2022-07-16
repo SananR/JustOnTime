@@ -101,13 +101,32 @@ const resendCode = async (req, res, next) => {
 const updateInformation = async (req, res, next) => {
     const id = req.body.id
     const update = req.body.update; 
-    User.findByIdAndUpdate(id, update, {new: true},  async (err, user) => {
-      console.log(user); 
-      if (!user) return clientError(res, "Unable to update the field at this time. Please try again later. ");
-      else return success(res, user, false);
-    }); 
+    if(JSON.stringify(req.body.update).indexOf("organizer") != -1){
+
+      inprogress(id).then(() => {
+        User.findByIdAndUpdate(id, update, {new: true},  async (err, user) => {
+          console.log(user); 
+          if (!user) return clientError(res, "Unable to update the field at this time. Please try again later. ");
+          else return success(res, user, false);
+        }); }
+      ).catch(() => clientError(res, "Unable to update the field at this time. Please try again later. "));
+    } else {
+      User.findByIdAndUpdate(id, update, {new: true},  async (err, user) => {
+        console.log(user); 
+        if (!user) return clientError(res, "Unable to update the field at this time. Please try again later. ");
+        else return success(res, user, false);
+      });
+    }
    
   }
+
+const inprogress = async (id) => {
+  User.findByIdAndUpdate(id, {"organizer.info.verificationStatus": "VERIFICATION_IN_PROGRESS"}, {new: true},  async (err, user) => {
+    console.log(!user); 
+    if (!user) return false;
+    else return true;
+  }); 
+} 
 
 const registerOrganizer = async (req, res, next) => {
   const errors = validationResult(req);
