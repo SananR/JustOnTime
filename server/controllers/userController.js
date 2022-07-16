@@ -2,8 +2,9 @@ import passport from 'passport';
 import { User } from '../models/userModel.js';
 import { VerificationToken } from '../models/verificationTokenModel.js';
 import { flagError, clientError, serverError, success, successWithData } from "../util/http/httpResponse.js";
-import { createSaveToken } from "../util/email/verification/userVerification.js";
+import { createSaveToken, createResetToken, emailer} from "../util/email/verification/userVerification.js";
 import { validationResult } from 'express-validator';
+import * as bcrypt from 'bcrypt';
 
 const registerUser = async (req, res, next) => {
     const errors = validationResult(req);
@@ -96,43 +97,109 @@ const resendCode = async (req, res, next) => {
 
 
 // request body {"update": {{userInfo.field: newValue},{organizer.field: newValue}} , id: id}
-//cannot update email or password with this
+//cannot update password with this
 const updateInformation = async (req, res, next) => {
     const id = req.body.id
     const update = req.body.update; 
-    User.findByIdAndUpdate(id, update, {new: true},  async (err, user) => {
-      console.log(user); 
-      if (!user) return clientError(res, "Unable to update the field at this time. Please try again later. ");
-      else return success(res, user, false);
-    }); 
+    if(JSON.stringify(req.body.update).indexOf("organizer") != -1){
+
+      inprogress(id).then(() => {
+        User.findByIdAndUpdate(id, update, {new: true},  async (err, user) => {
+          console.log(user); 
+          if (!user) return clientError(res, "Unable to update the field at this time. Please try again later. ");
+          else return success(res, user, false);
+        }); }
+      ).catch(() => clientError(res, "Unable to update the field at this time. Please try again later. "));
+    } else {
+      User.findByIdAndUpdate(id, update, {new: true},  async (err, user) => {
+        console.log(user); 
+        if (!user) return clientError(res, "Unable to update the field at this time. Please try again later. ");
+        else return success(res, user, false);
+      });
+    }
    
   }
+
+const inprogress = async (id) => {
+  User.findByIdAndUpdate(id, {"organizer.info.verificationStatus": "VERIFICATION_IN_PROGRESS"}, {new: true},  async (err, user) => {
+    console.log(!user); 
+    if (!user) return false;
+    else return true;
+  }); 
+} 
 
 const registerOrganizer = async (req, res, next) => {
   const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return clientError(res, errors.array());
   }
-  else{
+  else {
     const update = {
-      organizer: { info: { 
-        phoneNumber : req.body.phoneNumber, 
-        verificationStatus: "VERIFICATION_IN_PROGRESS" } 
+      organizer: {
+          info: {
+              phoneNumber : req.body.phoneNumber,
+              address: req.body.address,
+              businessName: req.body.businessName,
+              businessLicense: req.body.businessLicense,
+              postal: req.body.postal,
+              city: req.body.city,
+              province: req.body.province,
+              verificationStatus: "VERIFICATION_IN_PROGRESS"
+          },
       },
       "userType":"Organizer",
     }
-    User.findOne({ _id: req.query.id}, (err, user) => {
-      if (!user) {return clientError(res, "No such user exists ");}
-      else if (!user.isVerified){
-        return clientError(res, "User is not verified");
-      }
-      User.updateOne(update, (err, user) => { 
-        if (err) {return serverError(res, "User couldn't be updated");}
-        return success(res, "User successfully updated", false);
-      }); 
+    User.findByIdAndUpdate(req.body.id, update,{new: true}, (err, user) => {
+        if (!user) {return clientError(res, "No such user exists");}
+        if (err) {return clientError(res, "An unexpected error occurred");}
+        return successWithData(res, user, false);
     });
   }
 }
 
-export { registerUser, loginUser, logoutUser, verifyEmail, resendCode, registerOrganizer, updateInformation }
+//body example {"email": user@email.com, "field": passsword}
+const sendResetLink = async (req, res, next) => {
+  User.findOne({ "userInfo.email" : req.body.email }, async (err, user) => {
+    if (!user) return clientError(res, "We were unable to find an account with that email.");
+    else {
+      let token = await VerificationToken.findOne({ _userId: user._id });
+      if (token) await VerificationToken.deleteOne(); 
+      return createResetToken(res, user, 'A reset link has been sent to your inbox.', req.body.field);
+    }
+  })
+}
+
+//body example {"token": token}
+const checkTokenExpiration = async (req, res, next) => {
+  const passwordResetToken = await VerificationToken.findOne({token: req.body.token});
+  console.log(passwordResetToken);
+  if (!passwordResetToken) return clientError(res, "Token does not exist. Please try again.");
+  else return success(res, "Token exists", false);
+
+}
+
+//example body: {id: id, password: password}
+const passwordChanger = async (req, res, next) => {
+  const hashed = await bcrypt.hash(req.body.password, 10); 
+  if(!hashed) return clientError(res, "password could not be hashed.");
+  else {
+    const id = req.body.id
+    const update = { "userInfo.password" : hashed }
+    await VerificationToken.deleteOne({"_userId": req.body.id});
+    User.findByIdAndUpdate(id, update, {new: true},  async (err, user) => {
+    console.log(user); 
+    if (!user) return clientError(res, "Unable to update the field at this time. Please try again later. ");
+    else return successWithData(res, user, false);
+  }); }
+}
+//example body : {message: email message, subject: subject of email, id: id}
+const sendEmail = async (req, res, next) => {
+  User.findOne({ "_id" : req.body.id }, async (err, user) => {
+    if(!user) return clientError(res, "Couldn't send confirmation email")
+    else {
+      return await emailer(res, user.userInfo.email, req.body.subject, req.body.message)
+    }
+  });
+}
+export { registerUser, loginUser, logoutUser, verifyEmail, resendCode, registerOrganizer, updateInformation, sendResetLink, checkTokenExpiration, passwordChanger, sendEmail}
 

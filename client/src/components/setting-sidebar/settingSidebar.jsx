@@ -7,6 +7,8 @@ function SettingSidebar() {
     return (
         <div id="sidebar-cont">
             <a href='/personal-info' > <span id='sidebar-nav'> Personal Information</span></a>
+            <a href='/reset-link/password' > <span id='sidebar-nav'> Change Password</span></a>
+            <a href='/reset-link/email' > <span id='sidebar-nav'> Change Email</span></a>
          </div>
     );
 }

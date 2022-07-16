@@ -23,6 +23,18 @@ export const registerUser = createAsyncThunk('auth/register', async (user, thunk
     }
 })
 
+//Register organizer
+export const registerOrganizer = createAsyncThunk("auth/organizer/register", async (user, thunkAPI) => {
+    try {
+        return await authService.registerOrganizer(user);
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message)
+            || error.message || error.toString();
+
+        return thunkAPI.rejectWithValue(message);
+    }
+})
+
 //Login user
 export const loginUser = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     try {
@@ -74,6 +86,7 @@ export const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            //Register user
             .addCase(registerUser.pending, (state) => {
                 state.isLoading = true;
             })
@@ -89,6 +102,23 @@ export const authSlice = createSlice({
                 state.message = action.payload;
                 state.user = null;
             })
+            //Register organizer
+            .addCase(registerOrganizer.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(registerOrganizer.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.user = action.payload;
+                state.message = "";
+            })
+            .addCase(registerOrganizer.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+                state.user = null;
+            })
+            //Login user
             .addCase(loginUser.pending, (state) => {
                 state.isLoading = true;
             })
@@ -104,6 +134,7 @@ export const authSlice = createSlice({
                 state.message = action.payload;
                 state.user = null;
             })
+            //Update user
             .addCase(updateUser.pending, (state) => {
                 state.isLoading = true;
             })
@@ -118,6 +149,7 @@ export const authSlice = createSlice({
                 state.isError = true;
                 state.message = action.payload;
             })
+            //Logout user
             .addCase(logoutUser.fulfilled, (state) => {
                 state.isLoading = false;
                 state.isSuccess = false;
