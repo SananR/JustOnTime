@@ -73,7 +73,7 @@ As an event organizer, I want to be able to create a new event, so that the cust
   
 # Spikes
 
-Spikes: None
+Spikes: Backend for bidding to be researched further
 
 # Team Capacity
 
