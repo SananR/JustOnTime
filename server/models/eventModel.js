@@ -25,7 +25,12 @@ const eventSchema = mongoose.Schema({
     eventImagePath:{
         type: String, // referes to the eventImage's id
         required: true
+    },
+    ImagePathArray:{
+        type: [String],
+        required: false
     }
+
 });
 
 const Event = mongoose.model("Event", eventSchema);

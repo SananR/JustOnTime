@@ -5,6 +5,7 @@ import { eventImageService } from "../util/ImageService.js";
 import { validationResult } from 'express-validator';
 import mongoose from "mongoose";
 import path from "path";
+import console from "console";
 
 const getEventImage = async (req, res, next) => {
     if (!req.query.id) return clientError(res, "Must provide an event ID.");
@@ -22,15 +23,22 @@ const getEventImage = async (req, res, next) => {
 
 const addEvent = async (req, res, next) => {
     const errors = validationResult(req);
-    if (!req.file) {
+    if (!req.files) {
         return clientError(res, 'Invalid file provided.');
     }
+    const files = req.files;
+    const eventImagepath = req.files.mainImage[0].path;
+    const ImagePathArray = []
+    req.files.images.forEach(image => {
+        ImagePathArray.push(image.path)
+    });
     if (!errors.isEmpty()) {
-        eventImageService.deleteImage(req.file.path);
+        eventImageService.deleteImage(eventImagepath);
+        ImagePathArray.forEach(path => {
+            eventImageService.deleteImage(path);
+        });
         return clientError(res, errors.array());
     }
-    const file = req.file;
-    const path = file.path;
 
     try{
         const event = new Event(
@@ -50,16 +58,19 @@ const addEvent = async (req, res, next) => {
                 tags: req.body.tags,
                 bidHistory: req.body.bidHistory,
                 organizerId: req.user._id,
-                eventImagePath: path
+                eventImagePath: eventImagepath,
+                ImagePathArray: ImagePathArray
             }
         )
         await event.save();
         return success(res, "Event successfully created.", true);
     } catch(err) {
-        eventImageService.deleteImage(path);
+        eventImageService.deleteImage(eventImagepath);
+        ImagePathArray.forEach(path => {
+            eventImageService.deleteImage(path);
+        });
         if (err.message.includes("duplicate"))
             return clientError(res, "An event with similar information already exists.")
-        console.error(err);
         return serverError(res, "An error occurred, event could not be added")
     }
 }
@@ -80,7 +91,8 @@ const getEvents = async (req, res, next) => {
                             date: out.eventInfo.date,
                             location: out.eventInfo.address.street,
                             eventImagePath: out.eventImagePath,
-                            bidHistory: out.bidHistory
+                            bidHistory: out.bidHistory,
+                            ImagePathArray: out.ImagePathArray
                         };
                     })
                 };
@@ -139,8 +151,12 @@ const getOrganizerEvents =  async (req, res, next) => {
 const updateEvents = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        if (req.file){
-            eventImageService.deleteImage(req.file.path);
+        if (req.files){
+            eventImageService.deleteImage(eventImagepath);
+            const ImagePathArray = req.files.images.path;
+            ImagePathArray.forEach(path => {
+                eventImageService.deleteImage(path);
+            });
         }
         return clientError(res, errors.array());
     }
