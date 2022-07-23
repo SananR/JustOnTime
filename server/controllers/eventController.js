@@ -29,14 +29,18 @@ const addEvent = async (req, res, next) => {
     const files = req.files;
     const eventImagepath = req.files.mainImage[0].path;
     const ImagePathArray = []
-    req.files.images.forEach(image => {
-        ImagePathArray.push(image.path)
-    });
+    if(req.files.images != null){
+        req.files.images.forEach(image => {
+            ImagePathArray.push(image.path)
+        });
+    }
     if (!errors.isEmpty()) {
         eventImageService.deleteImage(eventImagepath);
-        ImagePathArray.forEach(path => {
-            eventImageService.deleteImage(path);
-        });
+        if(ImagePathArray.length != 0){
+            ImagePathArray.forEach(path => {
+                eventImageService.deleteImage(path);
+            });
+        }
         return clientError(res, errors.array());
     }
 
@@ -66,9 +70,11 @@ const addEvent = async (req, res, next) => {
         return success(res, "Event successfully created.", true);
     } catch(err) {
         eventImageService.deleteImage(eventImagepath);
-        ImagePathArray.forEach(path => {
-            eventImageService.deleteImage(path);
-        });
+        if(ImagePathArray.length != 0){
+            ImagePathArray.forEach(path => {
+                eventImageService.deleteImage(path);
+            });
+        }
         if (err.message.includes("duplicate"))
             return clientError(res, "An event with similar information already exists.")
         return serverError(res, "An error occurred, event could not be added")
@@ -153,10 +159,12 @@ const updateEvents = async (req, res, next) => {
     if (!errors.isEmpty()) {
         if (req.files){
             eventImageService.deleteImage(eventImagepath);
-            const ImagePathArray = req.files.images.path;
-            ImagePathArray.forEach(path => {
-                eventImageService.deleteImage(path);
-            });
+            if(req.files.images != null){
+                const ImagePathArray = req.files.images.path;
+                ImagePathArray.forEach(path => {
+                    eventImageService.deleteImage(path);
+                });
+            }
         }
         return clientError(res, errors.array());
     }
