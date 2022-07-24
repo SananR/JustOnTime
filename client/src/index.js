@@ -12,6 +12,7 @@ import CustomerVerifyEmail from './pages/user/verification/verifyEmail/verifyEma
 import CustomerVerificationRequired from './pages/user/verification/verificationRequired/verificationRequired.jsx'
 import CustomerInfo from './pages/user/customer/customerInfo/customerInfo.jsx'
 import CustomerHome from "./pages/user/customer/home/CustomerHome";
+import CustomerStar from "./pages/user/customer/star/star.jsx"
 import OrganizerMain from './pages/user/organizer/main/main.jsx'
 import Header from './components/header/Header'
 import { store } from './store.js'
@@ -63,6 +64,7 @@ export default function App() {
                   <Route path=":token" element={<CustomerVerifyEmail />} />
                 </Route>
               </Route>
+              <Route path="star" element={<CustomerStar />}/>
             </Route>
             <Route path="organizer">
                 <Route path="signup" element={<OrganizerSignup/>} />
