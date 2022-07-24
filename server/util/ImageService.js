@@ -36,7 +36,7 @@ class ImageService {
   });
 
   uploadImage = (req, res, next) => {
-    const uploaded = this.upload.single('image');
+    const uploaded = this.upload.fields([{name: 'mainImage'}, {name: 'images', maxCount:4}])
     uploaded(req, res, function (err) {
         if (err instanceof multer.MulterError) {
           return clientError(res, err.message);
