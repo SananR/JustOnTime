@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom';
-import { AiOutlinePlus } from 'react-icons/ai'
+import { AiOutlinePlus, AiFillCloseCircle } from 'react-icons/ai'
+import { BiPhotoAlbum } from 'react-icons/bi'
 import './uploadImage.css'
 
 function UploadImage() {
@@ -23,13 +24,18 @@ function UploadImage() {
         setEventImages(imageFiles)
     }
 
+    const removeImage = (key) => {
+        console.log(key)
+    }
+
     const renderImages = () => {
         eventImages.forEach(image => {
             console.log(image)
         })
         return eventImages.map(image => {
             console.log(image)
-            return <div className="m-3 img-card col-sm-3" key={image.name}>
+            return <div className="m-3 img-card col-sm-3" key={image.name+":container"}> 
+                        <span className="clickable close-icon mt-2" data-effect="fadeOut" key={image.name} onClick={(event) => removeImage(key)}><AiFillCloseCircle color={"grey"} size={35}/></span>
                         <img className="w-100" src={URL.createObjectURL(new Blob([image], {type:"image/jpeg"}))} alt="EventImage"/>
                         <div className='' style={{backgroundColor: "red"}}></div>
                     </div>
@@ -38,12 +44,14 @@ function UploadImage() {
 
     return (
         <div>
-            <div className="m-5 container-fluid">
-                <div className='row images-container'>                
+            <div className="my-5 container shadow-lg p-3 mb-5 bg-white rounded">
+                <div className='h3'>Images  <span className='h5'>({eventImages.length}/5)</span></div>
+                <div className='row'>                
                     {renderImages()}
-                    <input className='m-3 col-sm-3 d-none' ref={hiddenImageInput} type="file" accept="image/gif, image/jpeg, image/png" name="eventImage" onChange={addImage} />
-                    <div type="button" className='m-3 mr-5 img-card btn btn-secondary col-sm-3' style={{"background": "red"}} onClick={addImageClicked}>
-                            <div style={{'background': "blue"}}><AiOutlinePlus/>Click here to add images</div>
+                    <input className='d-none' ref={hiddenImageInput} type="file" accept="image/gif, image/jpeg, image/png" name="eventImage" onChange={addImage} />
+                    <div className='m-3 mr-5 img-card-add btn btn-secondary col-sm-3' onClick={addImageClicked}>
+                            <div className=''><AiOutlinePlus size={30}/><BiPhotoAlbum size={30}/></div>
+                            <div className='h5'>Click here to add images</div>
                     </div>
                 </div>
 
