@@ -153,7 +153,37 @@ const getOrganizerEvents =  async (req, res, next) => {
         return clientError(res, "No events found");
     }
 }
-
+const getSearchedEvents = async (req, res, next) => {
+    if(!req.query.searchTerm) return clientError(res, "Must have search term");
+    try{
+        const searchTerm = req.query.searchTerm;
+        Event.find({ $text: { $search: `${searchTerm }` }})
+            .sort({score:{$meta: "textScore"}})
+            .exec()
+            .then(output => {
+                const response = {
+                    count: output.length,
+                    events: output.map(out => {
+                        return {
+                            id: out._id,
+                            name: out.eventInfo.name,
+                            description: out.eventInfo.description,
+                            time: out.eventInfo.time,
+                            date: out.eventInfo.date,
+                            location: out.eventInfo.address.street,
+                            eventImagePath: out.eventImagePath,
+                            bidHistory: out.bidHistory,
+                            ImagePathArray: out.ImagePathArray
+                        };
+                    })
+                };
+            return res.status(200).json(response);
+            });
+    }catch (err) {
+        console.error(err);
+        return serverError(res, "An unexpected error occurred.");
+    }
+}
 const updateEvents = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -227,4 +257,4 @@ const updateEvents = async (req, res, next) => {
         
       });
 }
-export {addEvent, getEvents, getAnEvent, getOrganizerEvents, updateEvents, getEventImage }
+export {addEvent, getEvents, getAnEvent, getOrganizerEvents, updateEvents, getEventImage, getSearchedEvents }
