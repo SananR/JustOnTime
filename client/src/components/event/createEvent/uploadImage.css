@@ -1,0 +1,17 @@
+.img-card{
+    position:relative;
+    overflow:hidden;
+    padding-bottom:35%;
+    width: 25%;
+    border: 1px solid rgb(134, 134, 134);
+}
+
+.img-card img{
+      position: absolute;
+      object-fit: contain;
+      max-width: 100%;
+      max-height: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+}

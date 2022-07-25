@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom';
 import { AiOutlinePlus } from 'react-icons/ai'
+import './uploadImage.css'
 
 function UploadImage() {
 
@@ -10,7 +11,13 @@ function UploadImage() {
         
     })
 
+    const hiddenImageInput = React.useRef(null);
     const addImageClicked = (e) => {
+        e.preventDefault()
+        hiddenImageInput.current.click()
+    }
+
+    const addImage = (e) => {
         const imageFiles = eventImages.concat(e.target.files[0])
         console.log(imageFiles)
         setEventImages(imageFiles)
@@ -22,8 +29,8 @@ function UploadImage() {
         })
         return eventImages.map(image => {
             console.log(image)
-            return <div className="m-2 card col-sm-3" key={image.name}>
-                        <img className="card-img-top w-100" src={URL.createObjectURL(new Blob([image], {type:"image/jpeg"}))} alt="EventImage"/>
+            return <div className="m-3 img-card col-sm-3" key={image.name}>
+                        <img className="w-100" src={URL.createObjectURL(new Blob([image], {type:"image/jpeg"}))} alt="EventImage"/>
                         <div className='' style={{backgroundColor: "red"}}></div>
                     </div>
         })
@@ -32,10 +39,12 @@ function UploadImage() {
     return (
         <div>
             <div className="m-5 container-fluid">
-                <div className='row'>                
+                <div className='row images-container'>                
                     {renderImages()}
-                    <input type="file" accept="image/gif, image/jpeg, image/png" name="eventImage" onChange={addImageClicked} />
-                    <div type="button" className='m-2 mr-5 btn btn-secondary col-sm-3'  onClick={addImageClicked}><AiOutlinePlus/></div>
+                    <input className='m-3 col-sm-3 d-none' ref={hiddenImageInput} type="file" accept="image/gif, image/jpeg, image/png" name="eventImage" onChange={addImage} />
+                    <div type="button" className='m-3 mr-5 img-card btn btn-secondary col-sm-3' style={{"background": "red"}} onClick={addImageClicked}>
+                            <div style={{'background': "blue"}}><AiOutlinePlus/>Click here to add images</div>
+                    </div>
                 </div>
 
             </div>
