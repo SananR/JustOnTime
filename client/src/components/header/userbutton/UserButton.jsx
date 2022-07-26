@@ -45,6 +45,7 @@ function UserButton() {
               {!user && <Dropdown.Item href="/login">Login</Dropdown.Item>}
               {!user && <Dropdown.Item href="/signup">Register</Dropdown.Item>}
               {user && <Dropdown.Item href="/personal-info">My Account</Dropdown.Item>}
+              {user.userType === "Organizer" && <Dropdown.Item href="/personal-info">My Events</Dropdown.Item>}
               {user && <Dropdown.Divider />}
               {user && <Dropdown.Item as="button" onClick={onLogout}>Logout</Dropdown.Item>}
           </Dropdown.Menu>
