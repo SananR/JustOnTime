@@ -15,8 +15,10 @@
     margin-top: 1%;
     margin-left: 63%;
     padding: 1%;
-    fill: lightgray;
-    border: lightgray;
+    fill: red;
+    border: red;
+    background-color: rgb(255, 1, 1);
+    color: white;
     border-radius: 4px;
     display: inline-block;
     vertical-align: middle;
@@ -24,21 +26,32 @@
 
 .list {
     width: 80%;
-    margin-left: 10%;
-    margin-bottom: 2%;
+    margin-left: 8%;
 }
 
-.event {
-    font-size: medium;
-    width: 100%;
-    margin-top: 0.4%;
-    padding: 1%;
-    fill: lightgray;
-    border: lightgray;
-    border-radius: 4px;
-    text-align: left;
+.event{
+    text-align: center;
+    padding: 10px;
+}
+.car-event{
+    margin: 10px;
+    border: solid lightgray 1px;
+    border-radius: 10px;
+
 }
 
-#logo {
-    margin: 2%;
+#name{
+    font-weight: bolder;
+    color: rgb(255, 1, 1); 
+    font-size: 22px;
 }
+#eventInfo{
+     text-align: left;
+     margin-top: 10px;
+ }
+
+ /* #resub-edit{
+    position: relative;
+    margin-top: 40%;
+    left: 75%;
+ } */
