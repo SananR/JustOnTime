@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { registerUser, loginUser, logoutUser, verifyEmail, resendCode, registerOrganizer, updateInformation, sendResetLink, checkTokenExpiration, passwordChanger, sendEmail} from '../controllers/userController.js';
+import { registerUser, loginUser, logoutUser, verifyEmail, resendCode, registerOrganizer, updateInformation, sendResetLink, checkTokenExpiration, passwordChanger, sendEmail, updateStarredList} from '../controllers/userController.js';
 import { checkAuthentication } from '../util/passport/authentication.js';
 import { validateUserRegisterSchema, validateUserLoginSchema,validateOrganizerRegisterSchema } from "../util/validation/userValidationSchema.js";
 
@@ -17,5 +17,6 @@ userRouter.route("/send-reset-link").post(sendResetLink);
 userRouter.route("/checktoken").post(checkTokenExpiration);
 userRouter.route("/hash").post(passwordChanger);
 userRouter.route("/send-email").post(sendEmail);
+userRouter.route("/starredList").post(updateStarredList);
 
 export { userRouter }

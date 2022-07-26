@@ -201,5 +201,31 @@ const sendEmail = async (req, res, next) => {
     }
   });
 }
-export { registerUser, loginUser, logoutUser, verifyEmail, resendCode, registerOrganizer, updateInformation, sendResetLink, checkTokenExpiration, passwordChanger, sendEmail}
+
+//example body : {userId: user id, eventId: event id}
+const updateStarredList = async (req, res, next) => {
+  const userId = req.body.userId
+  const eventId = req.body.eventId; 
+  User.findOne({ "_id" : userId }, async (err, user) => {
+    if (!user) return clientError(res, "We were unable to find the user.");
+    else {
+      if (!user.starredEvents.includes(eventId)) {
+        User.findByIdAndUpdate(userId, {$push: {"starredEvents": eventId}}, {new: true},  async (err, user) => {
+          console.log(user); 
+          if (!user) return clientError(res, "Unable to update the field at this time. Please try again later. ");
+          else return success(res, user, false);
+        });
+      } else {
+        User.findByIdAndUpdate(userId, {$pull: {"starredEvents": eventId}}, {new: true},  async (err, user) => {
+          console.log(user); 
+          if (!user) return clientError(res, "Unable to update the field at this time. Please try again later. ");
+          else return success(res, user, false);
+        });
+      }
+    }
+  })
+}
+
+
+export { registerUser, loginUser, logoutUser, verifyEmail, resendCode, registerOrganizer, updateInformation, sendResetLink, checkTokenExpiration, passwordChanger, sendEmail, updateStarredList}
 
