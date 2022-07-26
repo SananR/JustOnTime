@@ -24,8 +24,10 @@ function UploadImage() {
         setEventImages(imageFiles)
     }
 
-    const removeImage = (key) => {
-        console.log(key)
+    const removeImage = (imageName) => {
+        console.log(imageName)
+        const updatedImages = eventImages.filter((image) => image.name !== imageName)
+        setEventImages(updatedImages)
     }
 
     const renderImages = () => {
@@ -34,8 +36,8 @@ function UploadImage() {
         })
         return eventImages.map(image => {
             console.log(image)
-            return <div className="m-3 img-card col-sm-3" key={image.name+":container"}> 
-                        <span className="clickable close-icon mt-2" data-effect="fadeOut" key={image.name} onClick={(event) => removeImage(key)}><AiFillCloseCircle color={"grey"} size={35}/></span>
+            return  <div className="m-3 img-card col-sm-3" key={image.name+":"+image.lastModified}> 
+                        <span className="clickable close-icon mt-2" data-effect="fadeOut" onClick={() => removeImage(image.name)}><AiFillCloseCircle color={"grey"} size={35}/></span>
                         <img className="w-100" src={URL.createObjectURL(new Blob([image], {type:"image/jpeg"}))} alt="EventImage"/>
                         <div className='' style={{backgroundColor: "red"}}></div>
                     </div>
