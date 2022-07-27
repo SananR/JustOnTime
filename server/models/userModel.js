@@ -17,6 +17,11 @@ const userSchema = mongoose.Schema({
     isVerified: {
         type: Boolean,
         default: false
+    },
+    starredEvents: {
+        type: [{type: String}],
+        required: true,
+        default: []
     }
 }, {
     timestamps: true,

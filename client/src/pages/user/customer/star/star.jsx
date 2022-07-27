@@ -1,32 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { updateUser } from '../../../../services/auth/authSlice.js'
 import axios from 'axios'
 import { getEventImage } from "../../../../services/event/eventService"
 import './star.css'
-import starFilled from './star_filled.png'
-import starUnfilled from './star_unfilled.png'
+import starFilled from '../../../../star_filled.png'
+import starUnfilled from '../../../../star_unfilled.png'
 
 function CustomerStar() {
     const [eventState, setEventState] = useState({})
     const [error, setError] = useState()
     const [loading, setLoading] = useState(true)
+    const user = useSelector(state => state.auth.user)
+    const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    const handleStar = (e, event) => {
-        e.stopPropagation()
-
-        // update database
-        event.starred = true
-        console.log("starred")
-    }
-
-    const handleUnstar = (e, event) => {
-        e.stopPropagation()
-
-        // update database
-        event.starred = false
-        console.log("unstarred")
-    }
 
     const Heading = () => {
         return (
@@ -39,26 +27,46 @@ function CustomerStar() {
     useEffect(() => {
         const fetchData = (async () => {
             try {
+                setLoading(true)
                 await axios.get('/api/event/').then(function(res) {
-                    res = res.data.events;
-                    console.log(res);
+                    res = res.data.events
                     for (let index = 0; index < res.length; index++) {
                         res[index]["blob"] = getEventImage(res[index].id)
-
-                        // will be gotten from database
-                        res[index]["starred"] = false
+                        if (user.starredEvents.includes(res[index].id))
+                            res[index]["starred"] = true
+                        else
+                            res[index]["starred"] = false
                     }
-                    setEventState(res);
+                    setEventState(res)
                 }
-                );
+                )
             } catch (e) {
-                setError(e);
+                setError(e)
             } finally {
-                setLoading(false);
+                setLoading(false)
             }
         })
-        fetchData();
-    }, [])
+        fetchData()
+    }, [user])
+
+    const handleStar = (async (e, event) => {
+        try {
+            e.stopPropagation()
+            setLoading(true)
+            const userId = user._id
+            const eventId = event.id
+            var events = [...user.starredEvents]
+            if (events.includes(eventId))
+                events.splice(events.indexOf(eventId), 1)
+            else
+                events.push(eventId)
+            dispatch(updateUser({"update": {"starredEvents": events}, "id": userId}))
+        } catch (e) {
+            setError(e)
+        } finally {
+            setLoading(false)
+        }
+    })
 
     if (error) {
         return (
@@ -78,24 +86,24 @@ function CustomerStar() {
         ) 
     } else {
         return (
-        <div>
-            <Heading/>
-            <div className="list">
-                {
-                    eventState.map(event =>
-                        <button className="event" onClick={() => navigate("/event/" + event.id)}>
-                            {event.name}<br/>
-                            {event.time}<br/>
-                            {event.location}<br/>
-                            {(event.starred && <button className="star" onClick={(e) => handleUnstar(e, event)}>
-                                <img src={starFilled} width="25" height="25"/></button>) ||
-                             (!event.starred && <button className="star" onClick={(e) => handleStar(e, event)}>
-                                <img src={starUnfilled} width="25" height="25"/></button>)}
-                        </button>
-                    )
-                }
+            <div>
+                <Heading/>
+                <div className="list">
+                    {
+                        eventState.map(event =>
+                            <button className="event" onClick={() => navigate("/event/" + event.id)}>
+                                {event.name}<br/>
+                                {event.time}<br/>
+                                {event.location}<br/>
+                                <button className="star" onClick={(e) => handleStar(e, event)}>
+                                    {(event.starred && <img src={starFilled} alt="star-filled" width="25" height="25"/>) ||
+                                    (!event.starred && <img src={starUnfilled} alt="star-unfilled" width="25" height="25"/>)}
+                                </button>
+                            </button>
+                        )
+                    }
+                </div>
             </div>
-        </div>
         )
     }
 }
