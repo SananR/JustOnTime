@@ -21,7 +21,11 @@ function CreateEvent() {
         description: '',
         initialPrice: 0,
         tag: [],
-        dateTime: defaultDateTime
+        dateTime: defaultDateTime,
+        street: '',
+        city: '',
+        country: '',
+        postalCode: ''
     })
 
     const {firstName, lastName, email, password, password2} = formData;
@@ -36,6 +40,8 @@ function CreateEvent() {
             ...prevState,
             [e.target.name]: e.target.value
         }))
+
+        console.log(formData)
     }
 
     const onChangeDateTime = (newDateTime) => {
