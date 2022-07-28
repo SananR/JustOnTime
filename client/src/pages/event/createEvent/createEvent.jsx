@@ -5,6 +5,19 @@ import CreateEventForm from '../../../components/forms/createEventForm/createEve
 function CreateEvent() {
 
     const [eventImages, setEventImages] = useState([]);
+
+    const addImage = (e) => {
+        const imageFiles = eventImages.concat(e.target.files[0])
+        console.log(imageFiles)
+        setEventImages(imageFiles)
+    }
+
+    const removeImage = (imageName) => {
+        console.log(imageName)
+        const updatedImages = eventImages.filter((image) => image.name !== imageName)
+        setEventImages(updatedImages)
+    }
+
     const [formError, setFormError] = useState({
         titleError: false,
         descriptionError: false,
@@ -58,7 +71,7 @@ function CreateEvent() {
         <div className="m-5 container w-100 h-100">
             <div className='h1'>Create New Event</div>
             <hr></hr>
-            <UploadImage></UploadImage>
+            <UploadImage addImage={addImage} removeImage={removeImage} eventImages={eventImages}></UploadImage>
             <CreateEventForm dateTime={formData.dateTime} onSubmit={onSubmit} onChange={onChange} onChangeDateTime={onChangeDateTime} error={formError}></CreateEventForm>
         </div>
     )
