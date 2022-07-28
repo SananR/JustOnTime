@@ -132,7 +132,7 @@ function CreateEvent() {
                 if (addEventResult.success){
                     setShowAlert(true)
                 } 
-                else if (addEventResult.message.includes("similar")) {
+                else if (addEventResult.message.includes()) {
                     setFormError((prevState) => ({
                         ...prevState,
                         ["formError"]: addEventResult.message
@@ -150,6 +150,10 @@ function CreateEvent() {
                 }
             } catch (e) {
                 console.error(e)
+                setFormError((prevState) => ({
+                    ...prevState,
+                    ["formError"]: addEventResult.message
+                }))
             }
 
         }
