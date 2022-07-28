@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
+import { addEvent } from '../../../services/event/eventService';
 import UploadImage from '../../../components/event/createEvent/uploadImage';
 import CreateEventForm from '../../../components/forms/createEventForm/createEventForm';
+import './createEvent.css'
 
 function CreateEvent() {
 
@@ -64,7 +66,17 @@ function CreateEvent() {
         }))
     }
 
-    const onSubmit = (e) => {
+    const submiEvent = (e) => {
+        console.log("button clicked")
+        if (eventImages.length > 0) {
+            const date = formData.dateTime.getDate()
+            const time = formData.dateTime.getTime()
+            addEvent(formData.name, formData.description, formData.initialPrice, date, time,
+                formData.street, formData.city, formData.country, formData.postalCode,
+                eventImages[0], eventImages.slice(1))
+        } else {
+            console.log("no images")
+        }
     }
 
     return (
@@ -72,7 +84,10 @@ function CreateEvent() {
             <div className='h1'>Create New Event</div>
             <hr></hr>
             <UploadImage addImage={addImage} removeImage={removeImage} eventImages={eventImages}></UploadImage>
-            <CreateEventForm dateTime={formData.dateTime} onSubmit={onSubmit} onChange={onChange} onChangeDateTime={onChangeDateTime} error={formError}></CreateEventForm>
+            <CreateEventForm dateTime={formData.dateTime} onChange={onChange} onChangeDateTime={onChangeDateTime} error={formError}></CreateEventForm>
+            <div class="row justify-content-center">
+                <button type="submit" id="create-event-submit-button" onClick={submiEvent} className="mt-3 justify-self-center shadow-lg rounded-pill btn btn-block w-100 btn-primary">Create Event</button>
+            </div>
         </div>
     )
 }

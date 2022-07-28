@@ -63,3 +63,33 @@ export const getEventImage = async(id) => {
     }
 
 }
+
+
+//Possibly add organizer information(name)
+export const addEvent = async (name, description, initialPrice, time, date, street, city, country, postalCode, tags, mainImage, otherImages) => {
+    const body = {    
+        name: name,
+        description: description,
+        initialPrice: initialPrice,
+        time: time,
+        date: date,
+        street: street,
+        city: city,
+        country: country,
+        postalCode: postalCode,
+        tags: tags,
+        mainImage: mainImage,
+        images: otherImages
+    }
+    const headers = {
+        'Content-Type': 'multipart/form-data'
+    }
+    const response = await axios.post(API_URL + `event`, headers,body);
+    
+    if (response.data) {
+        console.log(response.data)
+    }
+    else {
+        console.log(response)
+    }
+}
