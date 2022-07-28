@@ -65,7 +65,6 @@ export const getEventImage = async(id) => {
 }
 
 export const addEvent = async (body) => {
-    console.log(body)
     const headers = {
         'Content-Type': 'multipart/form-data'
     }
@@ -73,15 +72,12 @@ export const addEvent = async (body) => {
         const response = await axios.post(API_URL + `event`, body, {
             headers: headers,
         });
+        console.log("success")
+        return {success: true}
         
-        if (response.data) {
-            console.log(response.data)
-        }
-        else {
-            console.log(response)
-        }  
     } catch (e){
         console.error(e)
+        return {success: false, message: e.response.data.message}
     }
 
 }

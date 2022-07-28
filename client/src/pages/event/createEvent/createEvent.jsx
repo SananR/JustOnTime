@@ -1,28 +1,31 @@
 import React, {useEffect, useState} from 'react'
+import {useNavigate} from "react-router-dom";
+
 import { addEvent } from '../../../services/event/eventService';
 import UploadImage from '../../../components/event/createEvent/uploadImage';
 import CreateEventForm from '../../../components/forms/createEventForm/createEventForm';
 import './createEvent.css'
+import Alert from 'react-bootstrap/Alert';
+
 import { InputValidator } from '../../../util/validation/InputValidator';
 
 function CreateEvent() {
-
+    const navigate = useNavigate()
     const [eventImages, setEventImages] = useState([]);
+    const [showAlert, setShowAlert] = useState(false);
 
     const addImage = (e) => {
         const imageFiles = eventImages.concat(e.target.files[0])
-        console.log(imageFiles)
         setEventImages(imageFiles)
     }
 
     const removeImage = (imageName) => {
-        console.log(imageName)
         const updatedImages = eventImages.filter((image) => image.name !== imageName)
         setEventImages(updatedImages)
     }
 
     const [formError, setFormError] = useState({
-        titleError: false,
+        nameError: false,
         descriptionError: false,
         dateTimeError: false,
         initialPriceError: false,
@@ -38,7 +41,7 @@ function CreateEvent() {
     const defaultDateTime = new Date()
     defaultDateTime.setDate(defaultDateTime.getDate() + 6);
     const [formData, setFormData] = useState({
-        title: '',
+        name: '',
         description: '',
         initialPrice: 1,
         tag: [],
@@ -49,18 +52,17 @@ function CreateEvent() {
         postalCode: ''
     })
 
-    const {title, description, initialPrice, tag, dateTime, street, city, country, postalCode} = formData;
+    const {name, description, initialPrice, tag, dateTime, street, city, country, postalCode} = formData;
 
 
-    useEffect(() => {})
+    useEffect(() => {
+    })
     const onChange = (e) => {
         console.log(e)
         setFormData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
         }))
-
-        console.log(formData)
     }
 
     const onChangeDateTime = (newDateTime) => {
@@ -70,31 +72,31 @@ function CreateEvent() {
         }))
     }
 
-    const submiEvent = (e) => {
-        let titleValid = new InputValidator(title).minLength(5).maxLength(30).isValid;
-        let descriptionValid = new InputValidator(description).minLength(10).maxLength(200).isValid;
+    const submiEvent = async (e) => {
+        let nameValid = new InputValidator(name).minLength(3).maxLength(50).isValid;
+        let descriptionValid = new InputValidator(description).minLength(20).isValid;
         let initialPriceValid = new InputValidator(initialPrice).isInRange(0, 100000).isValid;
         let tagValid = new InputValidator(tag).minLength(0).maxLength(10).isValid;
-        let streetValid = new InputValidator(street).minLength(5).maxLength(100).isValid;
-        let cityValid = new InputValidator(street).minLength(2).maxLength(100).isValid;
-        let countryValid = new InputValidator(country).minLength(3).maxLength(30).isValid;
-        let postalCodeValid = new InputValidator(postalCode).minLength(6).maxLength(15).isValid;
+        let streetValid = new InputValidator(street).minLength(3).maxLength(50).isValid;
+        let cityValid = new InputValidator(street).minLength(3).maxLength(50).isValid;
+        let countryValid = new InputValidator(country).minLength(3).maxLength(50).isValid;
+        let postalCodeValid = true;
         let imageValid = new InputValidator(eventImages).minLength(1).maxLength(5).isValid;
 
         setFormError((prevState) => ({
             ...prevState,
-            titleError: titleValid ? false : "Enter a valid title. (title must be between 5 to 30 charcters)",
-            descriptionError: descriptionValid ? false : "Enter a valid description. (description must be between 10 to 200 charcters)",
+            nameError: nameValid ? false : "Enter a valid title (event title must be between 3 and 50 characters long)",
+            descriptionError: descriptionValid ? false : "Enter a valid description. (description must be least 20 characters long)",
             initialPriceError: initialPriceValid ? false : "Enter a valid price",
             tagError: tagValid ? false : "Enter a valid tags",
-            streetError: streetValid ? false : "Enter a valid street name",
-            cityError: cityValid ? false : "Enter a valid city name",
-            countryError: countryValid ? false : "Enter a valid country name",
+            streetError: streetValid ? false : "Enter a valid street name (street must be between 3 and 50 characters long)",
+            cityError: cityValid ? false : "Enter a valid city name (city must be between 3 and 50 characters long)",
+            countryError: countryValid ? false : "Enter a valid country name (country must be between 3 and 50 characters long)",
             postalCodeError: postalCodeValid ? false : "Enter a valid postalCode",
             imageError: imageValid ? false : "Please select 1 to 5 images for your event",
         
         }))
-        let formValid = titleValid && descriptionValid && initialPriceValid && tagValid && streetValid
+        let formValid = nameValid && descriptionValid && initialPriceValid && tagValid && streetValid
              && countryValid && postalCodeValid && imageValid;
         if (formValid) {
             const dd = String(dateTime.getDate())
@@ -105,12 +107,10 @@ function CreateEvent() {
             const hours = String(dateTime.getHours()).padStart(2, "0") 
             const minutes = String(dateTime.getMinutes()).padStart(2, "0")
             const time = hours + ":" + minutes
-            console.log(date )
-            console.log(time)
             const mainImage = eventImages[0]
             const otherImages = eventImages.slice(1)
             const body = {    
-                name: title,
+                name: name,
                 description: description,
                 initialPrice: initialPrice,
                 time: time,
@@ -123,21 +123,45 @@ function CreateEvent() {
                 mainImage: mainImage,
                 images: otherImages
             }
-            addEvent(body)
-        } else {
-            console.log("no images")
+            const addEventResult = await addEvent(body)
+            if (addEventResult.success){
+                setShowAlert(true)
+            } else {
+                console.error(addEventResult.message[0])
+                addEventResult.message.forEach(error => {
+                    const {value, msg, param, location} = error
+                    setFormError((prevState) => ({
+                        ...prevState,
+                        [param+"Error"]: msg
+                    }))
+                })
+
+            }
         }
     }
 
     return (
-        <div className="m-5 container w-100 h-100">
-            <div className='h1'>Create New Event</div>
-            <hr></hr>
-            <UploadImage addImage={addImage} removeImage={removeImage} eventImages={eventImages} imageError={formError.imageError}></UploadImage>
-            <CreateEventForm dateTime={formData.dateTime} onChange={onChange} onChangeDateTime={onChangeDateTime} error={formError}></CreateEventForm>
-            <div class="row justify-content-center">
-                <button type="submit" id="create-event-submit-button" onClick={submiEvent} className="mt-3 justify-self-center shadow-lg rounded-pill btn btn-block w-100 btn-primary">Create Event</button>
-            </div>
+        <div className="m-5 container w-100 h-100"> 
+            <div>
+                <div className='h1'>Create New Event</div>
+                    <hr></hr>
+                    <UploadImage addImage={addImage} removeImage={removeImage} eventImages={eventImages} imageError={formError.imageError}></UploadImage>
+                    <CreateEventForm dateTime={formData.dateTime} onChange={onChange} onChangeDateTime={onChangeDateTime} error={formError}></CreateEventForm>
+                    <div class="row justify-content-center">
+                        <button type="submit" id="create-event-submit-button" onClick={submiEvent} className="mt-3 justify-self-center shadow-lg rounded-pill btn btn-block w-100 btn-primary">Create Event</button>
+                    </div> 
+            </div> 
+            {showAlert && 
+                <div className="position-fixed top-0 start-0 w-100 h-100" style={{"background": "rgba(0,0,0, .8)", "zIndex": "1000"}}> 
+                    <div>Where are tou</div>
+                    <div className='position-fixed top-50 start-50 translate-middle'>
+                        <Alert variant="success" onClose={() => {setShowAlert(false); navigate("/")}} dismissible>
+                            The event is successfully created! <br></br>
+                            Please wait for few business days for the event to be verified
+                        </Alert>
+                    </div>
+                </div>
+            }
         </div>
     )
 }

@@ -14,12 +14,12 @@ function CreateEventForm(props) {
             <div className="form-group col-12 ">
                 <div className='row my-2'>
                     <CreateEventFormInputField
-                        error={props.error.titleError}
-                        name="title"
+                        error={props.error.nameError}
+                        name="name"
                         className="col-sm-8"
                         onChange={props.onChange}
                         type="email"
-                        label="Event Title"
+                        label="Event Name"
                         errorMargin="0%"
                     /> 
                     <CreateEventFormInputField
@@ -47,7 +47,7 @@ function CreateEventForm(props) {
                 />
                 <CreateEventFormInputField
                     error={props.error.cityError}
-                    className="col-sm-4"
+                    className="col-sm-6"
                     name="city"
                     onChange={props.onChange}
                     label="city"
@@ -55,7 +55,7 @@ function CreateEventForm(props) {
                 />
                 <CreateEventFormInputField
                     error={props.error.countryError}
-                    className="col-sm-4"
+                    className="col-sm-6"
                     name="country"
                     onChange={props.onChange}
                     label="country"
@@ -63,7 +63,7 @@ function CreateEventForm(props) {
                 />
                 <CreateEventFormInputField
                     error={props.error.postalCodeError}
-                    className="col-sm-4"
+                    className="col-sm-6"
                     name="postalCode"
                     onChange={props.onChange}
                     label="postalCode"
