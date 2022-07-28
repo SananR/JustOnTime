@@ -1,15 +1,14 @@
 import React from 'react'
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {FaUserAlt, FaLock} from 'react-icons/fa'
 import CreateEventFormInputField from "./createEventFormInput/createEventFormInputField";
-import Spinner from "../../spinner/Spinner";
 import { forwardRef } from 'react';
 import DatePickerField from './datePickerInput/datePickerInput';
 import './createEventForm.css'
+import { MdError } from 'react-icons/md';
 
 function CreateEventForm(props) {
-    return (<div>
+    return (<div className='mb-5'>
         <form onSubmit={props.onSubmit} className="w-100 d-flex justify-content-center align-items-center grid">
             <div className="form-group col-12 ">
                 <div className='row my-2'>
@@ -93,6 +92,10 @@ function CreateEventForm(props) {
                 </div>
             </div>
         </form>
+        {props.error.formError &&  <div className='position-absolute d-inline-flex'> 
+                <MdError className="m-0 error-icon" style={{marginLeft: `${props.errorMargin}`}} color="red" size={25} /> 
+                <p className="ms-2 text-danger z-index-10">{props.error.formError}</p>
+            </div>}
     </div>
 )}
 

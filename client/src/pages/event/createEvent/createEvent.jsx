@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useNavigate} from "react-router-dom";
-
+import Spinner from "../../../components/spinner/Spinner";
 import { addEvent } from '../../../services/event/eventService';
 import UploadImage from '../../../components/event/createEvent/uploadImage';
 import CreateEventForm from '../../../components/forms/createEventForm/createEventForm';
@@ -13,6 +13,7 @@ function CreateEvent() {
     const navigate = useNavigate()
     const [eventImages, setEventImages] = useState([]);
     const [showAlert, setShowAlert] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const addImage = (e) => {
         const imageFiles = eventImages.concat(e.target.files[0])
@@ -73,6 +74,8 @@ function CreateEvent() {
     }
 
     const submiEvent = async (e) => {
+        setLoading(true)
+
         let nameValid = new InputValidator(name).minLength(3).maxLength(50).isValid;
         let descriptionValid = new InputValidator(description).minLength(20).isValid;
         let initialPriceValid = new InputValidator(initialPrice).isInRange(0, 100000).isValid;
@@ -94,8 +97,9 @@ function CreateEvent() {
             countryError: countryValid ? false : "Enter a valid country name (country must be between 3 and 50 characters long)",
             postalCodeError: postalCodeValid ? false : "Enter a valid postalCode",
             imageError: imageValid ? false : "Please select 1 to 5 images for your event",
-        
+            formError: false
         }))
+
         let formValid = nameValid && descriptionValid && initialPriceValid && tagValid && streetValid
              && countryValid && postalCodeValid && imageValid;
         if (formValid) {
@@ -124,24 +128,38 @@ function CreateEvent() {
                 images: otherImages
             }
             const addEventResult = await addEvent(body)
-            if (addEventResult.success){
-                setShowAlert(true)
-            } else {
-                console.error(addEventResult.message[0])
-                addEventResult.message.forEach(error => {
-                    const {value, msg, param, location} = error
+            try {
+                if (addEventResult.success){
+                    setShowAlert(true)
+                } 
+                else if (addEventResult.message.includes("similar")) {
                     setFormError((prevState) => ({
                         ...prevState,
-                        [param+"Error"]: msg
+                        ["formError"]: addEventResult.message
                     }))
-                })
-
+                }
+                else {
+                    console.error(addEventResult.message[0])
+                    addEventResult.message.forEach(error => {
+                        const {value, msg, param, location} = error
+                        setFormError((prevState) => ({
+                            ...prevState,
+                            [param+"Error"]: msg
+                        }))
+                    })
+                }
+            } catch (e) {
+                console.error(e)
             }
+
         }
+        setLoading(false)
+
     }
 
     return (
         <div className="m-5 container w-100 h-100"> 
+            <Spinner color={"#ff6178"} loading={loading} size={75} />
             <div>
                 <div className='h1'>Create New Event</div>
                     <hr></hr>
