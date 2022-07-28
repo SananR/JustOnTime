@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { AiOutlinePlus, AiFillCloseCircle } from 'react-icons/ai'
 import { BiPhotoAlbum } from 'react-icons/bi'
 import './uploadImage.css'
+import { MdError } from 'react-icons/md';
 
 function UploadImage(props) {
 
@@ -44,7 +45,10 @@ function UploadImage(props) {
                             <div className='h5'>Click here to add images</div>
                     </div>
                 </div>
-
+                {props.imageError && <div className='py-4 position-absolute d-inline-flex'> 
+                    <MdError className="m-0 error-icon" style={{marginLeft: `${props.errorMargin}`}} color="red" size={25} /> 
+                    <p className="ms-2 text-danger z-index-10">{props.imageError}</p>
+                </div>}
             </div>
         </div>
     )

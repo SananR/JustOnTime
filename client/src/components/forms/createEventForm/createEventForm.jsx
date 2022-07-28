@@ -20,10 +20,10 @@ function CreateEventForm(props) {
                         onChange={props.onChange}
                         type="email"
                         label="Event Title"
-                        errorMargin="90%"
+                        errorMargin="0%"
                     /> 
                     <CreateEventFormInputField
-                        error={props.error.titleError}
+                        error={props.error.initialPriceError}
                         name="initialPrice"
                         className="col-sm-4"
                         onChange={props.onChange}
@@ -38,7 +38,7 @@ function CreateEventForm(props) {
                 </div>
                 <div className='row my-2'>
                 <CreateEventFormInputField
-                    error={props.error.descriptionError}
+                    error={props.error.streetError}
                     className="col-sm-12"
                     name="street"
                     onChange={props.onChange}
@@ -46,7 +46,7 @@ function CreateEventForm(props) {
                     errorMargin="90%"
                 />
                 <CreateEventFormInputField
-                    error={props.error.descriptionError}
+                    error={props.error.cityError}
                     className="col-sm-4"
                     name="city"
                     onChange={props.onChange}
@@ -54,7 +54,7 @@ function CreateEventForm(props) {
                     errorMargin="90%"
                 />
                 <CreateEventFormInputField
-                    error={props.error.descriptionError}
+                    error={props.error.countryError}
                     className="col-sm-4"
                     name="country"
                     onChange={props.onChange}
@@ -62,7 +62,7 @@ function CreateEventForm(props) {
                     errorMargin="90%"
                 />
                 <CreateEventFormInputField
-                    error={props.error.descriptionError}
+                    error={props.error.postalCodeError}
                     className="col-sm-4"
                     name="postalCode"
                     onChange={props.onChange}
@@ -83,7 +83,7 @@ function CreateEventForm(props) {
                 </div>
                 <div className='row my-2'>
                     <CreateEventFormInputField
-                        error={props.error.descriptionError}
+                        error={props.error.tagError}
                         className="col-sm-12"
                         name="tag"
                         onChange={props.onChange}
