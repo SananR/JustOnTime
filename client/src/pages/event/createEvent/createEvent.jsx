@@ -99,7 +99,6 @@ function CreateEvent() {
             imageError: imageValid ? false : "Please select 1 to 5 images for your event",
             formError: false
         }))
-
         let formValid = nameValid && descriptionValid && initialPriceValid && tagValid && streetValid
              && countryValid && postalCodeValid && imageValid;
         if (formValid) {
@@ -113,6 +112,10 @@ function CreateEvent() {
             const time = hours + ":" + minutes
             const mainImage = eventImages[0]
             const otherImages = eventImages.slice(1)
+            const imagesBody = otherImages.reduce((prev, curr, {}) => {
+                return {...prev, images: curr }
+            })
+            console.log(imagesBody)
             const body = {    
                 name: name,
                 description: description,
@@ -125,19 +128,14 @@ function CreateEvent() {
                 postalCode: postalCode,
                 tags: tag,
                 mainImage: mainImage,
-                images: otherImages
+                ...imagesBody
             }
+            console.log(body)
             const addEventResult = await addEvent(body)
             try {
                 if (addEventResult.success){
                     setShowAlert(true)
                 } 
-                else if (addEventResult.message.includes()) {
-                    setFormError((prevState) => ({
-                        ...prevState,
-                        ["formError"]: addEventResult.message
-                    }))
-                }
                 else {
                     console.error(addEventResult.message[0])
                     addEventResult.message.forEach(error => {
@@ -149,11 +147,11 @@ function CreateEvent() {
                     })
                 }
             } catch (e) {
-                console.error(e)
                 setFormError((prevState) => ({
                     ...prevState,
                     ["formError"]: addEventResult.message
                 }))
+                console.error(e)
             }
 
         }

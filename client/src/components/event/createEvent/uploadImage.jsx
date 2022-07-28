@@ -20,11 +20,7 @@ function UploadImage(props) {
 
 
     const renderImages = () => {
-        props.eventImages.forEach(image => {
-            console.log(image)
-        })
         return props.eventImages.map(image => {
-            console.log(image)
             return  <div className="m-3 img-card col-sm-3" key={image.name+":"+image.lastModified}> 
                         <span className="clickable close-icon mt-2" data-effect="fadeOut" onClick={() => props.removeImage(image.name)}><AiFillCloseCircle color={"grey"} size={35}/></span>
                         <img className="w-100" src={URL.createObjectURL(new Blob([image], {type:"image/jpeg"}))} alt="EventImage"/>

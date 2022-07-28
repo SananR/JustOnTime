@@ -24,8 +24,6 @@ const DatePickerField = (props) => {
       };
 
 
-      console.log(props)
-
     return (<DatePicker 
         selected={props.dateTime} 
         onChange={props.onChange} 
