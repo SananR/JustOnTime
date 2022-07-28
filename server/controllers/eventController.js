@@ -22,7 +22,9 @@ const getEventImage = async (req, res, next) => {
 }
 
 const addEvent = async (req, res, next) => {
+   
     const errors = validationResult(req);
+
     if (!req.files) {
         return clientError(res, 'Invalid file provided.');
     }
