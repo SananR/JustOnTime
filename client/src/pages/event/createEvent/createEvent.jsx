@@ -40,7 +40,7 @@ function CreateEvent() {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        initialPrice: 0,
+        initialPrice: 1,
         tag: [],
         dateTime: defaultDateTime,
         street: '',
@@ -51,8 +51,6 @@ function CreateEvent() {
 
     const {title, description, initialPrice, tag, dateTime, street, city, country, postalCode} = formData;
 
-
-    // const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth) 
 
     useEffect(() => {})
     const onChange = (e) => {
@@ -87,7 +85,7 @@ function CreateEvent() {
             ...prevState,
             titleError: titleValid ? false : "Enter a valid title. (title must be between 5 to 30 charcters)",
             descriptionError: descriptionValid ? false : "Enter a valid description. (description must be between 10 to 200 charcters)",
-            initialPriceError: titleValid ? false : "Enter a valid price",
+            initialPriceError: initialPriceValid ? false : "Enter a valid price",
             tagError: tagValid ? false : "Enter a valid tags",
             streetError: streetValid ? false : "Enter a valid street name",
             cityError: cityValid ? false : "Enter a valid city name",
@@ -98,11 +96,17 @@ function CreateEvent() {
         }))
         let formValid = titleValid && descriptionValid && initialPriceValid && tagValid && streetValid
              && countryValid && postalCodeValid && imageValid;
-
-
         if (formValid) {
-            const date = dateTime.getDate()
-            const time = dateTime.getTime()
+            const dd = String(dateTime.getDate())
+            const mm = String(dateTime.getMonth() + 1) 
+            const yyyy = dateTime.getFullYear();
+            const date = yyyy + "/" + mm + "/" + dd;  
+
+            const hours = String(dateTime.getHours()).padStart(2, "0") 
+            const minutes = String(dateTime.getMinutes()).padStart(2, "0")
+            const time = hours + ":" + minutes
+            console.log(date )
+            console.log(time)
             const mainImage = eventImages[0]
             const otherImages = eventImages.slice(1)
             const body = {    
