@@ -25,4 +25,9 @@ export class InputValidator {
         return this;
     }
 
+    isInRange(min, max) {
+        this.isValid = this.isValid && this.input >= min && this.input <= max;
+        return this;
+    }
+
 }

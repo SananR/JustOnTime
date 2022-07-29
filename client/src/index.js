@@ -68,7 +68,7 @@ export default function App() {
             <Route path="organizer">
                 <Route path="signup" element={<OrganizerSignup/>} />
                 <Route path="main" element={<OrganizerMain/>} />
-                <Route path=":createEvent" element={<CreateEvent/>} />
+                <Route path="createEvent" element={<CreateEvent/>} />
             </Route>
         </Routes>
     </Router>
