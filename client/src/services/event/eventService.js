@@ -88,3 +88,21 @@ export const getEventImage = async(id) => {
     }
 
 }
+
+export const addEvent = async (body) => {
+    const headers = {
+        'Content-Type': 'multipart/form-data'
+    }
+    try {
+        const response = await axios.post(API_URL + `event`, body, {
+            headers: headers,
+        });
+        console.log("success")
+        return {success: true}
+        
+    } catch (e){
+        console.error(e)
+        return {success: false, message: e.response.data.message}
+    }
+
+}
