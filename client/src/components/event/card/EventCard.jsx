@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-import {AiOutlineStar, AiFillStar} from "react-icons/ai"
+import {AiOutlineStar, AiFillStar} from "react-icons/ai";
 
 import "./eventcard.css"
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,54 +10,28 @@ import { updateUser } from '../../../services/auth/authSlice.js';
 function EventCard(props) {
 
     const [image, setImage] = useState("");
+    const [url, setUrl] = useState();
     const [starredState, setStarredState] = useState(false);
-    // var starredState = false;
-    // const user = useSelector(state => state.auth.user);
-    // const [success, setSuccess] = useState(success);
-    const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
-
+    const [done, setDone] = useState(false);
+    const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
-
-    // const fetchImage = async() => {
-    //     const img = await getEventImage(props.id);
-    //     setImage(() => (img));
-    // }
-    // fetchImage().catch(console.error);
-
+    
     useEffect( () => {
-        console.log(props.id)
         const fetchImage = async() => {
             const img = await getEventImage(props.id);
+            setDone(true);
             setImage(() => (img));
         }
         fetchImage().catch(console.error);
+        setUrl({ backgroundImage: `url(${URL.createObjectURL(new Blob([image], {type:"image/jpeg"}))})` });
+    }, [done, props.id]);
 
+    useEffect( () => {
         if (user.starredEvents.includes(props.id))
             setStarredState(true);
         else
             setStarredState(false);
-    }, [props.id]);
-
-    // useEffect( () => {
-        // console.log(props.id)
-        // if (isSuccess) {
-            // console.log("aaa")
-            // if (user.starredEvents.includes(props.id) && starredState === false) {
-            //     setStarredState(true);
-            //     console.log("b")
-            //     console.log(props.id)
-            // }
-            // else if (!user.starredEvents.includes(props.id) && starredState === true) {
-            //     setStarredState(false);
-            //     console.log("c")
-            //     console.log(props.id)
-            // }
-            // if (user.starredEvents.includes(props.id))
-            //     setStarredState(true);
-            // else
-                // setStarredState(false);
-        // }
-    // }, [user, isSuccess, isLoading, isError, props.id]);
+    }, [user, props.id]);
 
     const handleStar = (async (e, event) => {
         try {
@@ -65,21 +39,18 @@ function EventCard(props) {
             const userId = user._id;
             const eventId = event.id;
             var eventsList = [...user.starredEvents];
-            if (eventsList.includes(eventId)) {
+            if (eventsList.includes(eventId))
                 eventsList.splice(eventsList.indexOf(eventId), 1);
-                // setStarredState(false);
-            }
-            else {
+            else
                 eventsList.push(eventId);
-                // setStarredState(true);
-            }
             dispatch(updateUser({"update": {"starredEvents": eventsList}, "id": userId}));
+            
+            // when the event card's star button is clicked, the following code immediately shows the updated star image
+            // for the current event card while the other event cards corresponding to the same event are being updated
             if (eventsList.includes(eventId))
                 setStarredState(true);
-                // starredState = true;
             else
                 setStarredState(false);
-                // starredState = false;
         } catch (e) {
             console.log(e);
         }
@@ -87,7 +58,7 @@ function EventCard(props) {
 
     return (
         <div className="event-card position-relative d-flex g-0 flex-column justify-content-center align-items-center mt-5 mb-5 shadow-sm container-fluid">
-            <div className="event-image-container w-100 bg-image " style={{ backgroundImage: `url(${URL.createObjectURL(new Blob([image], {type:"image/jpeg"}))})` }}></div>
+            <div className="event-image-container w-100 bg-image " style={url}></div>
             <div className="event-content-container w-100 gap-0 g-0 d-flex flex-column justify-content-center align-items-start">
                 <h1 className="event-card-title w-100 mt-3 ps-3 ">{props.title}</h1>
                 <h2 className="event-card-meta w-100 ps-3 text-muted">{props.date} • {props.time} • {props.location}</h2>
