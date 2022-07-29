@@ -11,6 +11,7 @@ function EventCard(props) {
 
     useEffect( () => {
         const fetchImage = async() => {
+            console.log(props)
             const img = await getEventImage(props.id);
             setImage(() => (img));
         }

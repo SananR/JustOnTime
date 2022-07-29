@@ -85,7 +85,7 @@ const addEvent = async (req, res, next) => {
 
 const getEvents = async (req, res, next) => {
     try{
-        Event.find({ 'eventInfo.status': 'Ongoing' })
+        Event.find({ 'eventInfo.status': 'ONGOING' })
             .exec()
             .then(output => {
                 const response = {
@@ -241,7 +241,7 @@ const updateEvents = async (req, res, next) => {
     }
     Event.findOne({ _id: req.query.eventId}, (err, event) => {
         if (!event) {return clientError(res, "No such event exists ");}
-        else if (event.eventInfo.status == "Ongoing" || event.eventInfo.status == "Completed"){
+        else if (event.eventInfo.status == "ONGOING" || event.eventInfo.status == "COMPLETED"){
           return clientError(res, "event cannot be updated");
         }
         let deletepath = event.eventImagePath

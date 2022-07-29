@@ -23,6 +23,27 @@ export const loadEvents = async () => {
     }
 }
 
+//Get searched events
+export const loadSearchedEvents = async (searchTerm) => {
+    const response = await axios.get(API_URL + `event/search/?searchTerm=${searchTerm}`);
+    if (response.data) {
+        const data =  response.data.events.map((event) => {
+            return {
+                id: event.id,
+                title: event.name,
+                date: event.date,
+                time: event.time,
+                location: event.location,
+                currentBid: 0,
+                previousBid: 0,
+                timeRemaining: "00:00:00"
+            }
+        });
+        return data;
+    }
+}
+
+
 //Possibly add organizer information(name)
 export const loadAnEvent = async (id) => {
     const response = await axios.get(API_URL + `event/getAnEvent?id=${id}`);
@@ -31,9 +52,12 @@ export const loadAnEvent = async (id) => {
         if (event.eventInfo.status != EventStatus.ONGOING){
             return false
         }
-        const maxBet = event.bidHistory.reduce((prev, curr) => {
-            return (prev.bidPrice > curr.bidPrice) ? prev : curr
-        })
+        if(event.bidHistory.length != 0){
+            const maxBet = event.bidHistory.reduce((prev, curr) => {
+                return (prev.bidPrice > curr.bidPrice) ? prev : curr
+            })
+        }
+        const allimages = [event.eventImagePath].concat(event.ImagePathArray);
         return {
             id: event._id,
             title: event.eventInfo.name,
@@ -45,8 +69,9 @@ export const loadAnEvent = async (id) => {
             bids: event.bidHistory,
             organizerId: event.organizerId,
             organizerName: event.organizerName,
-            currentBid: maxBet,
-            timeRemaining: "00:00:00"
+            currentBid: 1,
+            timeRemaining: "00:00:00",
+            images: allimages
         }
     }
 }
