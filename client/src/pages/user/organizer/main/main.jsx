@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import axios from 'axios'
 import './main.css'
 import Carousel from "react-multi-carousel"
+import EventCard from "../../../../components/event/card/EventCard"
 
 function OrganizerMain() {
     const [currEvents, setCurrEvents] = useState([]);
@@ -61,70 +62,87 @@ function OrganizerMain() {
 
     const createCurrEvents = (
         currEvents.map(event =>
-            <div className="event">
-                 <a href={"/organizer/events/" + event.id} > <span id="name">{event.name}<br/></span>  </a>
-                <div id="eventInfo"> 
-                {event.eventImage_path}<br/>
-                Time: {event.time}<br/>
-                Date: {event.date}<br/>
-                Address: {event.address.street}, {event.address.city}, {event.address.country}<br/>
-            </div>
-       </div>
+            <EventCard
+            key={event.id.toString()}
+            id={event.id}
+            title={event.name}
+            date={event.date}
+            time={event.time}
+            location={event.address.suiteNo, event.address.street}
+            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidPrice : "--" }
+            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidPrice : "--"}
+            url={"/events/" + event.id}
+            timeRemaining={"12:00"}
+            />
         )
     ) 
 
     const createRevEvents = (
         revEvents.map(event =>
-            <div className="event">
-                <a href={"/organizer/events/" + event.id} > <span id="name">{event.name}<br/></span>  </a>
-                <div id="eventInfo"> {event.eventImage_path}<br/>
-                Time: {event.time}<br/>
-                Date: {event.date}<br/>
-                Address: {event.address.street}, {event.address.city}, {event.address.country}<br/>
-                </div>
-            </div>
+            <EventCard
+            key={event.id.toString()}
+            id={event.id}
+            title={event.name}
+            date={event.date}
+            time={event.time}
+            location={event.address.suiteNo, event.address.street}
+            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidPrice : "--" }
+            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidPrice : "--"}
+            url={"/events/" + event.id}
+            timeRemaining= {"——:——"}
+            />
         )
     ) 
 
     const createSubEvents = (
         subEvents.map(event =>
-           <div className="event">
-                <a href={"/organizer/events/" + event.id} > <span id="name">{event.name}<br/></span>  </a>
-                <div id="eventInfo"> {event.eventImage_path}<br/>
-                Time: {event.time}<br/>
-                Date: {event.date}<br/>
-                Address: {event.address.street}, {event.address.city}, {event.address.country}<br/>
-                </div>
-           </div>
+            <EventCard
+            key={event.id.toString()}
+            id={event.id}
+            title={event.name}
+            date={event.date}
+            time={event.time}
+            location={event.address.suiteNo, event.address.street}
+            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidPrice : "--" }
+            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidPrice : "--"}
+            url={"/events/" + event.id}
+            timeRemaining= {"——:——"}
+            />
         )
     ) 
 
 
     const createPastEvents = (
         pastEvents.map(event =>
-            <div className="event">
-                 <a href={"/organizer/events/" + event.id} > <span id="name">{event.name}<br/></span>  </a>
-                <div id="eventInfo"> {event.eventImage_path}<br/>
-                Time: {event.time}<br/>
-                Date: {event.date}<br/>
-                Address: {event.address.street}, {event.address.city}, {event.address.country}<br/>
-                Status: {event.status}<br/>
-                </div>
-           </div>
+            <EventCard
+            key={event.id.toString()}
+            id={event.id}
+            title={event.name}
+            date={event.date}
+            time={event.time}
+            location={event.address.suiteNo, event.address.street}
+            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidPrice : "--" }
+            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidPrice : "--"}
+            url={"/events/" + event.id}
+            timeRemaining= {"——:——"}
+            />
         )
     ) 
 
     const createCompEvents = (
         compEvents.map(event =>
-            <div className="event">
-                 <a href={"/organizer/events/" + event.id} > <span id="name">{event.name}<br/></span>  </a>
-                <div id="eventInfo"> {event.eventImage_path}<br/>
-                Time: {event.time}<br/>
-                Date: {event.date}<br/>
-                Address: {event.address.street}, {event.address.city}, {event.address.country}<br/>
-                Status: {event.status}<br/>
-                </div>
-           </div>
+            <EventCard
+            key={event.id.toString()}
+            id={event.id}
+            title={event.name}
+            date={event.date}
+            time={event.time}
+            location={event.address.suiteNo, event.address.street}
+            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidPrice : "--" }
+            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidPrice : "--"}
+            url={"/events/" + event.id}
+            timeRemaining= {"00:00"}
+            />
         )
     ) 
 
@@ -173,89 +191,86 @@ function OrganizerMain() {
         <div>
             <div className="top">
                 <h1 id="title"> My Events </h1>
-                <button id="createEvent" onClick={() => navigate("/organizer/new")}>New Event</button>
+                <button id="createEvent" onClick={() => navigate("/organizer/createEvent")}>New Event</button>
             </div>
            
-            <div className="list">
+           {setCurrEvents.length > 0 && <div className="list">
                  <h3 id="title"> Current Events </h3>
                  <Carousel
                     swipeable={true}
                     draggable={true}
                     responsive={responsive}
+                    showDots={true}
                     ssr={true}
                     infinite={true}
-                    partialVisible={false}
-                    arrows={true}
-                    itemClass="car-event"
-                    >
-                   {createCurrEvents}
+                    partialVisible={true}
+                >
+                    {createCurrEvents}
                 </Carousel>
-            </div>
+            </div>}
 
-            <div className="list">
+            {subEvents.length > 0 && <div className="list">
              <h3 id="title"> Resubmit Events </h3>
              <Carousel
                     swipeable={true}
                     draggable={true}
                     responsive={responsive}
+                    showDots={true}
                     ssr={true}
                     infinite={true}
-                    partialVisible={false}
-                    arrows={true}
-                    itemClass="car-event"
-                    >
-                   {createSubEvents}
+                    partialVisible={true}
+                >
+                    {createSubEvents}
                 </Carousel>
-            </div>
+            </div>}
 
-            <div className="list">
+            { revEvents.length > 0 && <div className="list">
              <h3 id="title"> Pending Events </h3>
              <Carousel
                     swipeable={true}
                     draggable={true}
                     responsive={responsive}
+                    showDots={true}
                     ssr={true}
                     infinite={true}
-                    partialVisible={false}
-                    arrows={true}
-                    itemClass="car-event"
-                    >
-                   {createRevEvents}
+                    partialVisible={true}
+                >
+                    {createRevEvents}
                 </Carousel>
-            </div>
+            </div>}
 
-            <div className="list">
+          {pastEvents.length > 0 &&  <div className="list">
             <h3 id="title"> Incomplete Events </h3>
             <Carousel
                     swipeable={true}
                     draggable={true}
                     responsive={responsive}
+                    showDots={true}
                     ssr={true}
                     infinite={true}
-                    partialVisible={false}
-                    arrows={true}
-                    itemClass="car-event"
-                    >
-                   {createPastEvents}
+                    partialVisible={true}
+                >
+                    {createPastEvents}
+                    {createPastEvents}
+                    {createPastEvents}
+                    {createPastEvents}
                 </Carousel>
-            </div>
+            </div>}
 
-            <div className="list">
+           { compEvents.length > 0 && <div className="list">
             <h3 id="title"> Completed Events </h3>
             <Carousel
                     swipeable={true}
                     draggable={true}
                     responsive={responsive}
+                    showDots={true}
                     ssr={true}
                     infinite={true}
-                    partialVisible={false}
-                    arrows={true}
-                    itemClass="car-event"
-                    >
-                   {createCompEvents}
+                    partialVisible={true}
+                >
+                    {createCompEvents}
                 </Carousel>
-            </div>
-
+            </div> }
         </div>
     )
     const loadingscreen =  (

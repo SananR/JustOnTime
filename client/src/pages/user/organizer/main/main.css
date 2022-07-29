@@ -24,34 +24,10 @@
     vertical-align: middle;
 }
 
-.list {
-    width: 80%;
-    margin-left: 8%;
-}
-
-.event{
-    text-align: center;
-    padding: 10px;
-}
-.car-event{
-    margin: 10px;
-    border: solid lightgray 1px;
-    border-radius: 10px;
+#title{
+    margin-left: 3%;
+    padding-bottom: 0px;
 
 }
 
-#name{
-    font-weight: bolder;
-    color: rgb(255, 1, 1); 
-    font-size: 22px;
-}
-#eventInfo{
-     text-align: left;
-     margin-top: 10px;
- }
 
- /* #resub-edit{
-    position: relative;
-    margin-top: 40%;
-    left: 75%;
- } */
