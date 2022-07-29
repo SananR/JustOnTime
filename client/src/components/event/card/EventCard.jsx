@@ -11,23 +11,53 @@ function EventCard(props) {
 
     const [image, setImage] = useState("");
     const [starredState, setStarredState] = useState(false);
-    const user = useSelector(state => state.auth.user);
+    // var starredState = false;
+    // const user = useSelector(state => state.auth.user);
+    // const [success, setSuccess] = useState(success);
+    const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
+
     const dispatch = useDispatch();
 
+    // const fetchImage = async() => {
+    //     const img = await getEventImage(props.id);
+    //     setImage(() => (img));
+    // }
+    // fetchImage().catch(console.error);
+
     useEffect( () => {
+        console.log(props.id)
         const fetchImage = async() => {
             const img = await getEventImage(props.id);
             setImage(() => (img));
         }
         fetchImage().catch(console.error);
-    }, [props.id]);
 
-    useEffect( () => {
         if (user.starredEvents.includes(props.id))
             setStarredState(true);
         else
             setStarredState(false);
-    }, [user, props.id]);
+    }, [props.id]);
+
+    // useEffect( () => {
+        // console.log(props.id)
+        // if (isSuccess) {
+            // console.log("aaa")
+            // if (user.starredEvents.includes(props.id) && starredState === false) {
+            //     setStarredState(true);
+            //     console.log("b")
+            //     console.log(props.id)
+            // }
+            // else if (!user.starredEvents.includes(props.id) && starredState === true) {
+            //     setStarredState(false);
+            //     console.log("c")
+            //     console.log(props.id)
+            // }
+            // if (user.starredEvents.includes(props.id))
+            //     setStarredState(true);
+            // else
+                // setStarredState(false);
+        // }
+    // }, [user, isSuccess, isLoading, isError, props.id]);
 
     const handleStar = (async (e, event) => {
         try {
@@ -35,11 +65,21 @@ function EventCard(props) {
             const userId = user._id;
             const eventId = event.id;
             var eventsList = [...user.starredEvents];
-            if (eventsList.includes(eventId))
+            if (eventsList.includes(eventId)) {
                 eventsList.splice(eventsList.indexOf(eventId), 1);
-            else
+                // setStarredState(false);
+            }
+            else {
                 eventsList.push(eventId);
+                // setStarredState(true);
+            }
             dispatch(updateUser({"update": {"starredEvents": eventsList}, "id": userId}));
+            if (eventsList.includes(eventId))
+                setStarredState(true);
+                // starredState = true;
+            else
+                setStarredState(false);
+                // starredState = false;
         } catch (e) {
             console.log(e);
         }
