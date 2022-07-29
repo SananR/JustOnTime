@@ -33,7 +33,10 @@ function Search(){
         })
     }
     
-    return <div className="grid container-fluid w-100 h-100">{createEventCards()}</div>;
+    return (<div className="grid container-fluid w-100 h-100">
+        {events.length === 0 && <h1 className="text-center mt-5">No such events found</h1>}
+        {events.length !== 0 && createEventCards()}
+        </div>);
 }
 
 export default Search
