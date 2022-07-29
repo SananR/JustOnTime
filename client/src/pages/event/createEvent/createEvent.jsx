@@ -44,7 +44,7 @@ function CreateEvent() {
     const [formData, setFormData] = useState({
         name: '',
         description: '',
-        initialPrice: 1,
+        initialPrice: -1,
         tag: [],
         dateTime: defaultDateTime,
         street: '',
@@ -59,7 +59,6 @@ function CreateEvent() {
     useEffect(() => {
     })
     const onChange = (e) => {
-        console.log(e)
         setFormData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
@@ -167,7 +166,7 @@ function CreateEvent() {
                     <hr></hr>
                     <UploadImage addImage={addImage} removeImage={removeImage} eventImages={eventImages} imageError={formError.imageError}></UploadImage>
                     <CreateEventForm dateTime={formData.dateTime} onChange={onChange} onChangeDateTime={onChangeDateTime} error={formError}></CreateEventForm>
-                    <div class="row justify-content-center">
+                    <div className="row justify-content-center">
                         <button type="submit" id="create-event-submit-button" onClick={submiEvent} className="mt-3 justify-self-center shadow-lg rounded-pill btn btn-block w-100 btn-primary">Create Event</button>
                     </div> 
             </div> 

@@ -9,8 +9,8 @@ import { MdError } from 'react-icons/md';
 
 function CreateEventForm(props) {
     return (<div className='mb-5'>
-        <form onSubmit={props.onSubmit} className="w-100 d-flex justify-content-center align-items-center grid">
-            <div className="form-group col-12 ">
+        <form onSubmit={props.onSubmit} className="w-100 d-flex justify-content-center align-items-center">
+            <div className="form-group col-sm-12">
                 <div className='row my-2'>
                     <CreateEventFormInputField
                         error={props.error.nameError}
@@ -27,7 +27,6 @@ function CreateEventForm(props) {
                         className="col-sm-4"
                         onChange={props.onChange}
                         type="number"
-                        value="1"
                         label="initialPrice"
                         errorMargin="90%"
                     />    
