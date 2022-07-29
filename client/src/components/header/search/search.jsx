@@ -18,39 +18,50 @@ function Search(){
     }
 
     return(
-        <div className={`search ${showSearch ? "show-search" : ""}`}>
-            <button
-            onFocus={() => setShowSearch(true)}
-            onBlur={() => {
-                if (!inputHover) {
-                    setShowSearch(false);
-                }
-            }}
-            >
-            <FaSearch />
-            </button>
-            <input
-            type="text"
-            placeholder="Search"
-            value={searchTerm}
-            onChange={({ target }) => setSearchTerm(target.value)}
-            onMouseEnter={() => setInputHover(true)}
-            onMouseLeave={() => setInputHover(false)}
-            onBlur={() => {
-                setShowSearch(false);
-                setInputHover(false);
-            }}
-            onKeyPress = {
-                event => {
-                    if(event.key === 'Enter'){
-                        handleEnter(searchTerm)
-                    }
-                }
-            }
-            />
-        </div>
+            <div className="right">
+                <div className={`search ${showSearch ? "show-search" : ""} `}>
+                    <button
+                        onClick = {() => {
+                            if(!showSearch){
+                                setShowSearch(true)
+                            }
+                            else{
+                                setShowSearch(false)
+                            }
+                            }}
+                        onFocus={() => setShowSearch(true)}
+                        onBlur={() => {
+                            if (!inputHover) {
+                                setShowSearch(false);
+                            }
+                        }}
+                        >
+                        <FaSearch />
+                    </button>
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        value={searchTerm}
+                        onChange={({ target }) => setSearchTerm(target.value)}
+                        onMouseEnter={() => setInputHover(true)}
+                        onMouseLeave={() => setInputHover(false)}
+                        onBlur={() => {
+                            setShowSearch(false);
+                            setInputHover(false);
+                        }}
+                        onKeyPress = {
+                            event => {
+                                if(event.key === 'Enter'){
+                                    handleEnter(searchTerm)
+                                }
+                            }
+                        }
+                    />
+                </div>
+            </div>
     );
     
 }
 
 export default Search;
+

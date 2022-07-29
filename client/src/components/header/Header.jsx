@@ -7,6 +7,7 @@ import Search from './search/search'
 import logo from '../../logo_cropped.png'
 
 import './header.css'
+import { Nav } from 'react-bootstrap'
 
 function Header() {
     return (

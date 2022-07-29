@@ -52,9 +52,12 @@ export const loadAnEvent = async (id) => {
         if (event.eventInfo.status != EventStatus.ONGOING){
             return false
         }
-        const maxBet = event.bidHistory.reduce((prev, curr) => {
-            return (prev.bidPrice > curr.bidPrice) ? prev : curr
-        })
+        if(event.bidHistory.length != 0){
+            const maxBet = event.bidHistory.reduce((prev, curr) => {
+                return (prev.bidPrice > curr.bidPrice) ? prev : curr
+            })
+        }
+        const allimages = [event.eventImagePath].concat(event.ImagePathArray);
         return {
             id: event._id,
             title: event.eventInfo.name,
@@ -66,8 +69,9 @@ export const loadAnEvent = async (id) => {
             bids: event.bidHistory,
             organizerId: event.organizerId,
             organizerName: event.organizerName,
-            currentBid: maxBet,
-            timeRemaining: "00:00:00"
+            currentBid: 1,
+            timeRemaining: "00:00:00",
+            images: allimages
         }
     }
 }
