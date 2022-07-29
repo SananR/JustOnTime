@@ -1,11 +1,11 @@
 import {clientError, serverError, success, successWithData} from "../util/http/httpResponse.js";
 import {Event} from '../models/eventModel.js'
-import { User } from '../models/userModel.js'
 import { eventImageService } from "../util/ImageService.js";
 import { validationResult } from 'express-validator';
 import mongoose from "mongoose";
 import path from "path";
 import console from "console";
+import Fuse from 'fuse.js'
 
 const getEventImage = async (req, res, next) => {
     if (!req.query.id) return clientError(res, "Must provide an event ID.");
@@ -154,12 +154,10 @@ const getOrganizerEvents =  async (req, res, next) => {
     }
 }
 const getSearchedEvents = async (req, res, next) => {
-    if(!req.query.searchTerm) return clientError(res, "Must have search term");
     try{
-        const searchTerm = req.query.searchTerm;
-        Event.find({ $text: { $search: `${searchTerm }` }})
-            .sort({score:{$meta: "textScore"}})
-            .exec()
+        var searchTerm = req.query.searchTerm;
+        if(!req.query.searchTerm){
+            Event.find().limit(10).exec()
             .then(output => {
                 const response = {
                     count: output.length,
@@ -179,6 +177,36 @@ const getSearchedEvents = async (req, res, next) => {
                 };
             return res.status(200).json(response);
             });
+        }
+        else{
+            const options = {
+                includeScore: true,
+                keys: ['name','tags']
+            }
+            const events = Event.find().exec()
+                .then(output => {
+                    const response = {
+                        count: output.length,
+                        events: output.map(out => {
+                            return {
+                                id: out._id,
+                                name: out.eventInfo.name,
+                                description: out.eventInfo.description,
+                                time: out.eventInfo.time,
+                                date: out.eventInfo.date,
+                                location: out.eventInfo.address.street,
+                                eventImagePath: out.eventImagePath,
+                                bidHistory: out.bidHistory,
+                                ImagePathArray: out.ImagePathArray
+                            };
+                        })
+                    };
+                    console.log(response.events)
+                    const fuse = new Fuse(response.events, options);
+                    const result = fuse.search(searchTerm);
+                    return res.status(200).json(result);
+                });
+        }
     }catch (err) {
         console.error(err);
         return serverError(res, "An unexpected error occurred.");
