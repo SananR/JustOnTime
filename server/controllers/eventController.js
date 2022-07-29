@@ -189,7 +189,10 @@ const getSearchedEvents = async (req, res, next) => {
                                 name: out.eventInfo.name,
                                 eventImagePath: out.eventImagePath,
                                 ImagePathArray: out.ImagePathArray,
-                                tags: out.tags
+                                tags: out.tags,
+                                time: out.eventInfo.time,
+                                date: out.eventInfo.date,
+                                location: out.eventInfo.address.street,
                             };
                         })
                     };
@@ -205,7 +208,10 @@ const getSearchedEvents = async (req, res, next) => {
                             name: out.item.name,
                             eventImagePath: out.item.eventImagePath,
                             ImagePathArray: out.item.ImagePathArray,
-                            tags: out.item.tags
+                            tags: out.item.tags,
+                            time: out.item.time,
+                            date: out.item.date,
+                            location: out.item.location,
                         };
                     })
                         
