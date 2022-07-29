@@ -179,10 +179,6 @@ const getSearchedEvents = async (req, res, next) => {
             });
         }
         else{
-            const options = {
-                includeScore: true,
-                keys: ['name','tags']
-            }
             const events = Event.find().exec()
                 .then(output => {
                     const response = {
@@ -191,19 +187,28 @@ const getSearchedEvents = async (req, res, next) => {
                             return {
                                 id: out._id,
                                 name: out.eventInfo.name,
-                                description: out.eventInfo.description,
-                                time: out.eventInfo.time,
-                                date: out.eventInfo.date,
-                                location: out.eventInfo.address.street,
                                 eventImagePath: out.eventImagePath,
-                                bidHistory: out.bidHistory,
-                                ImagePathArray: out.ImagePathArray
+                                ImagePathArray: out.ImagePathArray,
+                                tags: out.tags
                             };
                         })
                     };
-                    console.log(response.events)
-                    const fuse = new Fuse(response.events, options);
-                    const result = fuse.search(searchTerm);
+                    const fuse = new Fuse(response.events, {
+                        includeScore: true,
+                        keys: [{name:'name', weight:2},'tags']
+                    });
+                    const result = fuse.search(searchTerm)
+                    .filter(out => out.score <=0.35)
+                    .map(out => {
+                        return {
+                            id: out.item._id,
+                            name: out.item.name,
+                            eventImagePath: out.item.eventImagePath,
+                            ImagePathArray: out.item.ImagePathArray,
+                            tags: out.item.tags
+                        };
+                    })
+                        
                     return res.status(200).json(result);
                 });
         }
