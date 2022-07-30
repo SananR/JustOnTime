@@ -206,7 +206,7 @@ const getSearchedEvents = async (req, res, next) => {
                     .filter(out => out.score <=0.35)
                     .map(out => {
                         return {
-                            id: out.item._id,
+                            id: out.item.id,
                             name: out.item.name,
                             eventImagePath: out.item.eventImagePath,
                             ImagePathArray: out.item.ImagePathArray,

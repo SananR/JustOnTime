@@ -2,17 +2,21 @@ import React, {useEffect, useState} from 'react'
 import { loadSearchedEvents } from '../../../../services/event/eventService';
 import RenderSearchCards from '../../../../components/event/search/searchEventCard';
 import { useParams } from 'react-router-dom';
+import Spinner from '../../../../components/spinner/Spinner';
 
 function Search(){
     const [events, setEvents] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     var { searchTerm } = useParams();
     console.log(events)
     useEffect( () => {
         const fetchEvents = async() => {
+            setIsLoading(true)
             const events = await loadSearchedEvents(searchTerm);
             setEvents(() => (events));
         }
         fetchEvents().catch(console.error);
+        setIsLoading(false)
     }, []);
 
     function createEventCards() {
@@ -34,7 +38,7 @@ function Search(){
     }
     
     return (<div className="grid container-fluid w-100 h-100">
-        {events.length === 0 && <h1 className="text-center mt-5">No such events found</h1>}
+        <Spinner color={"#ff6178"} loading={isLoading} size={75} />
         {events.length !== 0 && createEventCards()}
         </div>);
 }

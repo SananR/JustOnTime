@@ -27,7 +27,7 @@ export const loadEvents = async () => {
 export const loadSearchedEvents = async (searchTerm) => {
     const response = await axios.get(API_URL + `event/search/?searchTerm=${searchTerm}`);
     if (response.data) {
-        const data =  response.data.events.map((event) => {
+        const data =  response.data.map((event) => {
             return {
                 id: event.id,
                 title: event.name,
