@@ -18,7 +18,6 @@ function EventCard(props) {
     
     useEffect( () => {
         const fetchImage = async() => {
-            console.log(props)
             const img = await getEventImage(props.id);
             setDone(true);
             setImage(() => (img));
@@ -28,10 +27,12 @@ function EventCard(props) {
     }, [done, props.id]);
 
     useEffect( () => {
-        if (user.starredEvents.includes(props.id))
-            setStarredState(true);
-        else
-            setStarredState(false);
+        if (user !== null) {
+            if (user.starredEvents.includes(props.id))
+                setStarredState(true);
+            else
+                setStarredState(false);
+        }
     }, [user, props.id]);
 
     const handleStar = (async (e, event) => {
@@ -69,8 +70,8 @@ function EventCard(props) {
                 </div>
             </div>
             <BidTimeTag timeRemaining={props.timeRemaining}/>
-            {!starredState && <AiOutlineStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"white"} onClick={(e) => handleStar(e, props)}/>}
-            {starredState && <AiFillStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"gold"} onClick={(e) => handleStar(e, props)}/>}
+            {(user !== null) && !starredState && <AiOutlineStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"white"} onClick={(e) => handleStar(e, props)}/>}
+            {(user !== null) && starredState && <AiFillStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"gold"} onClick={(e) => handleStar(e, props)}/>}
         </div>
     );
 }
