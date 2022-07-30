@@ -48,7 +48,7 @@ Spikes: None
 
 # Team Capacity
 
-Team Capacity: 100 points
+Team Capacity: 116 points
 
 # Participants
 
