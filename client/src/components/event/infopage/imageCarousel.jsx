@@ -39,7 +39,7 @@ function ImageSlider(props) {
 
     function createImagePanels() {
         return props.images.map(image => {
-            return <img src={URL.createObjectURL(image)} key={image} className="event-image"/>
+            return <img src={`http://localhost:3000/${image.substring(3)}`} key={image} className="event-image"/>
         })
     }
 
@@ -55,9 +55,6 @@ function ImageSlider(props) {
             keyBoardControl={true}
         >
             {createImagePanels()}
-            <p className="event-image h-100" style={{backgroundColor:"grey"}}>Image1</p>
-            <p className="event-image h-100" style={{backgroundColor:"aqua"}}>Image2</p>
-            <p className="event-image h-100" style={{backgroundColor:"grey"}}>Image3</p>
         </Carousel>
     )
 }

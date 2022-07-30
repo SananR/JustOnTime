@@ -4,7 +4,7 @@ import { bidInfoSchema } from './schemas/event/bidInfo.schema.js';
 
 
 
-const eventSchema = mongoose.Schema({
+var eventSchema = mongoose.Schema({
     eventInfo: {
         type: eventInfoSchema,
         required: true
@@ -32,6 +32,18 @@ const eventSchema = mongoose.Schema({
     }
 
 });
+
+eventSchema.index({
+    'eventInfo.name': "text",
+    tags: "text"
+},
+{
+    weights:{
+        'eventInfo.name': 5,
+        tags: 1
+    },
+    name: "eventSearchIndex"
+})
 
 const Event = mongoose.model("Event", eventSchema);
 
