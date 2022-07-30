@@ -1,5 +1,6 @@
 import {clientError, serverError, success, successWithData} from "../util/http/httpResponse.js";
 import {Event} from '../models/eventModel.js'
+import {User} from '../models/userModel.js'
 import { eventImageService } from "../util/ImageService.js";
 import { validationResult } from 'express-validator';
 import mongoose from "mongoose";
