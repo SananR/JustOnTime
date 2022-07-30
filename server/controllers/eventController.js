@@ -1,5 +1,6 @@
 import {clientError, serverError, success, successWithData} from "../util/http/httpResponse.js";
 import {Event} from '../models/eventModel.js'
+import {User} from '../models/userModel.js'
 import { eventImageService } from "../util/ImageService.js";
 import { validationResult } from 'express-validator';
 import mongoose from "mongoose";
@@ -210,7 +211,7 @@ const getSearchedEvents = async (req, res, next) => {
                     .filter(out => out.score <=0.35)
                     .map(out => {
                         return {
-                            id: out.item._id,
+                            id: out.item.id,
                             name: out.item.name,
                             eventImagePath: out.item.eventImagePath,
                             ImagePathArray: out.item.ImagePathArray,
