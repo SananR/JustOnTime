@@ -138,12 +138,16 @@ const getOrganizerEvents =  async (req, res, next) => {
                             id: out._id, 
                             name: out.eventInfo.name,
                             description: out.eventInfo.description,
+                            time: out.eventInfo.time,
+                            date: out.eventInfo.date,
                             address:{
+                                suiteNo: out.eventInfo.address.suitNo,
                                 street: out.eventInfo.address.street,
                                 city: out.eventInfo.address.city,
                                 country: out.eventInfo.address.country,
                                 postalCode: out.eventInfo.address.postalCode
                             },
+                            status: out.eventInfo.status,
                             eventImagePath: out.eventImagePath,
                             bidHistory: out.bidHistory
                         };
