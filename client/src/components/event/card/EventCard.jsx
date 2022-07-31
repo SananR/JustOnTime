@@ -70,8 +70,8 @@ function EventCard(props) {
                 </div>
             </div>
             <BidTimeTag timeRemaining={props.timeRemaining}/>
-            {(user !== null) && !starredState && <AiOutlineStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"white"} onClick={(e) => handleStar(e, props)}/>}
-            {(user !== null) && starredState && <AiFillStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"gold"} onClick={(e) => handleStar(e, props)}/>}
+            {(user !== null) && (user.userType == "Customer") &&  !starredState && <AiOutlineStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"white"} onClick={(e) => handleStar(e, props)}/>}
+            {(user !== null) &&  (user.userType == "Customer") && starredState && <AiFillStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"gold"} onClick={(e) => handleStar(e, props)}/>}
         </div>
     );
 }
