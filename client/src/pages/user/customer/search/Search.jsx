@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import { useSelector} from 'react-redux';
 import { loadSearchedEvents } from '../../../../services/event/eventService';
 import RenderSearchCards from '../../../../components/event/search/searchEventCard';
 import { useParams } from 'react-router-dom';
@@ -8,6 +9,7 @@ function Search(){
     const [events, setEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     var { searchTerm } = useParams();
+    const user = useSelector((state) => state.auth.user);
     console.log(events)
     useEffect( () => {
         const fetchEvents = async() => {
@@ -39,7 +41,8 @@ function Search(){
     
     return (<div className="grid container-fluid w-100 h-100">
         <Spinner color={"#ff6178"} loading={isLoading} size={75} />
-        {events.length !== 0 && createEventCards()}
+        {!user && <h1 className="text-center mt-5">The user is not logged in</h1>}
+        {user && createEventCards()}
         </div>);
 }
 

@@ -27,6 +27,7 @@ function CreateEventForm(props) {
                         className="col-sm-4"
                         onChange={props.onChange}
                         type="number"
+                        onwheel="this.blur()"
                         label="initialPrice"
                         errorMargin="90%"
                     />    
