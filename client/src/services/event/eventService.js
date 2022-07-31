@@ -41,6 +41,9 @@ export const loadSearchedEvents = async (searchTerm) => {
         });
         return data;
     }
+    else{
+        return {}
+    }
 }
 
 
