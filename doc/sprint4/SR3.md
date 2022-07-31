@@ -21,5 +21,4 @@ Only pull in enough tasks in the sprint that can be completed rather than going 
 What was your best/worst experience during sprint 3:
 
 Worst experience- there was some lack of communition due to which some tasks were not completed and there was a lot of clean up invloved
-Best experience- the user stories were written well so it was clear what you needed to implement, the UI looks very good and looks appealing to the eyes,
-whatever tickets were completed followed COS and can be marked of as complete.
+Best experience- the user stories were written well so it was clear what you needed to implement, the UI looks very good and looks appealing to the eyes, whatever tickets were completed followed COS and can be marked of as complete.
