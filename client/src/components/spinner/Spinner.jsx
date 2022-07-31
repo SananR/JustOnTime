@@ -9,7 +9,7 @@ function Spinner(props) {
     };
     if (!props.loading) return null;
     else return (
-        <div id="spinner-container" className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center">
+        <div id="spinner-container" className="position-fixed w-100 h-100 d-flex justify-content-center align-items-center">
             <DotLoader color={props.color} loading={props.loading} size={props.size} css={override} />
         </div>
     )

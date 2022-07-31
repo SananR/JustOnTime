@@ -16,12 +16,13 @@ import OrganizerMain from './pages/user/organizer/main/main.jsx'
 import Header from './components/header/Header'
 import { store } from './store.js'
 import {Provider} from 'react-redux'
-
+import Search from './pages/user/customer/search/Search'
 import 'bootstrap/dist/css/bootstrap.css'
 import './stylesheet.css'
 import AdminDashboard from './pages/admin/dashboard'
 import EventInfo from './pages/event/info/eventInfo'
 import OrganizerSignup from "./pages/user/organizer/register/OrganizerSignup";
+import CreateEvent from './pages/event/createEvent/createEvent'
 
 export default function App() {
   return (
@@ -67,7 +68,9 @@ export default function App() {
             <Route path="organizer">
                 <Route path="signup" element={<OrganizerSignup/>} />
                 <Route path="main" element={<OrganizerMain/>} />
+                <Route path="createEvent" element={<CreateEvent/>} />
             </Route>
+            <Route path="/:searchTerm" element={<Search/>}/>
         </Routes>
     </Router>
   </>

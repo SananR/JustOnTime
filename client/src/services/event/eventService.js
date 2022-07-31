@@ -23,6 +23,30 @@ export const loadEvents = async () => {
     }
 }
 
+//Get searched events
+export const loadSearchedEvents = async (searchTerm) => {
+    const response = await axios.get(API_URL + `event/search/?searchTerm=${searchTerm}`);
+    if (response.data) {
+        const data =  response.data.map((event) => {
+            return {
+                id: event.id,
+                title: event.name,
+                date: event.date,
+                time: event.time,
+                location: event.location,
+                currentBid: 0,
+                previousBid: 0,
+                timeRemaining: "00:00:00"
+            }
+        });
+        return data;
+    }
+    else{
+        return {}
+    }
+}
+
+
 //Possibly add organizer information(name)
 export const loadAnEvent = async (id) => {
     const response = await axios.get(API_URL + `event/getAnEvent?id=${id}`);
@@ -31,9 +55,12 @@ export const loadAnEvent = async (id) => {
         if (event.eventInfo.status != EventStatus.ONGOING){
             return false
         }
-        const maxBet = event.bidHistory.reduce((prev, curr) => {
-            return (prev.bidPrice > curr.bidPrice) ? prev : curr
-        })
+        if(event.bidHistory.length != 0){
+            const maxBet = event.bidHistory.reduce((prev, curr) => {
+                return (prev.bidPrice > curr.bidPrice) ? prev : curr
+            })
+        }
+        const allimages = [event.eventImagePath].concat(event.ImagePathArray);
         return {
             id: event._id,
             title: event.eventInfo.name,
@@ -45,8 +72,9 @@ export const loadAnEvent = async (id) => {
             bids: event.bidHistory,
             organizerId: event.organizerId,
             organizerName: event.organizerName,
-            currentBid: maxBet,
-            timeRemaining: "00:00:00"
+            currentBid: 1,
+            timeRemaining: "00:00:00",
+            images: allimages
         }
     }
 }
@@ -60,6 +88,24 @@ export const getEventImage = async(id) => {
     } catch (err) {
         console.error(err);
         return null;
+    }
+
+}
+
+export const addEvent = async (body) => {
+    const headers = {
+        'Content-Type': 'multipart/form-data'
+    }
+    try {
+        const response = await axios.post(API_URL + `event`, body, {
+            headers: headers,
+        });
+        console.log("success")
+        return {success: true}
+        
+    } catch (e){
+        console.error(e)
+        return {success: false, message: e.response.data.message}
     }
 
 }

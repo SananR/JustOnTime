@@ -1,10 +1,12 @@
 import {clientError, serverError, success, successWithData} from "../util/http/httpResponse.js";
 import {Event} from '../models/eventModel.js'
-import { User } from '../models/userModel.js'
+import {User} from '../models/userModel.js'
 import { eventImageService } from "../util/ImageService.js";
 import { validationResult } from 'express-validator';
 import mongoose from "mongoose";
 import path from "path";
+import console from "console";
+import Fuse from 'fuse.js'
 
 const getEventImage = async (req, res, next) => {
     if (!req.query.id) return clientError(res, "Must provide an event ID.");
@@ -21,16 +23,29 @@ const getEventImage = async (req, res, next) => {
 }
 
 const addEvent = async (req, res, next) => {
+   
     const errors = validationResult(req);
-    if (!req.file) {
+
+    if (!req.files) {
         return clientError(res, 'Invalid file provided.');
     }
+    const files = req.files;
+    const eventImagepath = req.files.mainImage[0].path;
+    const ImagePathArray = []
+    if(req.files.images != null){
+        req.files.images.forEach(image => {
+            ImagePathArray.push(image.path)
+        });
+    }
     if (!errors.isEmpty()) {
-        eventImageService.deleteImage(req.file.path);
+        eventImageService.deleteImage(eventImagepath);
+        if(ImagePathArray.length != 0){
+            ImagePathArray.forEach(path => {
+                eventImageService.deleteImage(path);
+            });
+        }
         return clientError(res, errors.array());
     }
-    const file = req.file;
-    const path = file.path;
 
     try{
         const event = new Event(
@@ -48,25 +63,30 @@ const addEvent = async (req, res, next) => {
                     }
                 },
                 tags: req.body.tags,
-                bidHistory: req.body.bidHistory,
+                bidHistory: [{"uid": req.user._id, "bidPrice": req.body.initialPrice}],
                 organizerId: req.user._id,
-                eventImagePath: path
+                eventImagePath: eventImagepath,
+                ImagePathArray: ImagePathArray
             }
         )
         await event.save();
         return success(res, "Event successfully created.", true);
     } catch(err) {
-        eventImageService.deleteImage(path);
+        eventImageService.deleteImage(eventImagepath);
+        if(ImagePathArray.length != 0){
+            ImagePathArray.forEach(path => {
+                eventImageService.deleteImage(path);
+            });
+        }
         if (err.message.includes("duplicate"))
             return clientError(res, "An event with similar information already exists.")
-        console.error(err);
         return serverError(res, "An error occurred, event could not be added")
     }
 }
 
 const getEvents = async (req, res, next) => {
     try{
-        Event.find({ 'eventInfo.status': 'Ongoing' })
+        Event.find({ 'eventInfo.status': 'ONGOING' })
             .exec()
             .then(output => {
                 const response = {
@@ -80,7 +100,8 @@ const getEvents = async (req, res, next) => {
                             date: out.eventInfo.date,
                             location: out.eventInfo.address.street,
                             eventImagePath: out.eventImagePath,
-                            bidHistory: out.bidHistory
+                            bidHistory: out.bidHistory,
+                            ImagePathArray: out.ImagePathArray
                         };
                     })
                 };
@@ -118,12 +139,16 @@ const getOrganizerEvents =  async (req, res, next) => {
                             id: out._id, 
                             name: out.eventInfo.name,
                             description: out.eventInfo.description,
+                            time: out.eventInfo.time,
+                            date: out.eventInfo.date,
                             address:{
+                                suiteNo: out.eventInfo.address.suitNo,
                                 street: out.eventInfo.address.street,
                                 city: out.eventInfo.address.city,
                                 country: out.eventInfo.address.country,
                                 postalCode: out.eventInfo.address.postalCode
                             },
+                            status: out.eventInfo.status,
                             eventImagePath: out.eventImagePath,
                             bidHistory: out.bidHistory
                         };
@@ -135,18 +160,93 @@ const getOrganizerEvents =  async (req, res, next) => {
         return clientError(res, "No events found");
     }
 }
-
+const getSearchedEvents = async (req, res, next) => {
+    try{
+        var searchTerm = req.query.searchTerm;
+        if(!req.query.searchTerm){
+            Event.find().limit(10).exec()
+            .then(output => {
+                const response = {
+                    count: output.length,
+                    events: output.map(out => {
+                        return {
+                            id: out._id,
+                            name: out.eventInfo.name,
+                            description: out.eventInfo.description,
+                            time: out.eventInfo.time,
+                            date: out.eventInfo.date,
+                            location: out.eventInfo.address.street,
+                            eventImagePath: out.eventImagePath,
+                            bidHistory: out.bidHistory,
+                            ImagePathArray: out.ImagePathArray
+                        };
+                    })
+                };
+            return res.status(200).json(response);
+            });
+        }
+        else{
+            const events = Event.find().exec()
+                .then(output => {
+                    const response = {
+                        count: output.length,
+                        events: output.map(out => {
+                            return {
+                                id: out._id,
+                                name: out.eventInfo.name,
+                                eventImagePath: out.eventImagePath,
+                                ImagePathArray: out.ImagePathArray,
+                                tags: out.tags,
+                                time: out.eventInfo.time,
+                                date: out.eventInfo.date,
+                                location: out.eventInfo.address.street,
+                            };
+                        })
+                    };
+                    const fuse = new Fuse(response.events, {
+                        includeScore: true,
+                        keys: [{name:'name', weight:2},'tags']
+                    });
+                    const result = fuse.search(searchTerm)
+                    .filter(out => out.score <=0.35)
+                    .map(out => {
+                        return {
+                            id: out.item.id,
+                            name: out.item.name,
+                            eventImagePath: out.item.eventImagePath,
+                            ImagePathArray: out.item.ImagePathArray,
+                            tags: out.item.tags,
+                            time: out.item.time,
+                            date: out.item.date,
+                            location: out.item.location,
+                        };
+                    })
+                        
+                    return res.status(200).json(result);
+                });
+        }
+    }catch (err) {
+        console.error(err);
+        return serverError(res, "An unexpected error occurred.");
+    }
+}
 const updateEvents = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        if (req.file){
-            eventImageService.deleteImage(req.file.path);
+        if (req.files){
+            eventImageService.deleteImage(eventImagepath);
+            if(req.files.images != null){
+                const ImagePathArray = req.files.images.path;
+                ImagePathArray.forEach(path => {
+                    eventImageService.deleteImage(path);
+                });
+            }
         }
         return clientError(res, errors.array());
     }
     Event.findOne({ _id: req.query.eventId}, (err, event) => {
         if (!event) {return clientError(res, "No such event exists ");}
-        else if (event.eventInfo.status == "Ongoing" || event.eventInfo.status == "Completed"){
+        else if (event.eventInfo.status == "ONGOING" || event.eventInfo.status == "COMPLETED"){
           return clientError(res, "event cannot be updated");
         }
         let deletepath = event.eventImagePath
@@ -203,4 +303,4 @@ const updateEvents = async (req, res, next) => {
         
       });
 }
-export {addEvent, getEvents, getAnEvent, getOrganizerEvents, updateEvents, getEventImage }
+export {addEvent, getEvents, getAnEvent, getOrganizerEvents, updateEvents, getEventImage, getSearchedEvents }

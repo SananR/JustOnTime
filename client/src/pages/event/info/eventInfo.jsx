@@ -11,7 +11,6 @@ import BidHistoryPanel from '../../../components/event/infopage/bidHistory';
 function EventInfo() {
 
     const [event, setEvent] = useState(true);
-    const [image, setImage] = useState("");
     const [bidAmount, setBidAmount] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -19,10 +18,6 @@ function EventInfo() {
 
     useEffect(() => {
         loadAnEvent(eventId).then(async response => {
-            console.log(response)
-            const eventImage = await getEventImage(eventId).then(response)
-            setImage(eventImage)
-            console.log(image)            
             setEvent(response)
         }).catch(err => {
             console.log(err)
@@ -60,9 +55,9 @@ function EventInfo() {
                         <p className='m-1 fst-italic'>{event.location.city + ", " + event.location.street}</p>
                     </div>
                     <div className="justify-content-between mt-3">
-                        <div id="thisrow?" className='row'>
+                        <div className='row'>
                             <div className='col-md-6 mb-5 pt-5'>
-                                <ImageSlider images={[image]}></ImageSlider> 
+                                <ImageSlider images={event.images}></ImageSlider> 
                                 <div className="h5 my-5" style={{color: "dodgerblue"}}>{event.tags.map(tag => {if (tag!=="") return "#" + tag + " " })}</div>
                                 <hr></hr>
                                 <div className="h5 my-5"><BiTime></BiTime> Locked in: <span style={{color: "red"}}>{event.timeRemaining}</span></div>   
@@ -79,12 +74,12 @@ function EventInfo() {
                                 <MakeBidForm minBid={event.currentBid+1} currBid={event.currentBid} bids={event.bids} 
                                 onSubmit={onPlaceBid} onChange={onChangeBid} loading={isLoading}></MakeBidForm>
                                 <div id="organizer-card" className='card my-5'>
-                                    <div class="card-body">
+                                    <div className="card-body">
                                         <div className='h5 m-3'>Sold by:  <a href="organizerPage" target="_blank" className='text-primary'>{event.organizerName}</a></div>
                                     </div>
                                 </div>
                                 <div id="eventinfo-card" className='card my-5'>
-                                    <div class="card-body">
+                                    <div className="card-body">
                                         <div className='h5 m-3'>{event.date} {event.time}</div>
                                         <div className='h5 m-3 fst-italic'>{event.location.city + ", " + event.location.street + ", " + 
                                         event.location.country + ", " + event.location.postalCode}</div>
