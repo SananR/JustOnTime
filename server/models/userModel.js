@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { userInfoSchema } from "./schemas/userInfo.schema.js";
-import { bidInfoSchema } from './schemas/event/bidInfo.schema.js';
+import { BidInfo } from './schemas/event/bidInfo.schema.js';
 import { organizerInfoSchema } from "./schemas/organizerInfo.schema.js";
 
 const userSchema = mongoose.Schema({
@@ -20,7 +20,7 @@ const userSchema = mongoose.Schema({
         default: false
     },
     bidHistory: {
-        type: [bidInfoSchema],
+        type: [BidInfo],
         required: false,
         trim: true,
         default:[]

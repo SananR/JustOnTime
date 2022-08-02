@@ -1,6 +1,5 @@
 import {validateAuctionAction, createResponse } from "../util/auction/AuctionValidator.js";
-import {ActionTypes} from "../util/auction/AuctionHandler.js";
-import {queueBid} from "../util/auction/AuctionHandler.js";
+import {ActionTypes, queueBid} from "../util/auction/AuctionHandler.js";
 
 const handleIncomingAuctionAction = async (data, socket) => {
     if (!await validateAuctionAction(data, socket)) {
@@ -15,7 +14,7 @@ const handleIncomingAuctionAction = async (data, socket) => {
 }
 
 const handleBidPlace = (data, socket) => {
-    const bid = data.data;
+    const bid = {...data.data, "timeStamp": data.timeStamp};
     if (queueBid(bid)) {
         socket.send(JSON.stringify(createResponse(201, {"message": "Bid has been successfully queued."})));
     } else {

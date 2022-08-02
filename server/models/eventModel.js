@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { eventInfoSchema } from './schemas/event/eventInfo.schema.js'
-import { bidInfoSchema } from './schemas/event/bidInfo.schema.js';
+import { BidInfo } from './schemas/event/bidInfo.schema.js';
 
 
 
@@ -14,7 +14,7 @@ const eventSchema = mongoose.Schema({
         required: false
     },
     bidHistory: {
-        type: [bidInfoSchema],
+        type: [BidInfo],
         required: false,
         trim: true
     },
