@@ -1,6 +1,8 @@
 import app from './app.js';
 import mongoose from 'mongoose';
 import WebSocket, {WebSocketServer} from "ws";
+import {handleIncomingAuctionAction} from "./controllers/auctionController.js";
+import {startAuctionHandler} from "./util/auction/AuctionHandler.js";
 import {validateAuctionAction} from "./util/auction/AuctionValidator.js";
 
 const port = process.env.PORT || 3000;
@@ -31,15 +33,15 @@ await mongoose.connect(uri)
     })
     //Handle socket connection to client and data exchange
     websocketServer.on("connection", function connection(ws) {
-        ws.on("message", (message) => {
+        ws.on("message", (data, isBinary) => {
             try {
-                if (validateAuctionAction(message))
-                    ws.send(JSON.stringify({message: "VALID AUCTION ACTION RECEIVED"}));
-                else
-                    ws.send(JSON.stringify({message: "INVALID AUCTION ACTION RECEIVED"}));
+                const action = isBinary ? data : data.toString();
+                handleIncomingAuctionAction(action, ws);
             }catch (err) {
                 ws.send(JSON.stringify({}))
             }
         })
     })
+    //Start up the AuctionHandler
+    startAuctionHandler(websocketServer, process.env.AUCTION_HANDLER_INTERVAL);
 });

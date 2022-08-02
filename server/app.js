@@ -47,4 +47,5 @@ app.use("/api/admin", adminRouter);
 app.use("/api/event", eventRouter);
 app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 
+
 export default app;
