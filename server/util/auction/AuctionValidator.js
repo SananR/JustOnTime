@@ -9,7 +9,7 @@ const validateAuctionAction = (action, socket) => {
         const parsed = JSON.parse(data);
         //Has common AuctionAction data
         if (!validateFields(parsed, ["action", "timeStamp", "data"], ["string", "number", "object"]) || !ActionTypes.hasOwnProperty(parsed.action)) {
-            socket.send(JSON.stringify(createResponse(404, {"message": "Invalid AuctionAction format provided."})));
+            socket.send(JSON.stringify(createResponse(400, {"message": "Invalid AuctionAction format provided."})));
             return false;
         }
         const action = parsed.action;
@@ -32,8 +32,9 @@ const validateBidPlaceAction = async (parsedAction, socket) => {
     const aid = parsedAction.data.aid;
     const bidAmount = parsedAction.data.bidAmount;
     const auction = await validateAuction(aid, socket);
+    if (!auction) return false;
     const user = await validateUser(uid, socket);
-    if (!auction || !user) return false;
+    if (!user) return false;
     const currentBid = auction.bidHistory[0].bidAmount;
     //Validate bid increment
     if (bidAmount - process.env.AUCTION_MIN_BID_INCREMENT < currentBid) {
@@ -53,13 +54,16 @@ const validateFields = (obj, fields, types) => {
 
 const validateAuction = async (aid, socket) => {
     try {
-        if (!mongoose.isValidObjectId(aid)) return false;
+        if (!mongoose.isValidObjectId(aid)) {
+            socket.send(JSON.stringify(createResponse(404, {"message": "Auction ID provided is not a valid ObjectID."})));
+            return false;
+        }
         const event = await Event.findById(aid);
         if (!event) {
             socket.send(JSON.stringify(createResponse(404, {"message": "No auction found with the associated ID."})));
             return false;
         } else if (event.eventInfo.status !== "Ongoing") {
-            socket.send(JSON.stringify(createResponse(404, {"message": "Provided Auction is not currently ongoing."})));
+            socket.send(JSON.stringify(createResponse(400, {"message": "Provided Auction is not currently ongoing."})));
             return false;
         }
         return event;
@@ -71,13 +75,16 @@ const validateAuction = async (aid, socket) => {
 }
 const validateUser = async (uid, socket) => {
     try {
-        if (!mongoose.isValidObjectId(uid)) return false
+        if (!mongoose.isValidObjectId(uid)) {
+            socket.send(JSON.stringify(createResponse(404, {"message": "User ID provided is not a valid ObjectID."})));
+            return false;
+        }
         const user = await User.findById(uid);
         if (!user) {
             socket.send(JSON.stringify(createResponse(404, {"message": "No user found with the associated ID."})));
             return false;
         } else if (!user.isVerified) {
-            socket.send(JSON.stringify(createResponse(404, {"message": "User must be verified in order to participate in Auctions."})));
+            socket.send(JSON.stringify(createResponse(400, {"message": "User must be verified in order to participate in Auctions."})));
             return false;
         }
         return user;

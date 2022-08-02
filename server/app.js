@@ -28,12 +28,13 @@ var sessionStore = new MongoDBStore(session)({
 sessionStore.on('error', function(error) {
     console.log(error);
   });
-app.use(session({
+const sessionParser = session({
     secret: process.env.SESSION_SECRET_KEY,
     store: sessionStore,
     resave: false,
     saveUninitialized: false
-}))
+})
+app.use(sessionParser)
 
 // configure passport
 configPassportStrategies(passport);
@@ -49,3 +50,4 @@ app.use("*", (req, res) => res.status(404).json({ error: "Not found" }));
 
 
 export default app;
+export {sessionParser}
