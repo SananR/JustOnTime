@@ -6,6 +6,7 @@ import UploadImage from '../../../components/event/createEvent/uploadImage';
 import CreateEventForm from '../../../components/forms/createEventForm/createEventForm';
 import './createEvent.css'
 import Alert from 'react-bootstrap/Alert';
+import { useSelector } from 'react-redux';
 
 import { InputValidator } from '../../../util/validation/InputValidator';
 
@@ -55,8 +56,11 @@ function CreateEvent() {
 
     const {name, description, initialPrice, tag, dateTime, street, city, country, postalCode} = formData;
 
-
+    const user = useSelector((state) => state.auth.user);
     useEffect(() => {
+        if(user && user.userType == "Customer"){
+            navigate("/")
+        }
     })
     const onChange = (e) => {
         setFormData((prevState) => ({
