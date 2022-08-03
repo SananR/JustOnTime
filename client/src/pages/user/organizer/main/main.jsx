@@ -12,9 +12,10 @@ function OrganizerMain() {
     const [revEvents, setRevEvents] = useState([]);
     const [compEvents, setCompEvents] = useState([]);
     const [pastEvents, setPastEvents] = useState([]);
-    const [count, setCount] = useState(0); 
+    const [count, setCount] = useState(-1); 
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true)
+    const user = useSelector((state) => state.auth.user);
     const userID = useSelector((state) => state.auth.user._id);
     
     const fetchEvents = async () => {
@@ -26,13 +27,13 @@ function OrganizerMain() {
             const comp = []; 
             const response = await axios.get('/api/event/organizerEvents?id=' + userID);
             for(let i=0; i < response.data.events.length; i++){
-                if(response.data.events[i].status === "ONGOING"){
+                if(response.data.events[i].status.toUpperCase() === "ONGOING"){
                     curr.push(response.data.events[i])
-                } else if(response.data.events[i].status === "COMPLETED"  ){
+                } else if(response.data.events[i].status.toUpperCase() === "COMPLETED"  ){
                     comp.push(response.data.events[i])
-                } else if(response.data.events[i].status === "NEEDS_RESUBMISSION"){
+                } else if(response.data.events[i].status.toUpperCase() === "NEEDS_RESUBMISSION"){
                     sub.push(response.data.events[i])
-                } else if(response.data.events[i].status === "UNDER_REVIEW" ){
+                } else if(response.data.events[i].status.toUpperCase() === "UNDER_REVIEW" ){
                     rev.push(response.data.events[i])
                 } else {
                     past.push(response.data.events[i])
@@ -56,8 +57,10 @@ function OrganizerMain() {
     useEffect(() => {
         if(currEvents.length > 0 || pastEvents.length > 0 || revEvents.length > 0 || subEvents.length > 0 || compEvents.length > 0  ){
             setLoading(false); 
+        } else if (count != -1) {
+            setLoading(false);
         }
-    }, [currEvents, pastEvents, revEvents, subEvents, compEvents])
+    }, [currEvents, pastEvents, revEvents, subEvents, compEvents, count])
 
 
     const createCurrEvents = (
@@ -251,9 +254,6 @@ function OrganizerMain() {
                     partialVisible={true}
                 >
                     {createPastEvents}
-                    {createPastEvents}
-                    {createPastEvents}
-                    {createPastEvents}
                 </Carousel>
             </div>}
 
@@ -284,15 +284,23 @@ function OrganizerMain() {
 
     const noEvents =  (
         <div>
-
-            <div className="row justify-content-center">
-                <div > You Currently have no Events</div>
+            <div className="top">
+                <h1 id="title"> My Events </h1>
+                <button id="createEvent" onClick={() => navigate("/organizer/createEvent")}>New Event</button>
             </div>
+                <p className="d-flex flex-column text-center justify-content-start mt-5 mb-5 position-relative container h-100 p-5"><strong> You have no events.</strong></p>
         </div>
-    ) 
+    )
+    
+    const pageDNE =  (
+        <div>
+             <p className="d-flex flex-column text-center justify-content-start mt-5 mb-5 position-relative shadow-lg container h-100 p-5"><strong> This page does not exist.</strong></p>
+        </div>
+    )
+
 
     return(
-        (loading) ? loadingscreen : (count> 0) ? eventsList : noEvents
+        (user.userType === "Customer") ? pageDNE : (loading) ? loadingscreen : (count> 0) ? eventsList : noEvents
     )
 
 }

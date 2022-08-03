@@ -10,7 +10,7 @@
     "framer-motion": "^6.4.2",
     "react": "^18.1.0",
     "react-bootstrap": "^2.4.0",
-    "react-datepicker": "4.8.0",
+    "react-datepicker": "^4.8.0",
     "react-dom": "^18.1.0",
     "react-edit-text": "^5.0.2",
     "react-editext": "^4.2.1",
