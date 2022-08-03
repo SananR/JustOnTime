@@ -1,4 +1,4 @@
-import React from "react";
+import {React, forwardRef} from "react";
 
 import EventCard from "../card/EventCard";
 import Carousel from "react-multi-carousel"
@@ -6,7 +6,7 @@ import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css";
 import "./eventslider.css"
 
-function EventSlider(props) {
+const EventSlider = forwardRef((props, ref) => {
 
     const responsive = {
         bigdesktop: {
@@ -49,7 +49,7 @@ function EventSlider(props) {
 
     function createEventCards() {
         return props.events.map(event => {
-            return <EventCard
+            return <EventCard ref={ref}
                 key={event.id.toString()}
                 id={event.id}
                 title={event.title}
@@ -79,6 +79,6 @@ function EventSlider(props) {
             {createEventCards()}
         </Carousel>
     )
-}
+})
 
 export default EventSlider

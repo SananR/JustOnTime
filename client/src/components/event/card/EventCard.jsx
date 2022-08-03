@@ -1,13 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, forwardRef} from "react";
+import { useSelector, useDispatch } from 'react-redux';
 
 import {AiOutlineStar, AiFillStar} from "react-icons/ai";
 
 import "./eventcard.css"
-import { useSelector, useDispatch } from 'react-redux';
+
 import { getEventImage } from "../../../services/event/eventService";
 import { updateUser } from '../../../services/auth/authSlice.js';
 
-function EventCard(props) {
+const EventCard = forwardRef((props, ref) => {
 
     const [image, setImage] = useState("");
     const [url, setUrl] = useState();
@@ -24,7 +25,7 @@ function EventCard(props) {
         }
         fetchImage().catch(console.error);
         setUrl({ backgroundImage: `url(${URL.createObjectURL(new Blob([image], {type:"image/jpeg"}))})` });
-    }, [done, props.id]);
+    }, [done, image, props.id]);
 
     useEffect( () => {
         if (user !== null) {
@@ -47,12 +48,16 @@ function EventCard(props) {
                 eventsList.push(eventId);
             dispatch(updateUser({"update": {"starredEvents": eventsList}, "id": userId}));
             
-            // when the event card's star button is clicked, the following code immediately shows the updated star image
-            // for the current event card while the other event cards corresponding to the same event are being updated
-            if (eventsList.includes(eventId))
+            // when the event card's star button is clicked, the following code immediately shows the updated star image along with a conditional
+            // particle animation for the current event card while the other event cards corresponding to the same event are being updated
+            if (eventsList.includes(eventId)) {
                 setStarredState(true);
-            else
+                ref.current.plugins.get("emitters").array[0].play()
+            }
+            else {
                 setStarredState(false);
+                ref.current.plugins.get("emitters").array[0].pause()
+            }
         } catch (e) {
             console.log(e);
         }
@@ -70,11 +75,11 @@ function EventCard(props) {
                 </div>
             </div>
             <BidTimeTag timeRemaining={props.timeRemaining}/>
-            {(user !== null) && (user.userType == "Customer") &&  !starredState && <AiOutlineStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"white"} onClick={(e) => handleStar(e, props)}/>}
-            {(user !== null) &&  (user.userType == "Customer") && starredState && <AiFillStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"gold"} onClick={(e) => handleStar(e, props)}/>}
+            {(user !== null) && (user.userType == "Customer") &&  !starredState && <AiOutlineStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"white"} onClick={(e) => {e.stopPropagation(); handleStar(e, props)}}/>}
+            {(user !== null) &&  (user.userType == "Customer") && starredState && <AiFillStar className="event-card-star position-absolute end-0 top-0 me-2 mt-2" size={40} color={"gold"} onClick={(e) => {e.stopPropagation(); handleStar(e, props)}}/>}
         </div>
     );
-}
+})
 
 function BidTimeTag(props) {
     return (
