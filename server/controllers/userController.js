@@ -45,8 +45,10 @@ const loginUser = async (req, res, next) => {
 
 const logoutUser = async (req, res, next) => {
     try {
-        req.logout();
-        return success(res, "", false);
+        req.logout(function(err) {
+          if (err) { return next(err); }
+          return successWithData(res, "", false);
+      });
     } catch (err) {
         console.error(err);
     }

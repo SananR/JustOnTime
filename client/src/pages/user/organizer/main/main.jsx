@@ -91,7 +91,6 @@ function OrganizerMain() {
             location={event.address.suiteNo, event.address.street}
             currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidPrice : "--" }
             previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidPrice : "--"}
-            url={"/event/" + event.id}
             timeRemaining= {"——:——"}
             />
         )
@@ -108,7 +107,6 @@ function OrganizerMain() {
             location={event.address.suiteNo, event.address.street}
             currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidPrice : "--" }
             previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidPrice : "--"}
-            url={"/event/" + event.id}
             timeRemaining= {"——:——"}
             />
         )
@@ -143,7 +141,6 @@ function OrganizerMain() {
             location={event.address.suiteNo, event.address.street}
             currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidPrice : "--" }
             previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidPrice : "--"}
-            url={"/event/" + event.id}
             timeRemaining= {"00:00"}
             />
         )
