@@ -19,11 +19,10 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    bidHistory: {
-        type: [BidInfo],
-        required: false,
-        trim: true,
-        default:[]
+    starredEvents: {
+        type: [{type: String}],
+        required: true,
+        default: []
     }
 }, {
     timestamps: true,

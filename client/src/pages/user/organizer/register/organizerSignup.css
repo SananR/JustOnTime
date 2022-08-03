@@ -1,0 +1,16 @@
+#signup-container {
+    background: #ffffff;
+    color: #465362;
+    min-height: 450px;
+    min-width: 1100px;
+    border-radius: 20px;
+}
+
+.progress-item-filled {
+    color: red;
+    opacity: 0.8;
+}
+
+.progress-heading {
+    font-size: 1.3em;
+}

@@ -1,0 +1,13 @@
+.carousel-container {
+    border: hidden;
+    height: 500px;
+}
+
+.event-image {
+    object-fit: contain;
+    margin-left:auto;
+    margin-right:auto;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 5%;
+}

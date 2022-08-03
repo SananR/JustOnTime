@@ -7,7 +7,7 @@
     flex-grow: 1;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
-    background-image: url('../../bg.jpg');
+    background: url('../../bg.jpg') 0 0 repeat;
     background-size: 700%;
 }
 
