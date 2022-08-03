@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-
+import { useSelector} from 'react-redux';
 import cardBackground from "../../../../card-bg.jpg"
 import cardBackground2 from "../../../../card-bg2.jpg"
 import cardBackground3 from "../../../../card-bg3.jpg"
@@ -8,12 +8,17 @@ import "./customerhome.css"
 import EventSlider from "../../../../components/event/slider/EventSlider";
 import TopEventCarousel from "../../../../components/event/topcarousel/TopEventCarousel";
 import { loadEvents } from "../../../../services/event/eventService";
+import {useNavigate} from "react-router-dom";
 
 function CustomerHome() {
 
     const [events, setEvents] = useState([]);
-
+    const user = useSelector((state) => state.auth.user);
+    const navigate = useNavigate();
     useEffect( () => {
+        if(user && user.userType == "Organizer"){
+            navigate("/organizer/main")
+        }
         const fetchEvents = async() => {
             const events = await loadEvents();
             setEvents(() => (events));

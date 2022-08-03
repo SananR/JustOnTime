@@ -62,6 +62,7 @@ function EventSlider(props) {
                 timeRemaining={event.timeRemaining}
                 className="col-sm-4"
                 eventIcon={event.icon}
+                url={"/event/" + event.id}
             />
         })
     }
