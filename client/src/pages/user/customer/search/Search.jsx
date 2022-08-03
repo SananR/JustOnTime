@@ -7,10 +7,14 @@ function Search(){
     const [events, setEvents] = useState([]);
     var { searchTerm } = useParams();
     console.log(events)
+    const [flag, setFlag] = useState(false);
     useEffect( () => {
         const fetchEvents = async() => {
             const events = await loadSearchedEvents(searchTerm);
             setEvents(() => (events));
+            if(events.length == 0){
+                setFlag(true)
+            }
         }
         fetchEvents().catch(console.error);
     }, []);
@@ -32,10 +36,11 @@ function Search(){
             />
         })
     }
-    
+  
     return (<div className="grid container-fluid w-100 h-100">
-        {events.length === 0 && <h1 className="text-center mt-5">No such events found</h1>}
-        {events.length !== 0 && createEventCards()}
+        <Spinner color={"#ff6178"} loading={isLoading} size={75} />
+        {!flag && user && createEventCards()}
+        {flag &&  <h1 className="text-center mt-5">There are no such events</h1>}
         </div>);
 }
 
