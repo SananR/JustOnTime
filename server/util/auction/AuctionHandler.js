@@ -1,5 +1,6 @@
 import {WebSocket} from "ws";
 import {Event} from "../../models/eventModel.js";
+import {wss} from "../../websocket.js";
 
 export const ActionTypes = Object.freeze({
     "BID_PLACE": "BID_PLACE",
@@ -7,13 +8,11 @@ export const ActionTypes = Object.freeze({
 })
 const bidQueue = [];
 let interval = null;
-let wss = null;
 
 //Starts the AuctionHandler interval
-function startAuctionHandler(websocketServer, interval) {
+function startAuctionHandler(interval) {
     console.log("Starting AuctionHandler...");
     interval = setInterval(handleNextBid, interval);
-    wss = websocketServer;
 }
 
 //Stops the AuctionHandler and performs any necessary cleanup

@@ -35,6 +35,7 @@ wss.on("connection", (ws, req, param) => {
 });
 
 function init(server) {
+    console.log("Initializing WebSocket server...")
     //Handle upgrade request from client
     server.on("upgrade", (request, socket, head) => {
         console.log("Attempting connection for client " + request.socket.remoteAddress);

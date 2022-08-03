@@ -5,8 +5,14 @@ import {User} from "../../models/userModel.js";
 
 const validateAuctionAction = (action, socket) => {
     const data = action || "";
+    let parsed;
     try {
-        const parsed = JSON.parse(data);
+        parsed = JSON.parse(data);
+    } catch (err) {
+        socket.send(JSON.stringify(createResponse(400, {"message": "Invalid AuctionAction format provided."})));
+        return false;
+    }
+    try {
         //Has common AuctionAction data
         if (!validateFields(parsed, ["action", "timeStamp", "data"], ["string", "number", "object"]) || !ActionTypes.hasOwnProperty(parsed.action)) {
             socket.send(JSON.stringify(createResponse(400, {"message": "Invalid AuctionAction format provided."})));
@@ -35,7 +41,12 @@ const validateBidPlaceAction = async (parsedAction, socket) => {
     if (!auction) return false;
     const user = await validateUser(uid, socket);
     if (!user) return false;
-    const currentBid = auction.bidHistory[0].bidAmount;
+    const currentBid = auction.bidHistory.length > 0 ? auction.bidHistory[auction.bidHistory.length - 1].bidAmount : 0;
+    //Validate user to make sure the provided uid matches the authenticated user
+    if (uid !== socket.userId) {
+        socket.send(JSON.stringify(createResponse(403, {"message": "Forbidden: Authenticated user does not match provided user ID."})));
+        return false;
+    }
     //Validate bid increment
     if (bidAmount - process.env.AUCTION_MIN_BID_INCREMENT < currentBid) {
         socket.send(JSON.stringify(createResponse(400, {"message": "Provided bidAmount must be higher."})));
