@@ -62,7 +62,7 @@ const addEvent = async (req, res, next) => {
                     }
                 },
                 tags: req.body.tags,
-                bidHistory: [{"uid": req.user._id, "bidPrice": req.body.initialPrice}],
+                bidHistory: [{"uid": req.user._id, "bidAmount": req.body.initialPrice}],
                 organizerId: req.user._id,
                 eventImagePath: eventImagepath,
                 ImagePathArray: ImagePathArray
@@ -128,7 +128,7 @@ const getAnEvent = async (req, res, next) => {
 
 const getOrganizerEvents =  async (req, res, next) => {
     try{
-        Event.find({ 'organizerId': req.query.id })
+        Event.find({ organizerId: req.query.id })
             .exec()
             .then(output => {
                 const response = {
@@ -163,7 +163,7 @@ const getSearchedEvents = async (req, res, next) => {
     try{
         var searchTerm = req.query.searchTerm;
         if(!req.query.searchTerm){
-            Event.find().limit(10).exec()
+            Event.find({ 'eventInfo.status': 'ONGOING' }).limit(10).exec()
             .then(output => {
                 const response = {
                     count: output.length,
@@ -185,7 +185,7 @@ const getSearchedEvents = async (req, res, next) => {
             });
         }
         else{
-            const events = Event.find().exec()
+            const events = Event.find({ 'eventInfo.status': 'ONGOING' }).exec()
                 .then(output => {
                     const response = {
                         count: output.length,
@@ -294,7 +294,7 @@ const updateEvents = async (req, res, next) => {
                 },
                 tags: req.body.tags
             }
-            Event.updateOne(update, (err, user) => { 
+            Event.updateOne({_id:event._id},update, (err, user) => { 
                 if (err) {return serverError(res, "event couldn't be updated");}
                 return success(res, "event successfully updated", false);
             }); 
@@ -302,4 +302,5 @@ const updateEvents = async (req, res, next) => {
         
       });
 }
+
 export {addEvent, getEvents, getAnEvent, getOrganizerEvents, updateEvents, getEventImage, getSearchedEvents }

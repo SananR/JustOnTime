@@ -6,6 +6,7 @@ import UploadImage from '../../../components/event/createEvent/uploadImage';
 import CreateEventForm from '../../../components/forms/createEventForm/createEventForm';
 import './createEvent.css'
 import Alert from 'react-bootstrap/Alert';
+import { useSelector } from 'react-redux';
 
 import { InputValidator } from '../../../util/validation/InputValidator';
 
@@ -55,8 +56,11 @@ function CreateEvent() {
 
     const {name, description, initialPrice, tag, dateTime, street, city, country, postalCode} = formData;
 
-
+    const user = useSelector((state) => state.auth.user);
     useEffect(() => {
+        if(user && user.userType == "Customer"){
+            navigate("/")
+        }
     })
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -104,6 +108,7 @@ function CreateEvent() {
             const dd = String(dateTime.getDate())
             const mm = String(dateTime.getMonth() + 1) 
             const yyyy = dateTime.getFullYear();
+            const imagesBody = {}
             const date = yyyy + "/" + mm + "/" + dd;  
 
             const hours = String(dateTime.getHours()).padStart(2, "0") 
@@ -111,9 +116,11 @@ function CreateEvent() {
             const time = hours + ":" + minutes
             const mainImage = eventImages[0]
             const otherImages = eventImages.slice(1)
-            const imagesBody = otherImages.reduce((prev, curr, {}) => {
-                return {...prev, images: curr }
-            })
+            if(otherImages.length != 0){
+                imagesBody = otherImages.reduce((prev, curr, {}) => {
+                    return {...prev, images: curr }
+                })
+            }
             console.log(imagesBody)
             const body = {    
                 name: name,

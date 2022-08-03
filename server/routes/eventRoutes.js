@@ -1,5 +1,6 @@
 import express from 'express';
 
+
 import { addEvent, getEvents, getAnEvent, getOrganizerEvents, updateEvents, getEventImage, getSearchedEvents } from '../controllers/eventController.js';
 import { eventImageService } from '../util/ImageService.js';
 import { checkAuthentication} from '../util/passport/authentication.js';
@@ -13,5 +14,5 @@ eventRouter.route("/getImage").get(getEventImage);
 eventRouter.route("/getAnEvent").get(getAnEvent);
 eventRouter.route("/organizerEvents").get( checkAuthentication([]),getOrganizerEvents);
 eventRouter.route("/updateEvent").post(checkAuthentication(['Organizer']), eventImageService.uploadImage, validateEventCreationSchema, updateEvents);
-eventRouter.route("/search").get(checkAuthentication(['Customer']), getSearchedEvents)
+eventRouter.route("/search").get(getSearchedEvents)
 export { eventRouter }
