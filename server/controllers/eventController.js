@@ -63,7 +63,7 @@ const addEvent = async (req, res, next) => {
                     }
                 },
                 tags: req.body.tags,
-                bidHistory: [{"uid": req.user._id, "bidPrice": req.body.initialPrice}],
+                bidHistory: [{"uid": req.user._id, "bidAmount": req.body.initialPrice}],
                 organizerId: req.user._id,
                 eventImagePath: eventImagepath,
                 ImagePathArray: ImagePathArray
