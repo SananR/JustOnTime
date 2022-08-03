@@ -129,7 +129,7 @@ const getAnEvent = async (req, res, next) => {
 
 const getOrganizerEvents =  async (req, res, next) => {
     try{
-        Event.find({ 'organizerId': req.query.id })
+        Event.find({ organizerId: req.query.id })
             .exec()
             .then(output => {
                 const response = {
@@ -295,7 +295,7 @@ const updateEvents = async (req, res, next) => {
                 },
                 tags: req.body.tags
             }
-            Event.updateOne(update, (err, user) => { 
+            Event.updateOne({_id:event._id},update, (err, user) => { 
                 if (err) {return serverError(res, "event couldn't be updated");}
                 return success(res, "event successfully updated", false);
             }); 
@@ -303,4 +303,5 @@ const updateEvents = async (req, res, next) => {
         
       });
 }
+
 export {addEvent, getEvents, getAnEvent, getOrganizerEvents, updateEvents, getEventImage, getSearchedEvents }

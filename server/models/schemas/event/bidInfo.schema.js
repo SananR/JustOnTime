@@ -6,15 +6,15 @@ const bidInfoSchema = mongoose.Schema({
         type: ObjectId,
         required: true
     },
-    bidPrice: {
+    bidAmount: {
         type: Number,
         required: true
     },
-    date: {
-        type: Date,
+    timeStamp: {
+        type: Number,
         default: Date.now()
     }
 });
 
 
-export { bidInfoSchema }
+export { bidInfoSchema as BidInfo }

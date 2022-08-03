@@ -1,5 +1,6 @@
 import express from 'express';
 
+
 import { addEvent, getEvents, getAnEvent, getOrganizerEvents, updateEvents, getEventImage, getSearchedEvents } from '../controllers/eventController.js';
 import { eventImageService } from '../util/ImageService.js';
 import { checkAuthentication} from '../util/passport/authentication.js';

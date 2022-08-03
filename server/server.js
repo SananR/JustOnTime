@@ -1,7 +1,7 @@
 import app from './app.js';
 import mongoose from 'mongoose';
-import { User } from './models/userModel.js';
-import { Event } from './models/eventModel.js';
+import {startAuctionHandler} from "./util/auction/AuctionHandler.js";
+import init, {wss} from "./websocket.js";
 
 const port = process.env.PORT || 3000;
 const uri = process.env.JUSTONTIME_DB_URI_LOCAL; //process.env.JUSTONTIME_DB_URI (use this on production)
@@ -12,13 +12,12 @@ await mongoose.connect(uri)
     process.exit(1)
 })
 .then(async client => {
-    // await EventOrganizer.db.dropDatabase();
-    // await mongoose.connection.db.dropDatabase();
-    //await EventOrganizer.deleteOne({email: "youomachi@gmail.com"});
-    //  User.remove({}, () => {console.log("deleted user")})
-    // await VerificationToken.deleteMany();
     console.log('connected to mongoDB '+uri);
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
         console.log('listening on port '+port)
     })
+    //Initialize websocket server
+    init(server);
+    //Start up the AuctionHandler
+    startAuctionHandler(wss, process.env.AUCTION_HANDLER_INTERVAL);
 });
