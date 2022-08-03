@@ -104,6 +104,7 @@ function CreateEvent() {
             const dd = String(dateTime.getDate())
             const mm = String(dateTime.getMonth() + 1) 
             const yyyy = dateTime.getFullYear();
+            const imagesBody = {}
             const date = yyyy + "/" + mm + "/" + dd;  
 
             const hours = String(dateTime.getHours()).padStart(2, "0") 
@@ -111,9 +112,11 @@ function CreateEvent() {
             const time = hours + ":" + minutes
             const mainImage = eventImages[0]
             const otherImages = eventImages.slice(1)
-            const imagesBody = otherImages.reduce((prev, curr, {}) => {
-                return {...prev, images: curr }
-            })
+            if(otherImages.length != 0){
+                imagesBody = otherImages.reduce((prev, curr, {}) => {
+                    return {...prev, images: curr }
+                })
+            }
             console.log(imagesBody)
             const body = {    
                 name: name,
