@@ -164,7 +164,7 @@ const getSearchedEvents = async (req, res, next) => {
     try{
         var searchTerm = req.query.searchTerm;
         if(!req.query.searchTerm){
-            Event.find().limit(10).exec()
+            Event.find({ 'eventInfo.status': 'ONGOING' }).limit(10).exec()
             .then(output => {
                 const response = {
                     count: output.length,
@@ -186,7 +186,7 @@ const getSearchedEvents = async (req, res, next) => {
             });
         }
         else{
-            const events = Event.find().exec()
+            const events = Event.find({ 'eventInfo.status': 'ONGOING' }).exec()
                 .then(output => {
                     const response = {
                         count: output.length,

@@ -14,5 +14,5 @@ eventRouter.route("/getImage").get(getEventImage);
 eventRouter.route("/getAnEvent").get(getAnEvent);
 eventRouter.route("/organizerEvents").get( checkAuthentication([]),getOrganizerEvents);
 eventRouter.route("/updateEvent").post(checkAuthentication(['Organizer']), eventImageService.uploadImage, validateEventCreationSchema, updateEvents);
-eventRouter.route("/search").get(checkAuthentication(['Customer']), getSearchedEvents)
+eventRouter.route("/search").get(getSearchedEvents)
 export { eventRouter }
