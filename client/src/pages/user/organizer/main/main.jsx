@@ -15,6 +15,7 @@ function OrganizerMain() {
     const [count, setCount] = useState(0); 
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true)
+    const user = useSelector((state) => state.auth.user);
     const userID = useSelector((state) => state.auth.user._id);
     
     const fetchEvents = async () => {
@@ -26,13 +27,13 @@ function OrganizerMain() {
             const comp = []; 
             const response = await axios.get('/api/event/organizerEvents?id=' + userID);
             for(let i=0; i < response.data.events.length; i++){
-                if(response.data.events[i].status === "ONGOING"){
+                if(response.data.events[i].status.toUpperCase() === "ONGOING"){
                     curr.push(response.data.events[i])
-                } else if(response.data.events[i].status === "COMPLETED"  ){
+                } else if(response.data.events[i].status.toUpperCase() === "COMPLETED"  ){
                     comp.push(response.data.events[i])
-                } else if(response.data.events[i].status === "NEEDS_RESUBMISSION"){
+                } else if(response.data.events[i].status.toUpperCase() === "NEEDS_RESUBMISSION"){
                     sub.push(response.data.events[i])
-                } else if(response.data.events[i].status === "UNDER_REVIEW" ){
+                } else if(response.data.events[i].status.toUpperCase() === "UNDER_REVIEW" ){
                     rev.push(response.data.events[i])
                 } else {
                     past.push(response.data.events[i])
@@ -251,9 +252,6 @@ function OrganizerMain() {
                     partialVisible={true}
                 >
                     {createPastEvents}
-                    {createPastEvents}
-                    {createPastEvents}
-                    {createPastEvents}
                 </Carousel>
             </div>}
 
@@ -289,10 +287,17 @@ function OrganizerMain() {
                 <div > You Currently have no Events</div>
             </div>
         </div>
-    ) 
+    )
+    
+    const pageDNE =  (
+        <div>
+             <p className="d-flex flex-column text-center justify-content-start mt-5 mb-5 position-relative shadow-lg container h-100 p-5"><strong> This page does not exist.</strong></p>
+        </div>
+    )
+
 
     return(
-        (loading) ? loadingscreen : (count> 0) ? eventsList : noEvents
+        (user.userType === "Customer") ? pageDNE : (loading) ? loadingscreen : (count> 0) ? eventsList : noEvents
     )
 
 }
