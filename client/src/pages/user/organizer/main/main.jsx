@@ -12,7 +12,7 @@ function OrganizerMain() {
     const [revEvents, setRevEvents] = useState([]);
     const [compEvents, setCompEvents] = useState([]);
     const [pastEvents, setPastEvents] = useState([]);
-    const [count, setCount] = useState(0); 
+    const [count, setCount] = useState(-1); 
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true)
     const user = useSelector((state) => state.auth.user);
@@ -57,8 +57,10 @@ function OrganizerMain() {
     useEffect(() => {
         if(currEvents.length > 0 || pastEvents.length > 0 || revEvents.length > 0 || subEvents.length > 0 || compEvents.length > 0  ){
             setLoading(false); 
+        } else if (count != -1) {
+            setLoading(false);
         }
-    }, [currEvents, pastEvents, revEvents, subEvents, compEvents])
+    }, [currEvents, pastEvents, revEvents, subEvents, compEvents, count])
 
 
     const createCurrEvents = (
@@ -282,10 +284,11 @@ function OrganizerMain() {
 
     const noEvents =  (
         <div>
-
-            <div className="row justify-content-center">
-                <div > You Currently have no Events</div>
+            <div className="top">
+                <h1 id="title"> My Events </h1>
+                <button id="createEvent" onClick={() => navigate("/organizer/createEvent")}>New Event</button>
             </div>
+                <p className="d-flex flex-column text-center justify-content-start mt-5 mb-5 position-relative container h-100 p-5"><strong> You have no events.</strong></p>
         </div>
     )
     
