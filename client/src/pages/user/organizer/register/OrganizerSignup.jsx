@@ -84,6 +84,10 @@ function OrganizerSignup(props) {
         //Unverified organizer
         else if (user.userType === "Organizer" && user.organizer.info.verificationStatus === "VERIFICATION_IN_PROGRESS")
             setFormStep(() => 3);
+        //Verified organizer
+        else if (user.userType === "Organizer" && user.organizer.info.verificationStatus === "VERIFIED") {
+            navigate("/organizer/main");
+        }
     }, [])
 
     const onSubmit = (e) => {

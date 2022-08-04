@@ -14,9 +14,8 @@ export const loadEvents = async () => {
                 date: event.date,
                 time: event.time,
                 location: event.location,
-                currentBid: 0,
-                previousBid: 0,
-                timeRemaining: "00:00:00"
+                bidHistory: event.bidHistory,
+                auctionEnd: event.auctionEnd
             }
         });
         return data;
@@ -34,14 +33,13 @@ export const loadSearchedEvents = async (searchTerm) => {
                 date: event.date,
                 time: event.time,
                 location: event.location,
-                currentBid: 0,
-                previousBid: 0,
-                timeRemaining: "00:00:00"
+                bidHistory: event.bidHistory,
+                auctionEnd: event.auctionEnd
             }
         });
         return data;
     }
-    else{
+    else {
         return {}
     }
 }
@@ -52,14 +50,14 @@ export const loadAnEvent = async (id) => {
     const response = await axios.get(API_URL + `event/getAnEvent?id=${id}`);
     if (response.data) {
         const event = response.data
-        if (event.eventInfo.status != EventStatus.ONGOING){
+        if (event.eventInfo.status !== EventStatus.ONGOING){
             return false
         }
-        if(event.bidHistory.length != 0){
+        /*if(event.bidHistory.length !== 0){
             const maxBet = event.bidHistory.reduce((prev, curr) => {
                 return (prev.bidPrice > curr.bidPrice) ? prev : curr
             })
-        }
+        }*/
         const allimages = [event.eventImagePath].concat(event.ImagePathArray);
         return {
             id: event._id,
@@ -69,11 +67,10 @@ export const loadAnEvent = async (id) => {
             time: event.eventInfo.time,
             location: event.eventInfo.address,
             tags: event.tags,
-            bids: event.bidHistory,
+            bidHistory: event.bidHistory,
             organizerId: event.organizerId,
             organizerName: event.organizerName,
-            currentBid: 1,
-            timeRemaining: "00:00:00",
+            auctionEnd: event.eventInfo.auctionEnd,
             images: allimages
         }
     }

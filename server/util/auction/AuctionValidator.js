@@ -73,7 +73,7 @@ const validateAuction = async (aid, socket) => {
         if (!event) {
             socket.send(JSON.stringify(createResponse(404, {"message": "No auction found with the associated ID."})));
             return false;
-        } else if (event.eventInfo.status !== "Ongoing") {
+        } else if (event.eventInfo.status !== "ONGOING") {
             socket.send(JSON.stringify(createResponse(400, {"message": "Provided Auction is not currently ongoing."})));
             return false;
         }

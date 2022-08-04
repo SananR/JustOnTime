@@ -69,11 +69,12 @@ function OrganizerMain() {
             key={event.id.toString()}
             id={event.id}
             title={event.name}
-            date={event.date}
+            date={"2022-08-10"}
             time={event.time}
             location={event.address.suiteNo, event.address.street}
-            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidPrice : "--" }
-            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidPrice : "--"}
+            bidHistory = {event.bidHistory}
+            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
+            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
             url={"/event/" + event.id}
             timeRemaining={"12:00"}
             />
@@ -86,12 +87,12 @@ function OrganizerMain() {
             key={event.id.toString()}
             id={event.id}
             title={event.name}
-            date={event.date}
+            date={"2022-08-10"}
             time={event.time}
+            bidHistory = {event.bidHistory}
             location={event.address.suiteNo, event.address.street}
-            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidPrice : "--" }
-            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidPrice : "--"}
-            url={"/event/" + event.id}
+            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
+            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
             timeRemaining= {"——:——"}
             />
         )
@@ -103,12 +104,12 @@ function OrganizerMain() {
             key={event.id.toString()}
             id={event.id}
             title={event.name}
-            date={event.date}
+            date={"2022-08-10"}
             time={event.time}
+            bidHistory = {event.bidHistory}
             location={event.address.suiteNo, event.address.street}
-            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidPrice : "--" }
-            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidPrice : "--"}
-            url={"/event/" + event.id}
+            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
+            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
             timeRemaining= {"——:——"}
             />
         )
@@ -121,11 +122,12 @@ function OrganizerMain() {
             key={event.id.toString()}
             id={event.id}
             title={event.name}
-            date={event.date}
+            date={"2022-08-10"}
             time={event.time}
+            bidHistory = {event.bidHistory}
             location={event.address.suiteNo, event.address.street}
-            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidPrice : "--" }
-            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidPrice : "--"}
+            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
+            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
             url={"/event/" + event.id}
             timeRemaining= {"——:——"}
             />
@@ -138,12 +140,12 @@ function OrganizerMain() {
             key={event.id.toString()}
             id={event.id}
             title={event.name}
-            date={event.date}
+            date={"2022-08-10"}
             time={event.time}
+            bidHistory = {event.bidHistory}
             location={event.address.suiteNo, event.address.street}
-            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidPrice : "--" }
-            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidPrice : "--"}
-            url={"/event/" + event.id}
+            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
+            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
             timeRemaining= {"00:00"}
             />
         )
@@ -197,7 +199,7 @@ function OrganizerMain() {
                 <button id="createEvent" onClick={() => navigate("/organizer/createEvent")}>New Event</button>
             </div>
            
-           {setCurrEvents.length > 0 && <div className="list">
+           {currEvents.length > 0 && <div className="list">
                  <h3 id="title"> Current Events </h3>
                  <Carousel
                     swipeable={true}

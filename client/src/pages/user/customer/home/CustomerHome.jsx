@@ -1,4 +1,5 @@
 import React, {useEffect, useState, useRef} from "react";
+import { useSelector} from 'react-redux';
 import { Particles } from "react-tsparticles";
 import { loadFull } from "tsparticles";
 
@@ -12,12 +13,15 @@ import "./customerhome.css";
 import EventSlider from "../../../../components/event/slider/EventSlider";
 import TopEventCarousel from "../../../../components/event/topcarousel/TopEventCarousel";
 import { loadEvents } from "../../../../services/event/eventService";
+import {useNavigate} from "react-router-dom";
 
 function CustomerHome() {
 
     const [events, setEvents] = useState([]);
-    const container = useRef(null);
+    const user = useSelector((state) => state.auth.user);
     const fullDiv = useRef(null);
+    const container = useRef(null);
+    const navigate = useNavigate();
 
     const particlesInit = async (main) => {
         console.log(main);
@@ -145,7 +149,10 @@ function CustomerHome() {
         }
     } />);
 
-    useEffect( () => {
+    useEffect( () => {/*
+        if(user && user.userType === "Organizer"){
+            navigate("/organizer/main")
+        }*/
         const fetchEvents = async() => {
             const events = await loadEvents();
             setEvents(() => (events));

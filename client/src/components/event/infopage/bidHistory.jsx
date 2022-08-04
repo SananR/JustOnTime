@@ -1,17 +1,13 @@
-import React from "react";
-
-import Carousel from "react-multi-carousel"
+import React, {useState, useEffect} from "react";
 import './imageCarousel.css'
+
 function BidHistoryPanel(props) {
 
-    
     function createBidHistory() {
-        return props.bids.sort((prev, curr) => {
-            return (prev.bidPrice > curr.bidPrice) ? -1 : 1
-        }).map(bid => {
+        return props.bids.map(bid => {
             return (
                 <div className="my-1">
-                    A user made a bid of ${bid.bidPrice} at {bid.date}
+                    A user made a bid of ${bid.bidAmount} on {new Date(bid.timeStamp).toLocaleDateString()} at {new Date(bid.timeStamp).toLocaleTimeString()}
                 </div>
             )
         })
@@ -19,7 +15,7 @@ function BidHistoryPanel(props) {
 
     return (
         <div>
-            <div className="text-secondary mt-5 mb-3">BidHistory</div>
+            <div className="text-secondary mt-5 mb-3">Bid History</div>
             {createBidHistory()}
         </div>
     )

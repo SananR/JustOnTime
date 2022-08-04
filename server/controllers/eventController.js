@@ -23,7 +23,6 @@ const getEventImage = async (req, res, next) => {
 }
 
 const addEvent = async (req, res, next) => {
-   
     const errors = validationResult(req);
 
     if (!req.files) {
@@ -60,7 +59,8 @@ const addEvent = async (req, res, next) => {
                         city: req.body.city,
                         country: req.body.country,
                         postalCode: req.body.postalCode
-                    }
+                    },
+                    auctionEnd: req.body.date
                 },
                 tags: req.body.tags,
                 bidHistory: [{"uid": req.user._id, "bidAmount": req.body.initialPrice}],
@@ -72,6 +72,7 @@ const addEvent = async (req, res, next) => {
         await event.save();
         return success(res, "Event successfully created.", true);
     } catch(err) {
+        console.log(err)
         eventImageService.deleteImage(eventImagepath);
         if(ImagePathArray.length != 0){
             ImagePathArray.forEach(path => {
