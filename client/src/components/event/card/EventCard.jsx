@@ -27,7 +27,7 @@ const EventCard = forwardRef((props, ref) => {
         }
         fetchImage().catch(console.error);
         setUrl({ backgroundImage: `url(${URL.createObjectURL(new Blob([image], {type:"image/jpeg"}))})` });
-    }, [done, image, props.id]);
+    }, [done, props.id]);
 
     useEffect( () => {
         if (user !== null) {
@@ -44,7 +44,6 @@ const EventCard = forwardRef((props, ref) => {
 
     const handleStar = (async (e, event) => {
         try {
-            e.stopPropagation();
             const userId = user._id;
             const eventId = event.id;
             let eventsList = [...user.starredEvents];
@@ -58,11 +57,13 @@ const EventCard = forwardRef((props, ref) => {
             // particle animation for the current event card while the other event cards corresponding to the same event are being updated
             if (eventsList.includes(eventId)) {
                 setStarredState(true);
-                ref.current.plugins.get("emitters").array[0].play()
+                if(ref.current.plugins.get("emitters").array.length > 0)
+                    ref.current.plugins.get("emitters").array[0].play()
             }
             else {
                 setStarredState(false);
-                ref.current.plugins.get("emitters").array[0].pause()
+                if(ref.current.plugins.get("emitters").array.length > 0)
+                    ref.current.plugins.get("emitters").array[0].pause()
             }
         } catch (e) {
             console.log(e);

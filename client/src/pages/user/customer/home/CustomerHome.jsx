@@ -163,7 +163,8 @@ function CustomerHome() {
     useEffect(() => {
         function handler(e) {
             if (fullDiv.current && !fullDiv.current.contains(e.target)) {
-                container.current.plugins.get("emitters").array[0].pause()
+                if(container.current.plugins.get("emitters").array.length > 0)
+                    container.current.plugins.get("emitters").array[0].pause()
             }
         }
         document.addEventListener("click", handler);
@@ -173,7 +174,7 @@ function CustomerHome() {
     }, [fullDiv])
 
     return (
-        <div ref={fullDiv} className="container-fluid w-100 h-100" onClick={(e) => {container.current.plugins.get("emitters").array[0].pause()}}>
+        <div ref={fullDiv} className="container-fluid w-100 h-100" onClick={(e) => {if(container.current.plugins.get("emitters").array.length > 0) container.current.plugins.get("emitters").array[0].pause()}}>
             <TopEventCarousel
                 events={events}
             />
