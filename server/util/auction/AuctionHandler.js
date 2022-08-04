@@ -22,43 +22,36 @@ function stopAuctionHandler() {
 }
 
 //Handles the next bid in the queue
-function handleNextBid() {
+async function handleNextBid() {
     if (bidQueue.length > 0) {
         const bid = bidQueue.shift();
         //Override the timestamp to current
         bid.timeStamp = Date.now();
         //Handle the bid
-        handleBid(bid);
+        const bidHistory = await handleBid(bid);
         //Send update to all clients
-        sendAuctionUpdate(bid);
+        sendAuctionUpdate(bid.aid, bidHistory);
     }
 }
 
 //Handle a bid
-function handleBid(bid) {
+async function handleBid(bid) {
     const bidObj = {
         uid: bid.uid,
         bidAmount: bid.bidAmount,
         timeStamp: bid.timeStamp
     };
     const update = {$push: {bidHistory: bidObj}}
-    Event.findByIdAndUpdate(bid.aid, update,  async (err, event) => {
-        if (err) {
-            console.log(err);
-        }
-    });
+    let event = await Event.findByIdAndUpdate(bid.aid, update, {new: true});
+    return event.bidHistory;
 }
 
 //Sends an Auction update to all clients
-function sendAuctionUpdate(bid) {
+function sendAuctionUpdate(aid, bidHistory) {
     const update = {
         "action": "AUCTION_UPDATE",
-        "data": {
-            "uid": bid.uid,
-            "aid": bid.aid,
-            "bidAmount": bid.bidAmount,
-            "timeStamp": bid.timeStamp
-        }
+        "aid": aid,
+        "bidHistory": [...bidHistory]
     }
     wss.clients.forEach(function each(client) {
         if (client.readyState === WebSocket.OPEN) {
