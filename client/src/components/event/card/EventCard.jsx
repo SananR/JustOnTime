@@ -40,7 +40,7 @@ function EventCard(props) {
             e.stopPropagation();
             const userId = user._id;
             const eventId = event.id;
-            var eventsList = [...user.starredEvents];
+            let eventsList = [...user.starredEvents];
             if (eventsList.includes(eventId))
                 eventsList.splice(eventsList.indexOf(eventId), 1);
             else
@@ -58,6 +58,13 @@ function EventCard(props) {
         }
     });
 
+    const getCurrentBid = () => {
+        return props.bidHistory.length > 0 ? props.bidHistory[props.bidHistory.length - 1].bidAmount : 0;
+    }
+    const getPreviousBid = () => {
+        return props.bidHistory.length > 1 ? props.bidHistory[props.bidHistory.length - 2].bidAmount : 0;
+    }
+
     return (
         <div className="event-card position-relative d-flex g-0 flex-column justify-content-center align-items-center mt-5 mb-5 shadow-sm container-fluid">
             <div className="event-image-container w-100 bg-image " style={url}></div>
@@ -65,8 +72,8 @@ function EventCard(props) {
                 <h1 className="event-card-title w-100 mt-3 ps-3 "><a href={props.url}>{props.title}</a></h1>
                 <h2 className="event-card-meta w-100 ps-3 text-muted">{props.date} • {props.time} • {props.location}</h2>
                 <div className="w-100 mt-1 d-flex justify-content-start align-items-center">
-                    <h2 className="event-card-bid h-auto ps-3">${props.currentBid}</h2>
-                    <h2 className="event-card-prevbid h-auto ps-3">${props.previousBid}</h2>
+                    <h2 className="event-card-bid h-auto ps-3">${getCurrentBid()}</h2>
+                    <h2 className="event-card-prevbid h-auto ps-3">${getPreviousBid()}</h2>
                 </div>
             </div>
             <BidTimeTag timeRemaining={props.timeRemaining}/>

@@ -34,9 +34,8 @@ export const loadSearchedEvents = async (searchTerm) => {
                 date: event.date,
                 time: event.time,
                 location: event.location,
-                currentBid: 0,
-                previousBid: 0,
-                timeRemaining: "00:00:00"
+                bidHistory: event.bidHistory,
+                auctionEnd: event.auctionEnd
             }
         });
         return data;
