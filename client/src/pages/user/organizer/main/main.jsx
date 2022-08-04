@@ -72,6 +72,7 @@ function OrganizerMain() {
             date={"2022-08-10"}
             time={event.time}
             location={event.address.suiteNo, event.address.street}
+            bidHistory = {event.bidHistory}
             currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
             previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
             url={"/event/" + event.id}
@@ -88,6 +89,7 @@ function OrganizerMain() {
             title={event.name}
             date={"2022-08-10"}
             time={event.time}
+            bidHistory = {event.bidHistory}
             location={event.address.suiteNo, event.address.street}
             currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
             previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
@@ -104,6 +106,7 @@ function OrganizerMain() {
             title={event.name}
             date={"2022-08-10"}
             time={event.time}
+            bidHistory = {event.bidHistory}
             location={event.address.suiteNo, event.address.street}
             currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
             previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
@@ -121,6 +124,7 @@ function OrganizerMain() {
             title={event.name}
             date={"2022-08-10"}
             time={event.time}
+            bidHistory = {event.bidHistory}
             location={event.address.suiteNo, event.address.street}
             currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
             previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
@@ -138,6 +142,7 @@ function OrganizerMain() {
             title={event.name}
             date={"2022-08-10"}
             time={event.time}
+            bidHistory = {event.bidHistory}
             location={event.address.suiteNo, event.address.street}
             currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
             previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
