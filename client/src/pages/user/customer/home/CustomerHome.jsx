@@ -15,10 +15,10 @@ function CustomerHome() {
     const [events, setEvents] = useState([]);
     const user = useSelector((state) => state.auth.user);
     const navigate = useNavigate();
-    useEffect( () => {
-        if(user && user.userType == "Organizer"){
+    useEffect( () => {/*
+        if(user && user.userType === "Organizer"){
             navigate("/organizer/main")
-        }
+        }*/
         const fetchEvents = async() => {
             const events = await loadEvents();
             setEvents(() => (events));

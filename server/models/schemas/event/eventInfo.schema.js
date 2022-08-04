@@ -26,11 +26,11 @@ const eventInfoSchema = mongoose.Schema({
         unique: true
     },
     date: {
-        type: String,
+        type: Date,
         required: true
     },
-    time: {
-        type: String,
+    auctionEnd: {
+        type: Date,
         required: true
     },
     address: {

@@ -108,7 +108,7 @@ function CreateEvent() {
             const dd = String(dateTime.getDate())
             const mm = String(dateTime.getMonth() + 1) 
             const yyyy = dateTime.getFullYear();
-            const imagesBody = {}
+            var imagesBody = {}
             const date = yyyy + "/" + mm + "/" + dd;  
 
             const hours = String(dateTime.getHours()).padStart(2, "0") 
