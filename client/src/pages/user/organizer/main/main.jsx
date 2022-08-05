@@ -3,278 +3,78 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import './main.css'
+import EventSlider from '../../../../components/event/slider/EventSlider'
 import Carousel from "react-multi-carousel"
 import EventCard from "../../../../components/event/card/EventCard"
 
 function OrganizerMain() {
-    const [currEvents, setCurrEvents] = useState([]);
-    const [subEvents, setSubEvents] = useState([]);
-    const [revEvents, setRevEvents] = useState([]);
-    const [compEvents, setCompEvents] = useState([]);
-    const [pastEvents, setPastEvents] = useState([]);
-    const [count, setCount] = useState(-1); 
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true)
     const user = useSelector((state) => state.auth.user);
     const userID = useSelector((state) => state.auth.user._id);
     
+    const [events, setEvents] = useState([]);
+
     const fetchEvents = async () => {
         try {
-            const curr = [];
-            const sub = []; 
-            const rev = []; 
-            const past = []; 
-            const comp = []; 
+            var events = [];
+
             const response = await axios.get('/api/event/organizerEvents?id=' + userID);
             for(let i=0; i < response.data.events.length; i++){
-                if(response.data.events[i].status.toUpperCase() === "ONGOING"){
-                    curr.push(response.data.events[i])
-                } else if(response.data.events[i].status.toUpperCase() === "COMPLETED"  ){
-                    comp.push(response.data.events[i])
-                } else if(response.data.events[i].status.toUpperCase() === "NEEDS_RESUBMISSION"){
-                    sub.push(response.data.events[i])
-                } else if(response.data.events[i].status.toUpperCase() === "UNDER_REVIEW" ){
-                    rev.push(response.data.events[i])
-                } else {
-                    past.push(response.data.events[i])
-                }
+                events = response.data.events;
+                console.log(events);
             }
-            setCurrEvents(curr); 
-            setSubEvents(sub); 
-            setPastEvents(past); 
-            setRevEvents(rev); 
-            setCompEvents(comp); 
-            setCount(response.data.count);
-            return response.data;
+            setEvents(events);
         } catch (e) {
             console.log(e);
         }
     }
     useEffect(() => {
+        setLoading(true);
         fetchEvents();
+        setLoading(false);
     }, [userID])
 
-    useEffect(() => {
-        if(currEvents.length > 0 || pastEvents.length > 0 || revEvents.length > 0 || subEvents.length > 0 || compEvents.length > 0  ){
-            setLoading(false); 
-        } else if (count != -1) {
-            setLoading(false);
-        }
-    }, [currEvents, pastEvents, revEvents, subEvents, compEvents, count])
-
-
-    const createCurrEvents = (
-        currEvents.map(event =>
-            <EventCard
-            key={event.id.toString()}
-            id={event.id}
-            title={event.name}
-            date={"2022-08-10"}
-            time={event.time}
-            location={event.address.suiteNo, event.address.street}
-            bidHistory = {event.bidHistory}
-            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
-            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
-            url={"/event/" + event.id}
-            timeRemaining={"12:00"}
-            />
-        )
-    ) 
-
-    const createRevEvents = (
-        revEvents.map(event =>
-            <EventCard
-            key={event.id.toString()}
-            id={event.id}
-            title={event.name}
-            date={"2022-08-10"}
-            time={event.time}
-            bidHistory = {event.bidHistory}
-            location={event.address.suiteNo, event.address.street}
-            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
-            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
-            timeRemaining= {"——:——"}
-            />
-        )
-    ) 
-
-    const createSubEvents = (
-        subEvents.map(event =>
-            <EventCard
-            key={event.id.toString()}
-            id={event.id}
-            title={event.name}
-            date={"2022-08-10"}
-            time={event.time}
-            bidHistory = {event.bidHistory}
-            location={event.address.suiteNo, event.address.street}
-            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
-            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
-            timeRemaining= {"——:——"}
-            />
-        )
-    ) 
-
-
-    const createPastEvents = (
-        pastEvents.map(event =>
-            <EventCard
-            key={event.id.toString()}
-            id={event.id}
-            title={event.name}
-            date={"2022-08-10"}
-            time={event.time}
-            bidHistory = {event.bidHistory}
-            location={event.address.suiteNo, event.address.street}
-            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
-            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
-            url={"/event/" + event.id}
-            timeRemaining= {"——:——"}
-            />
-        )
-    ) 
-
-    const createCompEvents = (
-        compEvents.map(event =>
-            <EventCard
-            key={event.id.toString()}
-            id={event.id}
-            title={event.name}
-            date={"2022-08-10"}
-            time={event.time}
-            bidHistory = {event.bidHistory}
-            location={event.address.suiteNo, event.address.street}
-            currentBid={(event.bidHistory && event.bidHistory.length > 0) ? event.bidHistory[event.bidHistory.length-1].bidAmount : "--" }
-            previousBid={(event.bidHistory && event.bidHistory.length > 1) ? event.bidHistory[event.bidHistory.length-2].bidAmount : "--"}
-            timeRemaining= {"00:00"}
-            />
-        )
-    ) 
-
-
-    const responsive = {
-        bigdesktop: {
-            breakpoint: { max: 3000, min: 1800 },
-            items: 5,
-            slidesToSlide: 5,
-        },
-        desktop: {
-            breakpoint: { max: 1800, min: 1300 },
-            items: 4,
-            slidesToSlide: 4,
-            partialVisibilityGutter: 10
-        },
-        laptop: {
-            breakpoint: { max: 1300, min: 464 },
-            items: 3,
-            partialVisibilityGutter: 20
-        },
-        tablet: {
-            breakpoint: { max: 1090, min: 900 },
-            items: 2,
-            partialVisibilityGutter: 100
-        },
-        tablet2: {
-            breakpoint: { max: 900, min: 800 },
-            items: 2,
-            partialVisibilityGutter: 50
-        },
-        tablet3: {
-            breakpoint: { max: 800, min: 710 },
-            items: 2,
-            partialVisibilityGutter: 10
-        },
-        mobile: {
-            breakpoint: { max: 710, min: 0 },
-            items: 1,
-            partialVisibilityGutter: 200
-        }
-    };
-
+    const filterEvents = (status) => {
+        return events.filter(event => event.status === status)
+    } 
 
     const eventsList = (
         <div>
-            <div className="top">
-                <h1 id="title"> My Events </h1>
-                <button id="createEvent" onClick={() => navigate("/organizer/createEvent")}>New Event</button>
+            <div className="my-5 me-5 d-flex justify-content-between">
+                    <h1 id="title" className='col-sm-6'> My Events </h1>
+                    <button id="createEvent" className='col-sm-6' onClick={() => navigate("/organizer/createEvent")}>New Event</button>
             </div>
            
-           {currEvents.length > 0 && <div className="list">
+           {filterEvents("ONGOING").length > 0 && <div className="list">
                  <h3 id="title"> Current Events </h3>
-                 <Carousel
-                    swipeable={true}
-                    draggable={true}
-                    responsive={responsive}
-                    showDots={true}
-                    ssr={true}
-                    infinite={true}
-                    partialVisible={true}
-                >
-                    {createCurrEvents}
-                </Carousel>
+                 <EventSlider events={filterEvents("ONGOING")} className="container-fluid row w-100 h-100 gap-0 gx-0" />
             </div>}
 
-            {subEvents.length > 0 && <div className="list">
+            {filterEvents("NEEDS_RESUBMISSION") > 0 && <div className="list">
              <h3 id="title"> Resubmit Events </h3>
-             <Carousel
-                    swipeable={true}
-                    draggable={true}
-                    responsive={responsive}
-                    showDots={true}
-                    ssr={true}
-                    infinite={true}
-                    partialVisible={true}
-                >
-                    {createSubEvents}
-                </Carousel>
+             <EventSlider events={filterEvents("NEEDS_RESUBMISSION")} className="container-fluid row w-100 h-100 gap-0 gx-0" />
             </div>}
 
-            { revEvents.length > 0 && <div className="list">
+            {filterEvents("UNDER_REVIEW").length > 0 && <div className="list">
              <h3 id="title"> Pending Events </h3>
-             <Carousel
-                    swipeable={true}
-                    draggable={true}
-                    responsive={responsive}
-                    showDots={true}
-                    ssr={true}
-                    infinite={true}
-                    partialVisible={true}
-                >
-                    {createRevEvents}
-                </Carousel>
+             <EventSlider events={filterEvents("UNDER_REVIEW")} className="container-fluid row w-100 h-100 gap-0 gx-0" />
             </div>}
 
-          {pastEvents.length > 0 &&  <div className="list">
-            <h3 id="title"> Incomplete Events </h3>
-            <Carousel
-                    swipeable={true}
-                    draggable={true}
-                    responsive={responsive}
-                    showDots={true}
-                    ssr={true}
-                    infinite={true}
-                    partialVisible={true}
-                >
-                    {createPastEvents}
-                </Carousel>
-            </div>}
-
-           { compEvents.length > 0 && <div className="list">
+           {filterEvents("COMPLETED").length > 0 && <div className="list">
             <h3 id="title"> Completed Events </h3>
-            <Carousel
-                    swipeable={true}
-                    draggable={true}
-                    responsive={responsive}
-                    showDots={true}
-                    ssr={true}
-                    infinite={true}
-                    partialVisible={true}
-                >
-                    {createCompEvents}
-                </Carousel>
-            </div> }
+            <EventSlider events={filterEvents("COMPLETED")} className="container-fluid row w-100 h-100 gap-0 gx-0" />
+            </div> 
+            }
+
+          {filterEvents("CANCELED").length > 0 &&  <div className="list">
+            <h3 id="title"> Canceled Events </h3>
+            <EventSlider events={filterEvents("CANCELED")} className="container-fluid row w-100 h-100 gap-0 gx-0" />
+            </div>}
+
         </div>
     )
+
     const loadingscreen =  (
         <div>
 
@@ -302,7 +102,7 @@ function OrganizerMain() {
 
 
     return(
-        (user.userType === "Customer") ? pageDNE : (loading) ? loadingscreen : (count> 0) ? eventsList : noEvents
+        (user.userType === "Customer") ? pageDNE : (loading) ? loadingscreen : (events.length > 0) ? eventsList : noEvents
     )
 
 }
