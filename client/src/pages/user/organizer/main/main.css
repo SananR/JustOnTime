@@ -1,3 +1,7 @@
+/* .unclickable {
+    pointer-events: none;
+} */
+
 #createEvent {
     font-size: medium;
     width: 10%;
@@ -13,7 +17,6 @@
 #title{
     margin-left: 3%;
     padding-bottom: 0px;
-
 }
 
 

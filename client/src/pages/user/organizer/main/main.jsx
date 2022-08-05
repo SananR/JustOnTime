@@ -31,8 +31,13 @@ function OrganizerMain() {
     }
     useEffect(() => {
         setLoading(true);
-        fetchEvents();
-        setLoading(false);
+        fetchEvents().then((e) => {
+            if (e){
+                console.log(e);
+            }
+            setLoading(false);
+        })
+        
     }, [userID])
 
     const filterEvents = (status) => {
@@ -51,23 +56,23 @@ function OrganizerMain() {
                  <EventSlider events={filterEvents("ONGOING")} className="container-fluid row w-100 h-100 gap-0 gx-0" />
             </div>}
 
-            {filterEvents("NEEDS_RESUBMISSION") > 0 && <div className="list">
+            {filterEvents("NEEDS_RESUBMISSION") > 0 && <div className="list unclickable">
              <h3 id="title"> Resubmit Events </h3>
              <EventSlider events={filterEvents("NEEDS_RESUBMISSION")} className="container-fluid row w-100 h-100 gap-0 gx-0" />
             </div>}
 
-            {filterEvents("UNDER_REVIEW").length > 0 && <div className="list">
+            {filterEvents("UNDER_REVIEW").length > 0 && <div className="list unclickable">
              <h3 id="title"> Pending Events </h3>
              <EventSlider events={filterEvents("UNDER_REVIEW")} className="container-fluid row w-100 h-100 gap-0 gx-0" />
             </div>}
 
-           {filterEvents("COMPLETED").length > 0 && <div className="list">
+           {filterEvents("COMPLETED").length > 0 && <div className="list unclickable">
             <h3 id="title"> Completed Events </h3>
             <EventSlider events={filterEvents("COMPLETED")} className="container-fluid row w-100 h-100 gap-0 gx-0" />
             </div> 
             }
 
-          {filterEvents("CANCELED").length > 0 &&  <div className="list">
+          {filterEvents("CANCELED").length > 0 &&  <div className="list unclickable">
             <h3 id="title"> Canceled Events </h3>
             <EventSlider events={filterEvents("CANCELED")} className="container-fluid row w-100 h-100 gap-0 gx-0" />
             </div>}
@@ -77,7 +82,6 @@ function OrganizerMain() {
 
     const loadingscreen =  (
         <div>
-
             <div className="row justify-content-center">
                 <div id="loader" className="spinner-border text-primary" role="status"></div>
             </div>
@@ -102,6 +106,7 @@ function OrganizerMain() {
 
 
     return(
+        // eventsList
         (user.userType === "Customer") ? pageDNE : (loading) ? loadingscreen : (events.length > 0) ? eventsList : noEvents
     )
 

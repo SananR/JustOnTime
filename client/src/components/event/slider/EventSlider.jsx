@@ -49,6 +49,7 @@ function EventSlider(props) {
 
     function createEventCards() {
         return props.events.map(event => {
+            console.log(event)
             return <EventCard
                 key={event.id.toString()}
                 id={event.id}
@@ -61,6 +62,7 @@ function EventSlider(props) {
                 className="col-sm-4"
                 eventIcon={event.icon}
                 url={"/event/" + event.id}
+                status={event.status}
             />
         })
     }
