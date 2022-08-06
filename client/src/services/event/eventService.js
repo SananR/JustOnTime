@@ -27,6 +27,7 @@ export const loadSearchedEvents = async (searchTerm) => {
     const response = await axios.get(API_URL + `event/search/?searchTerm=${searchTerm}`);
     if (response.data) {
         const data =  response.data.map((event) => {
+            console.log(event.bidHistory);
             return {
                 id: event.id,
                 title: event.name,
@@ -37,6 +38,7 @@ export const loadSearchedEvents = async (searchTerm) => {
                 auctionEnd: event.auctionEnd
             }
         });
+        console.log(data)
         return data;
     }
     else {

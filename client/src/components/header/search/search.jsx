@@ -13,7 +13,7 @@ function Search(){
     const navigate = useNavigate();
 
     const handleEnter = (searchTerm) =>{
-        navigate(`/${searchTerm}`);
+        navigate(`search/${searchTerm}`);
         window.location.reload(true);
     }
 

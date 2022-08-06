@@ -12,7 +12,6 @@ function Search(){
     const [flag, setFlag] = useState(false);
     var { searchTerm } = useParams();
     const user = useSelector((state) => state.auth.user);
-    console.log(events)
     useEffect( () => {
         const fetchEvents = async() => {
             setIsLoading(true)
@@ -34,6 +33,7 @@ function Search(){
                 title={event.title}
                 date={event.date}
                 time={event.time}
+                bidHistory = {event.bidHistory}
                 location={event.location}
                 currentBid={event.currentBid}
                 previousBid={event.previousBid}
