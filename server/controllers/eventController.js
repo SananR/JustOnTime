@@ -24,6 +24,7 @@ const getEventImage = async (req, res, next) => {
 
 const addEvent = async (req, res, next) => {
     const errors = validationResult(req);
+    console.log(req.body)
 
     if (!req.files) {
         return clientError(res, 'Invalid file provided.');
@@ -69,6 +70,7 @@ const addEvent = async (req, res, next) => {
                 ImagePathArray: ImagePathArray
             }
         )
+        console.log(event)
         await event.save();
         return success(res, "Event successfully created.", true);
     } catch(err) {
