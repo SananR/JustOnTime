@@ -90,6 +90,7 @@ export const getEventImage = async(id) => {
 }
 
 export const addEvent = async (body) => {
+    console.log("Auction ends: " + body.auctionEnd);
     const headers = {
         'Content-Type': 'multipart/form-data'
     }

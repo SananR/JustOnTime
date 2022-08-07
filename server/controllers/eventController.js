@@ -60,7 +60,7 @@ const addEvent = async (req, res, next) => {
                         country: req.body.country,
                         postalCode: req.body.postalCode
                     },
-                    auctionEnd: req.body.date
+                    auctionEnd: req.body.auctionEnd
                 },
                 tags: req.body.tags,
                 bidHistory: [{"uid": req.user._id, "bidAmount": req.body.initialPrice}],
