@@ -12,8 +12,8 @@ function Search(){
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
     const handleEnter = (searchTerm) =>{
-        navigate(`search/${searchTerm}`);
-        window.location.reload(false);
+        const url = 'search/?searchTerm=' + searchTerm;
+        navigate(url);
     }
 
     return(

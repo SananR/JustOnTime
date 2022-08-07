@@ -12,7 +12,9 @@ function Search(){
     const [events, setEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [flag, setFlag] = useState(false);
-    var { searchTerm } = useParams();
+    var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('=');
+    var searchTerm = url[1]
+    console.log(searchTerm)
     const user = useSelector((state) => state.auth.user);
     const navigate = useNavigate();
     useEffect( () => {
@@ -20,13 +22,16 @@ function Search(){
             setIsLoading(true)
             const events = await loadSearchedEvents(searchTerm);
             setEvents(() => (events));
-            if(events.length == 0){
+            if(events.length === 0){
                 setFlag(true)
+            }
+            if(events.length !== 0){
+                setFlag(false)
             }
         }
         fetchEvents().catch(console.error);
         setIsLoading(false)
-    }, []);
+    }, [events, flag, isLoading]);
 
     function createEventCards() {
         return events.map(event => {
