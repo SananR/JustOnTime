@@ -39,12 +39,11 @@ function CreateEventForm(props) {
                     <div>
                         <label htmlFor="auction-end">Auction End Time</label>
                         <select name="auctionEndTimeGap" id="auction-end" class="form-select form-select-lg mb-3" onChange={props.onChange}  aria-label=".form-select-lg example">
-                            <option value="1">1 hour before the event starts</option>
-                            <option value="3">3 hours before the event starts</option>
-                            <option selected="6" value="6">6 hours before the event starts</option>
-                            <option value="12">12 hours before the event starts</option>
+                            <option value="6">6 hours before the event starts</option>
+                            <option selected="12" value="12">12 hours before the event starts</option>
                             <option value="24">24 hours before the event starts</option>
                             <option value="48">48 hours before the event starts</option>
+                            <option value="72">72 hours before the event starts</option>
                         </select>
                     </div>
 

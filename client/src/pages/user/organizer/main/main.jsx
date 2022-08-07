@@ -6,6 +6,7 @@ import './main.css'
 import EventSlider from '../../../../components/event/slider/EventSlider'
 import Carousel from "react-multi-carousel"
 import EventCard from "../../../../components/event/card/EventCard"
+import { loadOrganizerEvents } from '../../../../services/event/eventService'
 
 function OrganizerMain() {
     const navigate = useNavigate();
@@ -17,13 +18,7 @@ function OrganizerMain() {
 
     const fetchEvents = async () => {
         try {
-            var events = [];
-
-            const response = await axios.get('/api/event/organizerEvents?id=' + userID);
-            for(let i=0; i < response.data.events.length; i++){
-                events = response.data.events;
-                console.log(events);
-            }
+            const events = await loadOrganizerEvents(userID);
             setEvents(events);
         } catch (e) {
             console.log(e);
@@ -90,9 +85,9 @@ function OrganizerMain() {
 
     const noEvents =  (
         <div>
-            <div className="top">
-                <h1 id="title"> My Events </h1>
-                <button id="createEvent" onClick={() => navigate("/organizer/createEvent")}>New Event</button>
+            <div className="my-5 me-5 d-flex justify-content-between">
+                    <h1 id="title" className='col-sm-6'> My Events </h1>
+                    <button id="createEvent" className='col-sm-6' onClick={() => navigate("/organizer/createEvent")}>New Event</button>
             </div>
                 <p className="d-flex flex-column text-center justify-content-start mt-5 mb-5 position-relative container h-100 p-5"><strong> You have no events.</strong></p>
         </div>

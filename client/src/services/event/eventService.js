@@ -22,6 +22,24 @@ export const loadEvents = async () => {
     }
 }
 
+export const loadOrganizerEvents = async (userID) => {
+    const response = await axios.get('/api/event/organizerEvents?id=' + userID);
+    if (response.data) {
+        const data =  response.data.events.map((event) => {
+            return {
+                id: event.id,
+                title: event.name,
+                date: event.date,
+                time: event.time,
+                location: event.location,
+                bidHistory: event.bidHistory,
+                auctionEnd: event.auctionEnd,
+                status: event.status
+            }
+        });
+        return data;
+    }}
+
 //Get searched events
 export const loadSearchedEvents = async (searchTerm) => {
     const response = await axios.get(API_URL + `event/search/?searchTerm=${searchTerm}`);

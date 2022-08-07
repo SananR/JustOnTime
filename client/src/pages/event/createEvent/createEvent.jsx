@@ -70,6 +70,7 @@ function CreateEvent() {
             [e.target.name]: e.target.value
         }))
         console.log(formData)
+        console.log(dateTime.toISOString())
     }
 
     const onChangeDateTime = (newDateTime) => {
