@@ -54,9 +54,7 @@ export default function App() {
             <Route path="event">
               <Route path=":eventId" element={<EventInfo/>} />
             </Route>
-            <Route path="admin">
-              <Route path="dashboard" element={<AdminDashboard />} />
-            </Route>
+            <Route path="admin" element={<AdminDashboard />} />
             <Route path="customer">
               <Route path="verification-required" element={<CustomerVerificationRequired />} />
               <Route path="verifyemail">              
@@ -66,8 +64,8 @@ export default function App() {
               </Route>
             </Route>
             <Route path="organizer">
+                <Route path = "" element={<OrganizerMain/>}/>
                 <Route path="signup" element={<OrganizerSignup/>} />
-                <Route path="main" element={<OrganizerMain/>} />
                 <Route path="createEvent" element={<CreateEvent/>} />
             </Route>
             <Route path="/:searchTerm" element={<Search/>}/>

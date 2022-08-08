@@ -25,6 +25,9 @@ function OrganizerMain() {
         }
     }
     useEffect(() => {
+        if(user && user.userType == "Customer"){
+            navigate("/")
+        }
         setLoading(true);
         fetchEvents().then((e) => {
             if (e){
