@@ -34,7 +34,7 @@ const eventInfoSchema = mongoose.Schema({
         required: true
     },
     auctionEnd: {
-        type: Date,
+        type: String,
         required: true
     },
     address: {

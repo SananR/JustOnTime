@@ -36,38 +36,49 @@ function CreateEventForm(props) {
                     <DatePickerField className="" onChange={props.onChangeDateTime} dateTime={props.dateTime}/>
                 </div>
                 <div className='row my-2'>
-                <CreateEventFormInputField
-                    error={props.error.streetError}
-                    className="col-sm-12"
-                    name="street"
-                    onChange={props.onChange}
-                    label="street"
-                    errorMargin="90%"
-                />
-                <CreateEventFormInputField
-                    error={props.error.cityError}
-                    className="col-sm-6"
-                    name="city"
-                    onChange={props.onChange}
-                    label="city"
-                    errorMargin="90%"
-                />
-                <CreateEventFormInputField
-                    error={props.error.countryError}
-                    className="col-sm-6"
-                    name="country"
-                    onChange={props.onChange}
-                    label="country"
-                    errorMargin="90%"
-                />
-                <CreateEventFormInputField
-                    error={props.error.postalCodeError}
-                    className="col-sm-6"
-                    name="postalCode"
-                    onChange={props.onChange}
-                    label="postalCode"
-                    errorMargin="90%"
-                />
+                    <div>
+                        <label htmlFor="auction-end">Auction End Time</label>
+                        <select name="auctionEndTimeGap" id="auction-end" class="form-select form-select-lg mb-3" onChange={props.onChange}  aria-label=".form-select-lg example">
+                            <option value="6">6 hours before the event starts</option>
+                            <option selected="12" value="12">12 hours before the event starts</option>
+                            <option value="24">24 hours before the event starts</option>
+                            <option value="48">48 hours before the event starts</option>
+                            <option value="72">72 hours before the event starts</option>
+                        </select>
+                    </div>
+
+                    <CreateEventFormInputField
+                        error={props.error.streetError}
+                        className="col-sm-12"
+                        name="street"
+                        onChange={props.onChange}
+                        label="street"
+                        errorMargin="90%"
+                    />
+                    <CreateEventFormInputField
+                        error={props.error.cityError}
+                        className="col-sm-6"
+                        name="city"
+                        onChange={props.onChange}
+                        label="city"
+                        errorMargin="90%"
+                    />
+                    <CreateEventFormInputField
+                        error={props.error.countryError}
+                        className="col-sm-6"
+                        name="country"
+                        onChange={props.onChange}
+                        label="country"
+                        errorMargin="90%"
+                    />
+                    <CreateEventFormInputField
+                        error={props.error.postalCodeError}
+                        className="col-sm-6"
+                        name="postalCode"
+                        onChange={props.onChange}
+                        label="postalCode"
+                        errorMargin="90%"
+                    />
                 </div>
                 <div className='row my-2' style={{"height": "200px"}}>
                     <CreateEventFormInputField

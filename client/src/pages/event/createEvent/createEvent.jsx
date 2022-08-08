@@ -7,6 +7,7 @@ import CreateEventForm from '../../../components/forms/createEventForm/createEve
 import './createEvent.css'
 import Alert from 'react-bootstrap/Alert';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 import { InputValidator } from '../../../util/validation/InputValidator';
 
@@ -48,13 +49,14 @@ function CreateEvent() {
         initialPrice: -1,
         tag: [],
         dateTime: defaultDateTime,
+        auctionEndTimeGap: "6",
         street: '',
         city: '',
         country: '',
         postalCode: ''
     })
 
-    const {name, description, initialPrice, tag, dateTime, street, city, country, postalCode} = formData;
+    const {name, description, initialPrice, tag, dateTime, auctionEndTimeGap,street, city, country, postalCode} = formData;
 
     const user = useSelector((state) => state.auth.user);
     useEffect(() => {
@@ -67,12 +69,14 @@ function CreateEvent() {
             ...prevState,
             [e.target.name]: e.target.value
         }))
+        console.log(formData)
+        console.log(dateTime.toISOString())
     }
 
     const onChangeDateTime = (newDateTime) => {
         setFormData((prevState) => ({
             ...prevState,
-            dateTime: newDateTime
+            dateTime: newDateTime,
         }))
     }
 
@@ -121,7 +125,8 @@ function CreateEvent() {
                     return {...prev, images: curr }
                 })
             }
-            console.log(imagesBody)
+            const auctionEndTime = new Date(dateTime.getTime());
+            auctionEndTime.setHours(auctionEndTime.getHours() - parseInt(auctionEndTimeGap));
             const body = {    
                 name: name,
                 description: description,
@@ -132,6 +137,7 @@ function CreateEvent() {
                 city: city,
                 country: country,
                 postalCode: postalCode,
+                auctionEnd: auctionEndTime.toISOString(),
                 tags: tag,
                 mainImage: mainImage,
                 ...imagesBody

@@ -24,6 +24,7 @@ const getEventImage = async (req, res, next) => {
 
 const addEvent = async (req, res, next) => {
     const errors = validationResult(req);
+    console.log(req.body)
 
     if (!req.files) {
         return clientError(res, 'Invalid file provided.');
@@ -60,7 +61,7 @@ const addEvent = async (req, res, next) => {
                         country: req.body.country,
                         postalCode: req.body.postalCode
                     },
-                    auctionEnd: req.body.date
+                    auctionEnd: req.body.auctionEnd
                 },
                 tags: req.body.tags,
                 bidHistory: [{"uid": req.user._id, "bidAmount": req.body.initialPrice}],
@@ -69,6 +70,7 @@ const addEvent = async (req, res, next) => {
                 ImagePathArray: ImagePathArray
             }
         )
+        console.log(event)
         await event.save();
         return success(res, "Event successfully created.", true);
     } catch(err) {

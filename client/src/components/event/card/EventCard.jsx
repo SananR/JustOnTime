@@ -38,7 +38,9 @@ function EventCard(props) {
     }, [user, props.id]);
 
     const handleClick = () => {
-        navigate(`/event/${props.id}`);
+        if (props.status === undefined || props.status === "ONGOING"){
+            navigate(`/event/${props.id}`);
+        }
     }
 
     const handleStar = (async (e, event) => {

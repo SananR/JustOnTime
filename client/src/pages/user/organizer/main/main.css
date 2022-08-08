@@ -1,33 +1,22 @@
-.top {
-    margin-left: 11%;
-}
-
-#title {
-    margin-top: 3%;
-    margin-bottom: 2%;
-    display: inline-block;
-    vertical-align: middle;
-}
+/* .unclickable {
+    pointer-events: none;
+} */
 
 #createEvent {
     font-size: medium;
     width: 10%;
-    margin-top: 1%;
-    margin-left: 63%;
     padding: 1%;
     fill: red;
     border: red;
     background-color: rgb(255, 1, 1);
     color: white;
     border-radius: 4px;
-    display: inline-block;
     vertical-align: middle;
 }
 
 #title{
     margin-left: 3%;
     padding-bottom: 0px;
-
 }
 
 
