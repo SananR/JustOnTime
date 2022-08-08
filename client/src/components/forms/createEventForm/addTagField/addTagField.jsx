@@ -20,7 +20,6 @@ function AddTagField(props) {
 
     const renderTags = () => {
         return props.tags.map(tag => {
-            console.log(tag)
             return (
                 <TagNode text={tag} removeTag={props.removeTag}/>
             )

@@ -68,8 +68,6 @@ function CreateEvent() {
             ...prevState,
             [e.target.name]: e.target.value
         }))
-        console.log(formData)
-        console.log(dateTime.toISOString())
     }
 
     const onTagAddClciked = (newTag) => {
@@ -82,11 +80,9 @@ function CreateEvent() {
             ...prevState,
             tag: newTags
         }))
-        console.log(formData)
     }
     
     const removeTag = (tagName) => {
-        console.log(tagName + " deleted!")
         var newTags = tag.filter(tag => tag!==tagName)
         setFormData((prevState) => ({
             ...prevState,
@@ -163,14 +159,12 @@ function CreateEvent() {
                 mainImage: mainImage,
                 ...imagesBody
             }
-            console.log(body)
             const addEventResult = await addEvent(body)
             try {
                 if (addEventResult.success){
                     setShowAlert(true)
                 } 
                 else {
-                    console.error(addEventResult.message[0])
                     addEventResult.message.forEach(error => {
                         const {value, msg, param, location} = error
                         setFormError((prevState) => ({
