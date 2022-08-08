@@ -70,7 +70,7 @@ export default function App() {
                 <Route path="main" element={<OrganizerMain/>} />
                 <Route path="createEvent" element={<CreateEvent/>} />
             </Route>
-            <Route path="/:searchTerm" element={<Search/>}/>
+            <Route path = "search"  element={<Search/>}/>
         </Routes>
     </Router>
   </>
