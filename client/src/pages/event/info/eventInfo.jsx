@@ -144,7 +144,6 @@ function EventInfo() {
                                 <div id="bidhistory">
                                     <BidHistoryPanel bids={event.bidHistory}></BidHistoryPanel>
                                 </div>
-                                <hr></hr>
                             </div> 
                             <div id="sticky-form" className='col-md-5 offset-md-1 px-0 sticky-top align-self-start' style={{background: "white"}}>
                                 <BidForm bids={event.bidHistory} eventId={eventId} websocket={websocket} setLoading={setLoading} loading={loading}></BidForm>
