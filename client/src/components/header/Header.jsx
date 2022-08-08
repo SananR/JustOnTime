@@ -7,7 +7,6 @@ import Search from './search/search'
 import logo from '../../logo_cropped.png'
 
 import './header.css'
-import { Nav } from 'react-bootstrap'
 
 function Header() {
     return (
@@ -25,6 +24,7 @@ function Header() {
             </a>
             <Search/>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <a className="position-absolute start-50 ms-5 ps-5" href="/organizer/signup">Interested In Selling?</a>
             <Navbar.Collapse id="basic-navbar-nav">
             <UserButton />
             </Navbar.Collapse>

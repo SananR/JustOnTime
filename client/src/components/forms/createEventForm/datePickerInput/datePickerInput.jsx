@@ -8,7 +8,7 @@ import './datePickerInput.css'
 const DatePickerInput = forwardRef(({ value, onClick }, ref) => (
     <div className={`position-relative form-floating col-sm-8 my-3 mx-2`} >
             <input name="dateTime" id="date-field" label="Date" className="px-3 form-control form-control-lg" onClick={onClick} ref={ref} value={value} />
-            <label for="date-field" className='px-4'>Date</label>
+            <label htmlFor="date-field" className='px-4'>Date</label>
         </div>
   ));
 

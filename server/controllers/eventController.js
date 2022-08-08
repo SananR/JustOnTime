@@ -24,7 +24,12 @@ const getEventImage = async (req, res, next) => {
 
 const addEvent = async (req, res, next) => {
     const errors = validationResult(req);
-
+    const tags = []
+    Object.keys(req.body).forEach(field =>  
+        { if (field.includes("tags")){
+            tags.push(req.body[field])
+        }
+    })
     if (!req.files) {
         return clientError(res, 'Invalid file provided.');
     }
@@ -60,9 +65,9 @@ const addEvent = async (req, res, next) => {
                         country: req.body.country,
                         postalCode: req.body.postalCode
                     },
-                    auctionEnd: req.body.date
+                    auctionEnd: req.body.auctionEnd
                 },
-                tags: req.body.tags,
+                tags: tags,
                 bidHistory: [{"uid": req.user._id, "bidAmount": req.body.initialPrice}],
                 organizerId: req.user._id,
                 eventImagePath: eventImagepath,
@@ -164,29 +169,7 @@ const getOrganizerEvents =  async (req, res, next) => {
 const getSearchedEvents = async (req, res, next) => {
     try{
         var searchTerm = req.query.searchTerm;
-        if(!req.query.searchTerm){
-            Event.find({ 'eventInfo.status': 'ONGOING' }).limit(10).exec()
-            .then(output => {
-                const response = {
-                    count: output.length,
-                    events: output.map(out => {
-                        return {
-                            id: out._id,
-                            name: out.eventInfo.name,
-                            description: out.eventInfo.description,
-                            time: out.eventInfo.time,
-                            date: out.eventInfo.date,
-                            location: out.eventInfo.address.street,
-                            eventImagePath: out.eventImagePath,
-                            bidHistory: out.bidHistory,
-                            ImagePathArray: out.ImagePathArray
-                        };
-                    })
-                };
-            return res.status(200).json(response);
-            });
-        }
-        else{
+        if(req.query.searchTerm){
             const events = Event.find({ 'eventInfo.status': 'ONGOING' }).exec()
                 .then(output => {
                     const response = {
@@ -195,18 +178,20 @@ const getSearchedEvents = async (req, res, next) => {
                             return {
                                 id: out._id,
                                 name: out.eventInfo.name,
+                                description: out.eventInfo.description,
                                 eventImagePath: out.eventImagePath,
                                 ImagePathArray: out.ImagePathArray,
                                 tags: out.tags,
                                 time: out.eventInfo.time,
                                 date: out.eventInfo.date,
+                                bidHistory: out.bidHistory,
                                 location: out.eventInfo.address.street,
                             };
                         })
                     };
                     const fuse = new Fuse(response.events, {
                         includeScore: true,
-                        keys: [{name:'name', weight:2},'tags']
+                        keys: [{name:'name', weight:1},{name: 'tags', weight:0.5}, {name: 'description', weight:0.5}, {name: 'location', weight:0.25}]
                     });
                     const result = fuse.search(searchTerm)
                     .filter(out => out.score <=0.35)
@@ -219,10 +204,10 @@ const getSearchedEvents = async (req, res, next) => {
                             tags: out.item.tags,
                             time: out.item.time,
                             date: out.item.date,
+                            bidHistory: out.item.bidHistory,
                             location: out.item.location,
                         };
                     })
-                        
                     return res.status(200).json(result);
                 });
         }

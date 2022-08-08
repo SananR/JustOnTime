@@ -27,7 +27,10 @@ function Login() {
         if (isSuccess) {
             if(user.userType === "Organizer"){
                 navigate('/organizer')
-            } else{
+            } else if(user.userType === "Admin"){
+                navigate('/admin')
+            }
+            else{
                 navigate('/')
             }
         }

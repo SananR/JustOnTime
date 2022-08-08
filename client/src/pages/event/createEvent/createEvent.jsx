@@ -48,13 +48,14 @@ function CreateEvent() {
         initialPrice: -1,
         tag: [],
         dateTime: defaultDateTime,
+        auctionEndTimeGap: "6",
         street: '',
         city: '',
         country: '',
         postalCode: ''
     })
 
-    const {name, description, initialPrice, tag, dateTime, street, city, country, postalCode} = formData;
+    const {name, description, initialPrice, tag, dateTime, auctionEndTimeGap,street, city, country, postalCode} = formData;
 
     const user = useSelector((state) => state.auth.user);
     useEffect(() => {
@@ -69,10 +70,30 @@ function CreateEvent() {
         }))
     }
 
+    const onTagAddClciked = (newTag) => {
+        const newTags = tag
+        if (newTags.includes(newTag)) {
+            return
+        }
+        newTags.push(newTag)
+        setFormData((prevState) => ({
+            ...prevState,
+            tag: newTags
+        }))
+    }
+    
+    const removeTag = (tagName) => {
+        var newTags = tag.filter(tag => tag!==tagName)
+        setFormData((prevState) => ({
+            ...prevState,
+            tag: newTags
+        }))
+    }
+
     const onChangeDateTime = (newDateTime) => {
         setFormData((prevState) => ({
             ...prevState,
-            dateTime: newDateTime
+            dateTime: newDateTime,
         }))
     }
 
@@ -121,7 +142,8 @@ function CreateEvent() {
                     return {...prev, images: curr }
                 })
             }
-            console.log(imagesBody)
+            const auctionEndTime = new Date(dateTime.getTime());
+            auctionEndTime.setHours(auctionEndTime.getHours() - parseInt(auctionEndTimeGap));
             const body = {    
                 name: name,
                 description: description,
@@ -132,18 +154,17 @@ function CreateEvent() {
                 city: city,
                 country: country,
                 postalCode: postalCode,
+                auctionEnd: auctionEndTime.toISOString(),
                 tags: tag,
                 mainImage: mainImage,
                 ...imagesBody
             }
-            console.log(body)
             const addEventResult = await addEvent(body)
             try {
                 if (addEventResult.success){
                     setShowAlert(true)
                 } 
                 else {
-                    console.error(addEventResult.message[0])
                     addEventResult.message.forEach(error => {
                         const {value, msg, param, location} = error
                         setFormError((prevState) => ({
@@ -172,7 +193,7 @@ function CreateEvent() {
                 <div className='h1'>Create New Event</div>
                     <hr></hr>
                     <UploadImage addImage={addImage} removeImage={removeImage} eventImages={eventImages} imageError={formError.imageError}></UploadImage>
-                    <CreateEventForm dateTime={formData.dateTime} onChange={onChange} onChangeDateTime={onChangeDateTime} error={formError}></CreateEventForm>
+                    <CreateEventForm dateTime={formData.dateTime} tags={tag} removeTag={removeTag} onTagAddClciked={onTagAddClciked} onChange={onChange} onChangeDateTime={onChangeDateTime} error={formError}></CreateEventForm>
                     <div className="row justify-content-center">
                         <button type="submit" id="create-event-submit-button" onClick={submiEvent} className="mt-3 justify-self-center shadow-lg rounded-pill btn btn-block w-100 btn-primary">Create Event</button>
                     </div> 
