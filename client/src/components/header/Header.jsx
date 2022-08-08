@@ -24,7 +24,7 @@ function Header() {
             </a>
             <Search/>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <a className="position-absolute start-50 ms-5 ps-5" href="/organizer/signup">Interested In Selling?</a>
+            <a className="position-absolute end-50 me-4 pe-4" href="/organizer/signup">Interested In Selling?</a>
             <Navbar.Collapse id="basic-navbar-nav">
             <UserButton />
             </Navbar.Collapse>
