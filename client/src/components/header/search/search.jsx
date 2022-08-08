@@ -18,7 +18,7 @@ function Search(){
 
     return(
             <div className="right">
-                <div className={`search ${showSearch ? "show-search" : ""} `}>
+                <div className={`search ${true ? "show-search" : ""} `}>
                     <button
                         onClick = {() => {
                             if(!showSearch){
