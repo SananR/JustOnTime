@@ -17,12 +17,16 @@ import Header from './components/header/Header'
 import { store } from './store.js'
 import {Provider} from 'react-redux'
 import Search from './pages/user/customer/search/Search'
-import 'bootstrap/dist/css/bootstrap.css'
-import './stylesheet.css'
 import AdminDashboard from './pages/admin/dashboard'
 import EventInfo from './pages/event/info/eventInfo'
 import OrganizerSignup from "./pages/user/organizer/register/OrganizerSignup";
 import CreateEvent from './pages/event/createEvent/createEvent'
+
+import 'bootstrap/dist/css/bootstrap.css'
+import './stylesheet.css'
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from "react-toastify";
+
 
 export default function App() {
   return (
@@ -79,6 +83,14 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <App />
+    <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        pauseOnFocusLoss
+        pauseOnHover
+    />
   </Provider>
 );
 

@@ -107,6 +107,7 @@ const getEvents = async (req, res, next) => {
                             location: out.eventInfo.address.street,
                             eventImagePath: out.eventImagePath,
                             bidHistory: out.bidHistory,
+                            auctionEnd: out.eventInfo.auctionEnd,
                             ImagePathArray: out.ImagePathArray
                         };
                     })

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import Carousel from "react-multi-carousel"
 
 import "./topeventcarousel.css"
@@ -11,6 +12,7 @@ import {getEventImage} from "../../../services/event/eventService";
 function EventSlide(props) {
 
     const [image, setImage] = useState("");
+    const navigate = useNavigate();
 
     useEffect( () => {
         const fetchImage = async() => {
@@ -20,8 +22,14 @@ function EventSlide(props) {
         fetchImage().catch(console.error);
     }, []);
 
+    const handleClick = () => {
+        if (props.status === undefined || props.status === "ONGOING"){
+            navigate(`/event/${props.id}`);
+        }
+    }
+
     return (
-        <div className="container-fluid position-relative d-flex testing w-100 h-100 bg-image">
+        <div onClick={handleClick} className="container-fluid position-relative d-flex testing w-100 h-100 bg-image">
             <div className="w-100 h-100 position-absolute d-flex flex-column align-items-start justify-content-center">
                 <div className="position-absolute w-100 h-100 cover-shadow"></div>
                 <div className="d-flex justify-content-start align-items-end w-100 ">
@@ -70,6 +78,7 @@ function TopEventCarousel(props) {
                 date={event.date}
                 time={event.time}
                 location={event.location}
+                status={event.status}
             />
         })
     }
