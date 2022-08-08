@@ -2,11 +2,12 @@ import {WebSocketServer} from "ws";
 import {handleIncomingAuctionAction} from "./controllers/auctionController.js";
 import { v4 as uuidv4 } from 'uuid';
 import {sessionParser} from "./app.js";
+import {unsubscribeAll} from "./util/auction/AuctionHandler.js";
 
 export const wss = new WebSocketServer({ noServer: true, clientTracking: true, path: "/api/auction"})
 
 let interval;
-let clients = [];
+export let clients = [];
 
 //Handle socket connection to client and data exchange
 wss.on("connection", (ws, req, param) => {
@@ -31,7 +32,6 @@ wss.on("connection", (ws, req, param) => {
         socket: ws
     };
     clients.push(clientInfo);
-
 });
 
 function init(server) {
@@ -45,14 +45,14 @@ function init(server) {
             return;
         }
         sessionParser(request, {}, () => {
+            let id;
             if (!request.session || !request.session.passport || !request.session.passport.user) {
-                socket.end('HTTP/1.1 403 Forbidden');
-                return;
-            }
+                id = '';
+            } else id = request.session.passport.user;
             wss.handleUpgrade(request, socket, head, (ws) => {
                 console.log("Emitting connection for client " + request.socket.remoteAddress);
                 wss.emit('connection', ws, request, {
-                    userId: request.session.passport.user
+                    userId: id
                 });
             });
         });
@@ -78,6 +78,7 @@ function noop() {}
 
 function handleClose() {
     clients = clients.filter(c => c.connectionId !== this.connectionId);
+    unsubscribeAll(this.connectionId);
 }
 
 export default init

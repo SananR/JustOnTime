@@ -25,8 +25,8 @@ function Login() {
             setFormError(() => ("Invalid credentials. Please try again."))
         }
         if (isSuccess) {
-            if(user.userType == "Organizer"){
-                navigate('/organizer/main')
+            if(user.userType === "Organizer"){
+                navigate('/organizer')
             } else{
                 navigate('/')
             }

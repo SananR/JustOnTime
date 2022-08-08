@@ -1,5 +1,5 @@
 import {validateAuctionAction, createResponse } from "../util/auction/AuctionValidator.js";
-import {ActionTypes, queueBid} from "../util/auction/AuctionHandler.js";
+import {ActionTypes, queueBid, subscribeToEvent} from "../util/auction/AuctionHandler.js";
 
 const handleIncomingAuctionAction = async (data, socket) => {
     if (!await validateAuctionAction(data, socket)) {
@@ -10,15 +10,27 @@ const handleIncomingAuctionAction = async (data, socket) => {
     switch (action) {
         case ActionTypes.BID_PLACE:
             handleBidPlace(parsed, socket);
+            return;
+        case ActionTypes.AUCTION_SUBSCRIBE:
+            handleAuctionSubscribe(parsed, socket);
+    }
+}
+
+const handleAuctionSubscribe = (data, socket) => {
+    const aid = data.data.aid;
+    if (subscribeToEvent(aid, socket.connectionId)) {
+        socket.send(JSON.stringify(createResponse("SUBSCRIBED",201, "Subscribed to Auction to receive all updates.")));
+    } else {
+        socket.send(JSON.stringify(createResponse("SUBSCRIBE_FAILED", 500, "An unexpected error has occurred.")));
     }
 }
 
 const handleBidPlace = (data, socket) => {
     const bid = {...data.data, "timeStamp": data.timeStamp};
     if (queueBid(bid)) {
-        socket.send(JSON.stringify(createResponse(201, {"message": "Bid has been successfully queued."})));
+        socket.send(JSON.stringify(createResponse("BID_QUEUE",201, "Bid has been successfully queued.")));
     } else {
-        socket.send(JSON.stringify(createResponse(500, {"message": "An unexpected error has occurred."})));
+        socket.send(JSON.stringify(createResponse("BID_FAILED",500, "An unexpected error has occurred.")));
     }
 }
 
