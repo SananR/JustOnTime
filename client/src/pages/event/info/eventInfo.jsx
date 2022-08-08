@@ -8,7 +8,6 @@ import BidForm from '../../../components/forms/makebid/BidForm';
 import BidHistoryPanel from '../../../components/event/infopage/bidHistory';
 import moment from "moment";
 import {toast} from "react-toastify";
-import {Button, Modal} from "react-bootstrap";
 
 function EventInfo() {
 
