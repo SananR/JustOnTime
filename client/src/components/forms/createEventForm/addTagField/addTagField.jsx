@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import {AiOutlinePlusCircle} from "react-icons/ai"
 import {MdError} from "react-icons/md"
+import TagNode from './tagNode'
 
 
 function AddTagField(props) {
@@ -21,9 +22,7 @@ function AddTagField(props) {
         return props.tags.map(tag => {
             console.log(tag)
             return (
-                <div className='mx-2'>
-                    {tag}
-                </div>
+                <TagNode text={tag} removeTag={props.removeTag}/>
             )
         })
     }

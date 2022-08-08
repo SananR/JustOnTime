@@ -96,21 +96,12 @@ function CreateEventForm(props) {
                         error={props.error.tagError}
                         name="tag"
                         onTagAddClciked={props.onTagAddClciked}
+                        removeTag={props.removeTag}
                         tags={props.tags}
                         label="tag"
                         errorMargin="90%"
                     />
                 </div>
-                {/* <div className='row my-2'>
-                    <CreateEventFormInputField
-                        error={props.error.tagError}
-                        className="col-sm-12"
-                        name="tag"
-                        onChange={props.onChange}
-                        label="tag"
-                        errorMargin="90%"
-                    />
-                </div> */}
             </div>
         </form>
         {props.error.formError &&  <div className='position-absolute d-inline-flex'> 

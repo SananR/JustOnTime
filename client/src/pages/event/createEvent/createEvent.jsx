@@ -74,12 +74,24 @@ function CreateEvent() {
 
     const onTagAddClciked = (newTag) => {
         const newTags = tag
+        if (newTags.includes(newTag)) {
+            return
+        }
         newTags.push(newTag)
         setFormData((prevState) => ({
             ...prevState,
             tag: newTags
         }))
-        console.log(tag)
+        console.log(formData)
+    }
+    
+    const removeTag = (tagName) => {
+        console.log(tagName + " deleted!")
+        var newTags = tag.filter(tag => tag!==tagName)
+        setFormData((prevState) => ({
+            ...prevState,
+            tag: newTags
+        }))
     }
 
     const onChangeDateTime = (newDateTime) => {
@@ -187,7 +199,7 @@ function CreateEvent() {
                 <div className='h1'>Create New Event</div>
                     <hr></hr>
                     <UploadImage addImage={addImage} removeImage={removeImage} eventImages={eventImages} imageError={formError.imageError}></UploadImage>
-                    <CreateEventForm dateTime={formData.dateTime} tags={tag} onTagAddClciked={onTagAddClciked} onChange={onChange} onChangeDateTime={onChangeDateTime} error={formError}></CreateEventForm>
+                    <CreateEventForm dateTime={formData.dateTime} tags={tag} removeTag={removeTag} onTagAddClciked={onTagAddClciked} onChange={onChange} onChangeDateTime={onChangeDateTime} error={formError}></CreateEventForm>
                     <div className="row justify-content-center">
                         <button type="submit" id="create-event-submit-button" onClick={submiEvent} className="mt-3 justify-self-center shadow-lg rounded-pill btn btn-block w-100 btn-primary">Create Event</button>
                     </div> 
