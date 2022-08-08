@@ -25,7 +25,12 @@ const getEventImage = async (req, res, next) => {
 const addEvent = async (req, res, next) => {
     const errors = validationResult(req);
     console.log(req.body)
-
+    const tags = []
+    Object.keys(req.body).forEach(field =>  
+        { if (field.includes("tags")){
+            tags.push(req.body[field])
+        }
+    })
     if (!req.files) {
         return clientError(res, 'Invalid file provided.');
     }
@@ -63,7 +68,7 @@ const addEvent = async (req, res, next) => {
                     },
                     auctionEnd: req.body.auctionEnd
                 },
-                tags: req.body.tags,
+                tags: tags,
                 bidHistory: [{"uid": req.user._id, "bidAmount": req.body.initialPrice}],
                 organizerId: req.user._id,
                 eventImagePath: eventImagepath,
