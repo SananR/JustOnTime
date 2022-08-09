@@ -1,0 +1,18 @@
+#tag-container {
+    position: relative;
+    /* overflow: hidden; */
+}
+
+#node {
+    background-color: whitesmoke;
+    color: dodgerblue;
+    font-size: larger;
+}
+
+.close-icon {
+    cursor: pointer;
+    position: absolute;
+    top: -20px;
+    right: -5px;
+    z-index: 100;
+}

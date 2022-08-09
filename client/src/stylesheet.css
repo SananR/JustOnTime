@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
+/* Toastify Styling */
+:root {
+    --toastify-toast-width: 520px;
+    --toastify-toast-max-height: 1000px;
+}
 a {
     color: inherit !important; /* blue colors for links too */
     text-decoration: inherit !important; /* no underline */

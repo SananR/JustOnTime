@@ -23,9 +23,13 @@ const getEventImage = async (req, res, next) => {
 }
 
 const addEvent = async (req, res, next) => {
-   
     const errors = validationResult(req);
-
+    const tags = []
+    Object.keys(req.body).forEach(field =>  
+        { if (field.includes("tags")){
+            tags.push(req.body[field])
+        }
+    })
     if (!req.files) {
         return clientError(res, 'Invalid file provided.');
     }
@@ -60,10 +64,11 @@ const addEvent = async (req, res, next) => {
                         city: req.body.city,
                         country: req.body.country,
                         postalCode: req.body.postalCode
-                    }
+                    },
+                    auctionEnd: req.body.auctionEnd
                 },
-                tags: req.body.tags,
-                bidHistory: [{"uid": req.user._id, "bidPrice": req.body.initialPrice}],
+                tags: tags,
+                bidHistory: [{"uid": req.user._id, "bidAmount": req.body.initialPrice}],
                 organizerId: req.user._id,
                 eventImagePath: eventImagepath,
                 ImagePathArray: ImagePathArray
@@ -72,6 +77,7 @@ const addEvent = async (req, res, next) => {
         await event.save();
         return success(res, "Event successfully created.", true);
     } catch(err) {
+        console.log(err)
         eventImageService.deleteImage(eventImagepath);
         if(ImagePathArray.length != 0){
             ImagePathArray.forEach(path => {
@@ -101,6 +107,7 @@ const getEvents = async (req, res, next) => {
                             location: out.eventInfo.address.street,
                             eventImagePath: out.eventImagePath,
                             bidHistory: out.bidHistory,
+                            auctionEnd: out.eventInfo.auctionEnd,
                             ImagePathArray: out.ImagePathArray
                         };
                     })
@@ -129,7 +136,7 @@ const getAnEvent = async (req, res, next) => {
 
 const getOrganizerEvents =  async (req, res, next) => {
     try{
-        Event.find({ 'organizerId': req.query.id })
+        Event.find({ organizerId: req.query.id })
             .exec()
             .then(output => {
                 const response = {
@@ -163,30 +170,8 @@ const getOrganizerEvents =  async (req, res, next) => {
 const getSearchedEvents = async (req, res, next) => {
     try{
         var searchTerm = req.query.searchTerm;
-        if(!req.query.searchTerm){
-            Event.find().limit(10).exec()
-            .then(output => {
-                const response = {
-                    count: output.length,
-                    events: output.map(out => {
-                        return {
-                            id: out._id,
-                            name: out.eventInfo.name,
-                            description: out.eventInfo.description,
-                            time: out.eventInfo.time,
-                            date: out.eventInfo.date,
-                            location: out.eventInfo.address.street,
-                            eventImagePath: out.eventImagePath,
-                            bidHistory: out.bidHistory,
-                            ImagePathArray: out.ImagePathArray
-                        };
-                    })
-                };
-            return res.status(200).json(response);
-            });
-        }
-        else{
-            const events = Event.find().exec()
+        if(req.query.searchTerm){
+            const events = Event.find({ 'eventInfo.status': 'ONGOING' }).exec()
                 .then(output => {
                     const response = {
                         count: output.length,
@@ -194,18 +179,20 @@ const getSearchedEvents = async (req, res, next) => {
                             return {
                                 id: out._id,
                                 name: out.eventInfo.name,
+                                description: out.eventInfo.description,
                                 eventImagePath: out.eventImagePath,
                                 ImagePathArray: out.ImagePathArray,
                                 tags: out.tags,
                                 time: out.eventInfo.time,
                                 date: out.eventInfo.date,
+                                bidHistory: out.bidHistory,
                                 location: out.eventInfo.address.street,
                             };
                         })
                     };
                     const fuse = new Fuse(response.events, {
                         includeScore: true,
-                        keys: [{name:'name', weight:2},'tags']
+                        keys: [{name:'name', weight:1},{name: 'tags', weight:0.5}, {name: 'description', weight:0.5}, {name: 'location', weight:0.25}]
                     });
                     const result = fuse.search(searchTerm)
                     .filter(out => out.score <=0.35)
@@ -218,10 +205,10 @@ const getSearchedEvents = async (req, res, next) => {
                             tags: out.item.tags,
                             time: out.item.time,
                             date: out.item.date,
+                            bidHistory: out.item.bidHistory,
                             location: out.item.location,
                         };
                     })
-                        
                     return res.status(200).json(result);
                 });
         }
@@ -295,7 +282,7 @@ const updateEvents = async (req, res, next) => {
                 },
                 tags: req.body.tags
             }
-            Event.updateOne(update, (err, user) => { 
+            Event.updateOne({_id:event._id},update, (err, user) => { 
                 if (err) {return serverError(res, "event couldn't be updated");}
                 return success(res, "event successfully updated", false);
             }); 
@@ -303,4 +290,5 @@ const updateEvents = async (req, res, next) => {
         
       });
 }
+
 export {addEvent, getEvents, getAnEvent, getOrganizerEvents, updateEvents, getEventImage, getSearchedEvents }

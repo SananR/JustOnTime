@@ -11,15 +11,14 @@ function Search(){
     const [inputHover, setInputHover] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
-
     const handleEnter = (searchTerm) =>{
-        navigate(`/${searchTerm}`);
-        window.location.reload(true);
+        const url = 'search/?searchTerm=' + searchTerm;
+        navigate(url);
     }
 
     return(
             <div className="right">
-                <div className={`search ${showSearch ? "show-search" : ""} `}>
+                <div className={`search ${true ? "show-search" : ""} `}>
                     <button
                         onClick = {() => {
                             if(!showSearch){

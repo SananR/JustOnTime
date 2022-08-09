@@ -33,6 +33,10 @@ const eventInfoSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    auctionEnd: {
+        type: String,
+        required: true
+    },
     address: {
         type: addressSchema,
         required: false

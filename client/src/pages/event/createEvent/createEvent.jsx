@@ -6,6 +6,7 @@ import UploadImage from '../../../components/event/createEvent/uploadImage';
 import CreateEventForm from '../../../components/forms/createEventForm/createEventForm';
 import './createEvent.css'
 import Alert from 'react-bootstrap/Alert';
+import { useSelector } from 'react-redux';
 
 import { InputValidator } from '../../../util/validation/InputValidator';
 
@@ -47,16 +48,20 @@ function CreateEvent() {
         initialPrice: -1,
         tag: [],
         dateTime: defaultDateTime,
+        auctionEndTimeGap: "6",
         street: '',
         city: '',
         country: '',
         postalCode: ''
     })
 
-    const {name, description, initialPrice, tag, dateTime, street, city, country, postalCode} = formData;
+    const {name, description, initialPrice, tag, dateTime, auctionEndTimeGap,street, city, country, postalCode} = formData;
 
-
+    const user = useSelector((state) => state.auth.user);
     useEffect(() => {
+        if(user && user.userType == "Customer"){
+            navigate("/")
+        }
     })
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -65,10 +70,30 @@ function CreateEvent() {
         }))
     }
 
+    const onTagAddClciked = (newTag) => {
+        const newTags = tag
+        if (newTags.includes(newTag)) {
+            return
+        }
+        newTags.push(newTag)
+        setFormData((prevState) => ({
+            ...prevState,
+            tag: newTags
+        }))
+    }
+    
+    const removeTag = (tagName) => {
+        var newTags = tag.filter(tag => tag!==tagName)
+        setFormData((prevState) => ({
+            ...prevState,
+            tag: newTags
+        }))
+    }
+
     const onChangeDateTime = (newDateTime) => {
         setFormData((prevState) => ({
             ...prevState,
-            dateTime: newDateTime
+            dateTime: newDateTime,
         }))
     }
 
@@ -104,6 +129,7 @@ function CreateEvent() {
             const dd = String(dateTime.getDate())
             const mm = String(dateTime.getMonth() + 1) 
             const yyyy = dateTime.getFullYear();
+            var imagesBody = {}
             const date = yyyy + "/" + mm + "/" + dd;  
 
             const hours = String(dateTime.getHours()).padStart(2, "0") 
@@ -111,10 +137,13 @@ function CreateEvent() {
             const time = hours + ":" + minutes
             const mainImage = eventImages[0]
             const otherImages = eventImages.slice(1)
-            const imagesBody = otherImages.reduce((prev, curr, {}) => {
-                return {...prev, images: curr }
-            })
-            console.log(imagesBody)
+            if(otherImages.length != 0){
+                imagesBody = otherImages.reduce((prev, curr, {}) => {
+                    return {...prev, images: curr }
+                })
+            }
+            const auctionEndTime = new Date(dateTime.getTime());
+            auctionEndTime.setHours(auctionEndTime.getHours() - parseInt(auctionEndTimeGap));
             const body = {    
                 name: name,
                 description: description,
@@ -125,18 +154,17 @@ function CreateEvent() {
                 city: city,
                 country: country,
                 postalCode: postalCode,
+                auctionEnd: auctionEndTime.toISOString(),
                 tags: tag,
                 mainImage: mainImage,
                 ...imagesBody
             }
-            console.log(body)
             const addEventResult = await addEvent(body)
             try {
                 if (addEventResult.success){
                     setShowAlert(true)
                 } 
                 else {
-                    console.error(addEventResult.message[0])
                     addEventResult.message.forEach(error => {
                         const {value, msg, param, location} = error
                         setFormError((prevState) => ({
@@ -165,7 +193,7 @@ function CreateEvent() {
                 <div className='h1'>Create New Event</div>
                     <hr></hr>
                     <UploadImage addImage={addImage} removeImage={removeImage} eventImages={eventImages} imageError={formError.imageError}></UploadImage>
-                    <CreateEventForm dateTime={formData.dateTime} onChange={onChange} onChangeDateTime={onChangeDateTime} error={formError}></CreateEventForm>
+                    <CreateEventForm dateTime={formData.dateTime} tags={tag} removeTag={removeTag} onTagAddClciked={onTagAddClciked} onChange={onChange} onChangeDateTime={onChangeDateTime} error={formError}></CreateEventForm>
                     <div className="row justify-content-center">
                         <button type="submit" id="create-event-submit-button" onClick={submiEvent} className="mt-3 justify-self-center shadow-lg rounded-pill btn btn-block w-100 btn-primary">Create Event</button>
                     </div> 

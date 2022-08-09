@@ -56,12 +56,13 @@ function EventSlider(props) {
                 date={event.date}
                 time={event.time}
                 location={event.location}
-                currentBid={event.currentBid}
-                previousBid={event.previousBid}
+                bidHistory={event.bidHistory}
                 starred={event.starred}
-                timeRemaining={event.timeRemaining}
                 className="col-sm-4"
                 eventIcon={event.icon}
+                url={"/event/" + event.id}
+                status={event.status}
+                timeRemaining={props.timeRemaining[event.id]}
             />
         })
     }
