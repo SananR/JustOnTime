@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
-import axios from 'axios'
-import './main.css'
+import './main.module.css'
 import EventSlider from '../../../../components/event/slider/EventSlider'
-import Carousel from "react-multi-carousel"
-import EventCard from "../../../../components/event/card/EventCard"
 import { loadOrganizerEvents } from '../../../../services/event/eventService'
 
 function OrganizerMain() {
-    const navigate = useNavigate();
+    const router = useRouter();
     const [loading, setLoading] = useState(true)
     const user = useSelector((state) => state.auth.user);
     const userID = useSelector((state) => state.auth.user._id);
@@ -26,7 +23,7 @@ function OrganizerMain() {
     }
     useEffect(() => {
         if(user && user.userType == "Customer"){
-            navigate("/")
+            router.push("/")
         }
         setLoading(true);
         fetchEvents().then((e) => {

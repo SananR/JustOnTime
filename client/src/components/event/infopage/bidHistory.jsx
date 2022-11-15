@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import './imageCarousel.css'
+import './imageCarousel.module.css'
 
 function BidHistoryPanel(props) {
 

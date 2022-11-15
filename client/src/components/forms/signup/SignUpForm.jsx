@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './signupform.css'
+import './SignUpForm.module.css'
 import {HiCursorClick} from 'react-icons/hi'
 import InputField from '../input/InputField'
 import {FaLock, FaUserAlt} from "react-icons/fa";

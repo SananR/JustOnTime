@@ -2,7 +2,7 @@ import React from 'react'
 
 import {MdError} from "react-icons/md"
 
-import './inputField.css'
+import './inputField.module.css'
 
 
 function InputField(props) {

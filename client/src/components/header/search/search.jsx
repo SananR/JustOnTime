@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import './search.css'
+import './search.module.css'
 import {useNavigate} from "react-router-dom";
 
 

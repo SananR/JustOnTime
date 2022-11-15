@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import { useSelector} from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router'
 import { loadSearchedEvents } from '../../../../services/event/eventService';
-import RenderSearchCards from '../../../../components/event/search/searchEventCard';
-import { useParams } from 'react-router-dom';
-import Spinner from '../../../../components/spinner/Spinner';
 import EventCard from '../../../../components/event/card/EventCard';
-import pic from "../../../../no-result.jpg"
+import pic from "../../../../../public/no-result.jpg"
 
-function Search(){
+function Search() {
+
     const [events, setEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [flag, setFlag] = useState(false);
@@ -16,7 +14,8 @@ function Search(){
     var searchTerm = url[1]
     console.log(searchTerm)
     const user = useSelector((state) => state.auth.user);
-    const navigate = useNavigate();
+    const router = useRouter();
+
     useEffect( () => {
         const fetchEvents = async() => {
             setIsLoading(true)
@@ -68,7 +67,7 @@ function Search(){
                 <div className = "text-center"><h1>No events found</h1></div>
                 <div className = "text-center"><p className='font-weight-light'>We've searched more than 350 events</p></div>
                 <div className = "text-center"> <p className='font-weight-light'>We did not find any events for your search</p></div>
-                <div className= "text-center pt-3"><button className="btn btn-success" onClick= {() => {navigate("/")}}>Home page</button></div>
+                <div className= "text-center pt-3"><button className="btn btn-success" onClick= {() => {router.push("/")}}>Home page</button></div>
             </div>
         }
         {!flag && createEventCards()}

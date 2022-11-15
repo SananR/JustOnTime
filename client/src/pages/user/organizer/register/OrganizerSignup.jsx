@@ -5,9 +5,9 @@ import {
     OrganizerRegisterEmailConfirmation
 } from "../../../../components/forms/organizer/signup/OrganizerSignupForms";
 
-import "./organizerSignup.css"
+import "./OrganizerSignup.module.css"
 import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import { useRouter } from 'next/router'
 import {InputValidator} from "../../../../util/validation/InputValidator";
 import {registerOrganizer} from "../../../../services/auth/authSlice";
 
@@ -66,7 +66,7 @@ function OrganizerSignup(props) {
         cityError: ''
     })
 
-    const navigate = useNavigate();
+    const router = useRouter();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -77,7 +77,7 @@ function OrganizerSignup(props) {
 
     useEffect(() => {
         //Not registered
-        if (!user) navigate('/signup');
+        if (!user) router.push('/signup');
         //Email verified
         else if (user.userType === "Customer" && user.isVerified)
             setFormStep(() => 2);
@@ -86,7 +86,7 @@ function OrganizerSignup(props) {
             setFormStep(() => 3);
         //Verified organizer
         else if (user.userType === "Organizer" && user.organizer.info.verificationStatus === "VERIFIED") {
-            navigate("/organizer/main");
+            router.push("/organizer/main");
         }
     }, [])
 

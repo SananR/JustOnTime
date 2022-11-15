@@ -2,7 +2,7 @@ import React from 'react'
 
 import {MdError} from "react-icons/md"
 
-import './createEventFormInputField.css'
+import './createEventFormInputField.module.css'
 
 
 function CreateEventFormInputField(props) {

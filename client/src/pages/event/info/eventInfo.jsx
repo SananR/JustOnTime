@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import { useParams } from 'react-router-dom';
-import "./eventInfo.css"
+import { useRouter } from 'next/router'
+import "./eventInfo.module.css"
 import { BiTime } from 'react-icons/bi'
 import { loadAnEvent } from '../../../services/event/eventService';
 import ImageSlider from '../../../components/event/infopage/imageCarousel';
@@ -17,7 +17,7 @@ function EventInfo() {
     const [loading, setLoading] = useState(false);
     const [subscribed, setSubscribed] = useState(false);
 
-    const { eventId } = useParams();
+    const { eventId } = useRouter();
 
     useEffect(() => {
         let ws = new WebSocket("ws://localhost:3000/api/auction");

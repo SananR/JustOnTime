@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { useRouter } from 'next/router'
 import Carousel from "react-multi-carousel"
 
-import "./topeventcarousel.css"
+import "./TopEventCarousel.module.css"
 import "react-multi-carousel/lib/styles.css";
 
 import {HiArrowCircleRight} from "react-icons/hi";
@@ -12,7 +12,7 @@ import {getEventImage} from "../../../services/event/eventService";
 function EventSlide(props) {
 
     const [image, setImage] = useState("");
-    const navigate = useNavigate();
+    const router = useRouter();
 
     useEffect( () => {
         const fetchImage = async() => {
@@ -24,7 +24,7 @@ function EventSlide(props) {
 
     const handleClick = () => {
         if (props.status === undefined || props.status === "ONGOING"){
-            navigate(`/event/${props.id}`);
+            router.push(`/event/${props.id}`);
         }
     }
 

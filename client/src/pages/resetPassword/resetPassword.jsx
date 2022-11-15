@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {FaUserAlt, FaLock} from 'react-icons/fa'
-import { useParams, useNavigate } from "react-router-dom";
+import { FaLock} from 'react-icons/fa'
+import { useRouter } from 'next/router'
 import {useDispatch} from 'react-redux';
 import InputField from "../../components/forms/input/InputField";
-import Spinner from "../../components/spinner/Spinner";
-import logo from "../../logo_cropped.png";
+import logo from "../../../public/logo_cropped.png";
 import {logoutUser, reset } from "../../services/auth/authSlice"
 import axios from 'axios'
 
@@ -14,10 +13,10 @@ function ResetPassword() {
     const [password, setPassword] = useState(false);
     const [password2, setPassword2] = useState(false);
     const [exists, setExists] = useState(true);
-    const navigate = useNavigate();
+    const router = useRouter();
     const dispatch = useDispatch();
 
-    const {token, id} = useParams(); 
+    const {token, id} = useRouter();
 
     const logout = () => {
         dispatch(logoutUser());
@@ -51,7 +50,7 @@ function ResetPassword() {
             } 
             try {
                 const response = await axios.post(API_URL + 'user/send-email', {"id": id, "message": "Password successfully changed!", subject: "JUST ON TIME: Password changed" });
-                navigate('/reset-successful/password')
+                router.push('/reset-successful/password')
             } catch (error) {
                 setFormError(error.response.data.message);
             } 

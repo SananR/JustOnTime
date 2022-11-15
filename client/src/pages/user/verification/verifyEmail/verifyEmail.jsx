@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import "./verifyEmail.css";
-import { useParams } from 'react-router-dom';
+import "./verifyEmail.module.css";
+import { useRouter } from 'next/router'
 import { verifyEmail } from '../../../../services/emailVerification/customer/verifyEmail';
 
 function CustomerVerifyEmail() {
     const [message, setMessage] = useState({message: ""});
 
-    const { email, token } = useParams();
+    const { email, token } = useRouter();
 
     useEffect(() => {
         verifyEmail(email, token).then(response => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import './SettingSidebar.css'
+import './SettingSidebar.module.css'
 
 //update the bar as we add more services then it will be uniform for all settings pages
 

@@ -1,6 +1,6 @@
 import React from "react";
 import {DotLoader} from "react-spinners";
-import "./spinner.css"
+import "./Spinner.module.css"
 
 function Spinner(props) {
     const override = {

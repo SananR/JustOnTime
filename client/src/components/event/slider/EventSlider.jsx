@@ -4,7 +4,7 @@ import EventCard from "../card/EventCard";
 import Carousel from "react-multi-carousel"
 
 import "react-multi-carousel/lib/styles.css";
-import "./eventslider.css"
+import "./EventSlider.module.css"
 
 function EventSlider(props) {
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { forwardRef } from 'react';
-import './datePickerInput.css'
+import './datePickerInput.module.css'
 
 
 const DatePickerInput = forwardRef(({ value, onClick }, ref) => (

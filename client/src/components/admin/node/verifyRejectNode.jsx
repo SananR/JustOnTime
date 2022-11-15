@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Modal} from 'react-bootstrap';
-import './verifyRejectNode.css'
+import './verifyRejectNode.module.css'
 
 function VerifyRejectNode(props){
 

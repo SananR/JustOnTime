@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {FaUserAlt} from 'react-icons/fa'
-import { useParams } from 'react-router-dom'
 import InputField from "../../components/forms/input/InputField";
-import logo from "../../logo_cropped.png";
+import logo from "../../../public/logo_cropped.png";
 import axios from 'axios'
 
 function SendResetLink() {
@@ -13,7 +12,7 @@ function SendResetLink() {
     const {changed} = useParams(); 
 
     useEffect(() => {
-        if(!(changed == "email" || changed == "password")){
+        if(!(changed === "email" || changed === "password")){
             setSuccess("This Page does not exist");
         }
     }, []); 

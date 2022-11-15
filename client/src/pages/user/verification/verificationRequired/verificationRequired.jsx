@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { resendCode } from '../../../../services/emailVerification/customer/resendCode.js';
 
-import "./verificationRequired.css";
+import "./verificationRequired.module.css";
 
 function CustomerVerificationRequired() {
     const [message, setMessage] = useState({message: "", visible: false});

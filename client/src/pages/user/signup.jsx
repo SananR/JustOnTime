@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from 'react-redux'
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/router'
 import {registerUser} from '../../services/auth/authSlice'
 import {InputValidator} from "../../util/validation/InputValidator";
 
@@ -27,7 +27,7 @@ function Signup() {
 
     const {firstName, lastName, email, password, password2} = formData;
 
-    const navigate = useNavigate();
+    const router = useRouter();
     const dispatch = useDispatch();
 
     const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth) 
@@ -40,7 +40,7 @@ function Signup() {
             }))
         }
         else if (isSuccess || user) {
-            navigate('/')
+            router.push('/');
         }
     }, [user, isError, isSuccess, message, isLoading, navigate]);
 

@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 
 import {AiOutlineStar, AiFillStar} from "react-icons/ai";
 
-import "./eventcard.css"
+import "./EventCard.module.css"
 import { useSelector, useDispatch } from 'react-redux';
-import {useNavigate} from "react-router-dom";
+import { useRouter } from 'next/router'
 import { getEventImage } from "../../../services/event/eventService";
 import { updateUser } from '../../../services/auth/authSlice.js';
 
@@ -16,8 +16,8 @@ function EventCard(props) {
     const [done, setDone] = useState(false);
     const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    
+    const router = useRouter();
+
     useEffect( () => {
         const fetchImage = async() => {
             const img = await getEventImage(props.id);
@@ -39,7 +39,7 @@ function EventCard(props) {
 
     const handleClick = () => {
         if (props.status === undefined || props.status === "ONGOING"){
-            navigate(`/event/${props.id}`);
+            router.push(`/event/${props.id}`);
         }
     }
 

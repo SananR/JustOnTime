@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {BsShieldCheck } from "react-icons/bs"
-import {useParams} from 'react-router-dom'
+import { useRouter } from 'next/router'
 
 
 function ResetSuccessful() {
-    const {changed} = useParams(); 
+    const {changed} = useRouter();
     function errorCheck() {
         if(changed == "email" || changed === "password"){
           return (

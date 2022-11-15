@@ -1,9 +1,8 @@
 import React from 'react'
 import "react-datepicker/dist/react-datepicker.css";
-import {FaUserAlt, FaLock} from 'react-icons/fa'
 import CreateEventFormInputField from "./createEventFormInput/createEventFormInputField";
 import DatePickerField from './datePickerInput/datePickerInput';
-import './createEventForm.css'
+import './createEventForm.module.css'
 import { MdError } from 'react-icons/md';
 import AddTagField from './addTagField/addTagField';
 

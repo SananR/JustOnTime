@@ -5,7 +5,7 @@ import {FaUserCircle} from 'react-icons/fa'
 import Dropdown from 'react-bootstrap/Dropdown'
 import {useDispatch, useSelector} from 'react-redux';
 
-import './userbutton.css'
+import './UserButton.module.css'
 import {useNavigate} from "react-router-dom";
 import {logoutUser, reset} from "../../../services/auth/authSlice";
 

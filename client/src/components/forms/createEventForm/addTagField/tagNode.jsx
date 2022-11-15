@@ -1,7 +1,7 @@
 import React from 'react'
 import { AiFillCloseCircle } from 'react-icons/ai'
 
-import './tagNode.css'
+import './tagNode.module.css'
 
 function TagNode(props) {
 

@@ -1,30 +1,27 @@
 import React, {useEffect, useState} from 'react'
 import { useSelector} from 'react-redux';
-import cardBackground from "../../../../card-bg.jpg"
-import cardBackground2 from "../../../../card-bg2.jpg"
-import cardBackground3 from "../../../../card-bg3.jpg"
 
-import "./customerhome.css"
+import "./CustomerHome.module.css"
 import EventSlider from "../../../../components/event/slider/EventSlider";
 import TopEventCarousel from "../../../../components/event/topcarousel/TopEventCarousel";
 import { loadEvents } from "../../../../services/event/eventService";
-import {useNavigate} from "react-router-dom";
+import { useRouter } from 'next/router'
 import moment from "moment";
 
-function CustomerHome() {
+function CustomerHome({events}) {
 
-    const [events, setEvents] = useState([]);
+    //const [events, setEvents] = useState([]);
     const [timeRemaining, setTimeRemaining] = useState({});
     const user = useSelector((state) => state.auth.user);
-    const navigate = useNavigate();
+    const router = useRouter();
 
-    useEffect( () => {
+/*    useEffect( () => {
         const fetchEvents = async() => {
             const events = await loadEvents();
             setEvents(() => (events));
         }
         fetchEvents().catch(console.error);
-    }, []);
+    }, []);*/
 
     useEffect(() => {
         if (events.length > 0) {
@@ -75,6 +72,13 @@ function CustomerHome() {
             <EventSlider events={events} timeRemaining={timeRemaining} className="container-fluid row w-100 h-100 gap-0 gx-0" />
         </div>
     )
+}
+export async function getServerSideProps = withSession(async function ({ req, res }) {
+    // Fetch data from external API
+    const events = await loadEvents();
+
+    // Pass data to the page via props
+    return { props: { events } }
 }
 
 export default CustomerHome

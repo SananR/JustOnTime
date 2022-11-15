@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from 'react-redux'
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/router'
 import {loginUser, reset} from '../../services/auth/authSlice'
 import LoginForm from '../../components/forms/login/LoginForm'
 
@@ -15,7 +15,7 @@ function Login() {
 
     const {email, password} = formData;
 
-    const navigate = useNavigate();
+    const router = useRouter();
     const dispatch = useDispatch();
 
     const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
@@ -26,12 +26,12 @@ function Login() {
         }
         if (isSuccess) {
             if(user.userType === "Organizer"){
-                navigate('/organizer')
+                router.push('/organizer')
             } else if(user.userType === "Admin"){
-                navigate('/admin')
+                router.push('/admin')
             }
             else{
-                navigate('/')
+                router.push('/')
             }
         }
     }, [user, isError, isSuccess, message, isLoading, navigate]);

@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import { useParams } from 'react-router-dom';
 import { AiOutlinePlus, AiFillCloseCircle } from 'react-icons/ai'
 import { BiPhotoAlbum } from 'react-icons/bi'
-import './uploadImage.css'
+import './uploadImage.module.css'
 import { MdError } from 'react-icons/md';
 
 function UploadImage(props) {

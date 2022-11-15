@@ -1,6 +1,6 @@
 
 import React, {useEffect, useState} from "react";
-import "./searchEventCard.css";
+import "./searchEventCard.module.css";
 import { Card } from "react-bootstrap";
 import { getEventImage } from "../../../services/event/eventService";
 

@@ -4,9 +4,9 @@ import Navbar from 'react-bootstrap/Navbar'
 import UserButton from './userbutton/UserButton'
 import Search from './search/search'
 
-import logo from '../../logo_cropped.png'
+import logo from '../../../public/logo_cropped.png'
 
-import './header.css'
+import './Header.module.css'
 
 function Header() {
     return (
